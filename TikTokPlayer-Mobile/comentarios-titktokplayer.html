@@ -1,25 +1,37 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
-    /* === VARIABLES DE DISEÑO === */
+    /* === VARIABLES DE DISEÑOooo === */
     :root {
         /* 📏 DIMENSIONES */
-        --comments-handler-height: 50px;        /* Altura del header */
-        --comments-open-height: 65vh;            /* Altura cuando está abierta */
-        --comments-close-threshold: 55vh;        /* Umbral para cerrar (imán) */
-        
+        --comments-handler-height: 50px;
+        /* Altura del header */
+        --comments-open-height: 65vh;
+        /* Altura cuando está abierta */
+        --comments-close-threshold: 55vh;
+        /* Umbral para cerrar (imán) */
+
         /* 🎨 COLORES */
-        --comments-bg: #121212;                  /* Fondo del contenido */
-        --comments-handler-bg: #ffffff;          /* Fondo blanco del handler */
-        --comments-text-active: #383838;         /* Texto activo (negro oscuro) */
-        --comments-text-inactive: #7f7f7f;       /* Texto inactivo (gris claro) */
-        --comments-line-active: #1a1a1a;         /* Línea indicadora */
-        --comments-border: rgb(255,255,255);      /* Borde sutil */
-        
+        --comments-bg: #121212;
+        /* Fondo del contenido */
+        --comments-handler-bg: #ffffff;
+        /* Fondo blanco del handler */
+        --comments-text-active: #383838;
+        /* Texto activo (negro oscuro) */
+        --comments-text-inactive: #7f7f7f;
+        /* Texto inactivo (gris claro) */
+        --comments-line-active: #1a1a1a;
+        /* Línea indicadora */
+        --comments-border: rgb(255, 255, 255);
+        /* Borde sutil */
+
         /* ⚡ ANIMACIONES */
-        --comments-open-duration: 0.3s;          /* Duración al abrir */
-        --comments-close-duration: 0.4s;         /* Duración al cerrar */
-        --comments-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Curva suave */
+        --comments-open-duration: 0.3s;
+        /* Duración al abrir */
+        --comments-close-duration: 0.4s;
+        /* Duración al cerrar */
+        --comments-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* Curva suave */
     }
 
     /* === CONTENEDOR PRINCIPAL === */
@@ -75,7 +87,7 @@
         background: var(--comments-bg);
         display: flex;
         flex-direction: column;
-        box-shadow: 0 -5px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
         border-radius: 20px 20px 0 0;
         transition: height var(--comments-close-duration) var(--comments-easing);
     }
@@ -94,7 +106,8 @@
         cursor: grab;
         touch-action: none;
         user-select: none;
-        overflow: visible; /* IMPORTANTE: Permite que la línea se vea fuera del handler */
+        overflow: visible;
+        /* IMPORTANTE: Permite que la línea se vea fuera del handler */
     }
 
     .comments-handler:active {
@@ -104,17 +117,19 @@
     .comments-handler * {
         pointer-events: auto;
     }
-    
-    .comments-tab, .comments-close-btn {
+
+    .comments-tab,
+    .comments-close-btn {
         cursor: pointer;
     }
 
     /* === SWITCH DE PESTAÑAS CON DEGRADADO === */
     .comments-switch {
         /* 📏 ANCHO DEL SWITCH */
-        width: 50%;              /* ← Cambia aquí el ancho (50%, 70%, 80%, etc.) */
+        width: 50%;
+        /* ← Cambia aquí el ancho (50%, 70%, 80%, etc.) */
         max-width: 400px;
-        
+
         /* 📍 POSICIÓN HORIZONTAL DEL SWITCH */
         /* Opciones:
            - margin-left: 0;           → Totalmente a la izquierda
@@ -123,8 +138,9 @@
            - margin-left: auto;        → A la derecha
         */
         margin-left: -110px;
-        padding-right: 50px;/* ← Cambia aquí la posición horizontal */
-        
+        padding-right: 50px;
+        /* ← Cambia aquí la posición horizontal */
+
         display: flex;
         gap: 0;
         position: relative;
@@ -145,13 +161,14 @@
         white-space: nowrap;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
+
     /* 🎨 DEGRADADO IZQUIERDO - Comentarios cuando está inactivo */
     .comments-tab[data-tab="comentarios"]:not(.active) {
         /* 📏 DESPLAZAMIENTO: Ajusta el % para más/menos movimiento */
-        transform: translateX(-65%);     /* ← Cambia aquí (-40%, -20%, etc.) */
+        transform: translateX(-65%);
+        /* ← Cambia aquí (-40%, -20%, etc.) */
     }
-    
+
     /* Capa de degradado sobre Comentarios inactivo */
     .comments-tab[data-tab="comentarios"]:not(.active)::before {
         content: '';
@@ -161,22 +178,25 @@
         right: 0;
         bottom: 0;
         /* 🎨 DEGRADADO IZQUIERDO: de transparente a blanco */
-        background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 1) 0%,          /* ← 0-10%: Blanco sólido (oculta texto) */
-            rgba(255, 255, 255, 0.5) 30%,       /* ← 10%: 80% blanco */
-            rgba(255, 255, 255, 0) 50%          /* ← 20%: Transparente */
-        );
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 1) 0%,
+                /* ← 0-10%: Blanco sólido (oculta texto) */
+                rgba(255, 255, 255, 0.5) 30%,
+                /* ← 10%: 80% blanco */
+                rgba(255, 255, 255, 0) 50%
+                /* ← 20%: Transparente */
+            );
         pointer-events: none;
         z-index: 1;
     }
-    
+
     /* 🎨 DEGRADADO DERECHO - Reseñas cuando está inactivo */
     .comments-tab[data-tab="resenas"]:not(.active) {
         /* 📏 DESPLAZAMIENTO: Ajusta el % para más/menos movimiento */
-        transform: translateX(75%);      /* ← Cambia aquí (40%, 20%, etc.) */
+        transform: translateX(75%);
+        /* ← Cambia aquí (40%, 20%, etc.) */
     }
-    
+
     /* Capa de degradado sobre Reseñas inactivo */
     .comments-tab[data-tab="resenas"]:not(.active)::before {
         content: '';
@@ -186,12 +206,13 @@
         right: 0;
         bottom: 0;
         /* 🎨 DEGRADADO DERECHO: de transparente a blanco */
-        background: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 1.0) 0%,  
-            rgba(255, 255, 255, 1.0) 25%, /* ← 0-10%: Blanco sólido (oculta texto) */
-            rgba(255, 255, 255, 0.0) 45%          /* ← 20%: Transparente */
-        );
+        background: linear-gradient(to left,
+                rgba(255, 255, 255, 1.0) 0%,
+                rgba(255, 255, 255, 1.0) 25%,
+                /* ← 0-10%: Blanco sólido (oculta texto) */
+                rgba(255, 255, 255, 0.0) 45%
+                /* ← 20%: Transparente */
+            );
         pointer-events: none;
         z-index: 1;
     }
@@ -201,30 +222,33 @@
         color: var(--comments-text-active);
         transform: translateX(0);
     }
-    
+
     /* Sin degradado cuando está activo */
     .comments-tab.active::before {
         display: none;
     }
 
     /* Línea indicadora debajo del tab activo */
-  .comments-tab::after {
+    .comments-tab::after {
         content: '';
         position: absolute;
-        
+
         /* 📍 POSICIÓN DE LA LÍNEA */
-        bottom: -8px;           /* ← Ajusta este valor para mover la línea arriba/abajo
+        bottom: -8px;
+        /* ← Ajusta este valor para mover la línea arriba/abajo
                                       - Valor negativo = hacia abajo (fuera del tab)
                                       - 0 = en el borde del tab
                                       - Positivo = dentro del tab */
-        
+
         left: 50%;
         transform: translateX(-50%);
-        
+
         /* 📏 TAMAÑO DE LA LÍNEA */
-        width: 110%;             /* ← Ajusta el ancho (60%, 80%, 100%, 120%, etc.) */
-        height: 2px;             /* ← Ajusta el grosor (1px, 2px, 3px, etc.) */
-        
+        width: 110%;
+        /* ← Ajusta el ancho (60%, 80%, 100%, 120%, etc.) */
+        height: 2px;
+        /* ← Ajusta el grosor (1px, 2px, 3px, etc.) */
+
         background: var(--comments-line-active);
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -285,7 +309,7 @@
     .comments-content::-webkit-scrollbar {
         display: none;
     }
-    
+
     .comments-content {
         -ms-overflow-style: none;
         scrollbar-width: none;
@@ -309,7 +333,7 @@
                     Reseñas
                 </div>
             </div>
-            
+
             <!-- Botón cerrar -->
             <div class="comments-close-btn">&times;</div>
         </div>
@@ -320,7 +344,7 @@
             <div class="comments-content comments-content-item active" data-content="comentarios">
                 [mi_plantilla id="2441"]
             </div>
-            
+
             <!-- Pestaña Reseñas -->
             <div class="comments-content comments-content-item" data-content="resenas">
                 [mi_plantilla id="2441"]
@@ -330,258 +354,258 @@
 </div>
 
 <script>
-(function() {
-    'use strict';
-    
-    /* 📋 CONFIGURACIÓN */
-    const CFG = {
-        OPEN_HEIGHT_VH: 65,           // Altura al abrir (en vh)
-        CLOSE_THRESHOLD_VH: 55,       // Umbral para cerrar con imán (en vh)
-        OPEN_DURATION: 600,           // Duración apertura (ms)
-        CLOSE_DURATION: 500           // Duración cierre (ms)
-    };
+    (function () {
+        'use strict';
 
-    const root = document.getElementById('comments-persiana-root');
-    const overlay = document.getElementById('comments-persiana-overlay');
-    const widget = document.querySelector('.comments-persiana-widget');
-    const handler = document.querySelector('.comments-handler');
-    const closeBtn = document.querySelector('.comments-close-btn');
-    const tabs = document.querySelectorAll('.comments-tab');
-    const contents = document.querySelectorAll('.comments-content');
-    
-    let isOpen = false;
-    let isDragging = false;
-    let startY = 0;
-    let startHeight = 0;
-    let currentHeight = 0;
+        /* 📋 CONFIGURACIÓN */
+        const CFG = {
+            OPEN_HEIGHT_VH: 65,           // Altura al abrir (en vh)
+            CLOSE_THRESHOLD_VH: 55,       // Umbral para cerrar con imán (en vh)
+            OPEN_DURATION: 600,           // Duración apertura (ms)
+            CLOSE_DURATION: 500           // Duración cierre (ms)
+        };
 
-    // Mover el root al body para asegurar posicionamiento correcto
-    if (root && root.parentElement !== document.body) {
-        document.body.appendChild(root);
-    }
-    if (overlay && overlay.parentElement !== document.body) {
-        document.body.appendChild(overlay);
-    }
+        const root = document.getElementById('comments-persiana-root');
+        const overlay = document.getElementById('comments-persiana-overlay');
+        const widget = document.querySelector('.comments-persiana-widget');
+        const handler = document.querySelector('.comments-handler');
+        const closeBtn = document.querySelector('.comments-close-btn');
+        const tabs = document.querySelectorAll('.comments-tab');
+        const contents = document.querySelectorAll('.comments-content');
 
-    // Convertir vh a px
-    const vh = (percent) => (window.innerHeight * percent) / 100;
+        let isOpen = false;
+        let isDragging = false;
+        let startY = 0;
+        let startHeight = 0;
+        let currentHeight = 0;
 
-    /* === ABRIR PERSIANA === */
-    function openPersiana() {
-        if (isOpen) return;
-        
-        isOpen = true;
-        root.classList.add('persiana-open');
-        overlay.classList.add('overlay-visible');
-        
-        // Bloquear scroll del body
-        document.body.style.overflow = 'hidden';
-        document.body.style.touchAction = 'none';
-        
-        // Altura objetivo
-        const targetHeight = vh(CFG.OPEN_HEIGHT_VH);
-        widget.style.height = targetHeight + 'px';
-        currentHeight = targetHeight;
-        
-        // Revivir sliders/elementos dinámicos
-        reviveContent();
-    }
-
-    /* === CERRAR PERSIANA === */
-    function closePersiana() {
-        if (!isOpen) return;
-        
-        isOpen = false;
-        root.classList.remove('persiana-open');
-        overlay.classList.remove('overlay-visible');
-        
-        // Restaurar scroll del body
-        document.body.style.overflow = '';
-        document.body.style.touchAction = '';
-        
-        widget.style.height = '0px';
-        currentHeight = 0;
-    }
-
-    /* === SWITCH DE PESTAÑAS === */
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            
-            const targetTab = tab.dataset.tab;
-            
-            // Cambiar tabs activos
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            
-            // Cambiar contenido activo
-            contents.forEach(c => {
-                if (c.dataset.content === targetTab) {
-                    c.classList.add('active');
-                } else {
-                    c.classList.remove('active');
-                }
-            });
-            
-            // Revivir contenido nuevo
-            reviveContent();
-        });
-    });
-
-    /* === CERRAR AL HACER CLICK O TOCAR FUERA === */
-    overlay.addEventListener('click', (e) => {
-        closePersiana();
-    });
-    
-    overlay.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        closePersiana();
-    }, { passive: false });
-    
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closePersiana();
-    });
-
-    /* === DRAG: INICIO === */
-    function startDrag(e) {
-        // Evitar drag si se hace click en tabs o botón cerrar
-        if (e.target.closest('.comments-tab') || e.target.closest('.comments-close-btn')) {
-            return;
+        // Mover el root al body para asegurar posicionamiento correcto
+        if (root && root.parentElement !== document.body) {
+            document.body.appendChild(root);
         }
-        
-        isDragging = true;
-        startY = e.touches ? e.touches[0].clientY : e.clientY;
-        startHeight = currentHeight;
-        
-        widget.style.transition = 'none';
-    }
+        if (overlay && overlay.parentElement !== document.body) {
+            document.body.appendChild(overlay);
+        }
 
-    /* === DRAG: MOVIMIENTO === */
-    function moveDrag(e) {
-        if (!isDragging || !isOpen) return;
-        
-        const currentY = e.touches ? e.touches[0].clientY : e.clientY;
-        const deltaY = startY - currentY; // Positivo = arrastrar hacia arriba
-        
-        let newHeight = startHeight + deltaY;
-        const maxHeight = vh(CFG.OPEN_HEIGHT_VH);
-        
-        // Limitar altura
-        newHeight = Math.max(0, Math.min(newHeight, maxHeight));
-        
-        widget.style.height = newHeight + 'px';
-        currentHeight = newHeight;
-    }
+        // Convertir vh a px
+        const vh = (percent) => (window.innerHeight * percent) / 100;
 
-    /* === DRAG: FIN === */
-    function endDrag() {
-        if (!isDragging) return;
-        
-        isDragging = false;
-        widget.style.transition = '';
-        
-        // Efecto imán: si está por debajo del umbral, cerrar
-        const threshold = vh(CFG.CLOSE_THRESHOLD_VH);
-        
-        if (currentHeight < threshold) {
-            closePersiana();
-        } else {
-            // Volver a altura completa
+        /* === ABRIR PERSIANA === */
+        function openPersiana() {
+            if (isOpen) return;
+
+            isOpen = true;
+            root.classList.add('persiana-open');
+            overlay.classList.add('overlay-visible');
+
+            // Bloquear scroll del body
+            document.body.style.overflow = 'hidden';
+            document.body.style.touchAction = 'none';
+
+            // Altura objetivo
             const targetHeight = vh(CFG.OPEN_HEIGHT_VH);
             widget.style.height = targetHeight + 'px';
             currentHeight = targetHeight;
-        }
-    }
 
-    /* === SCROLL: DETECTAR LÍMITE Y CERRAR === */
-    let scrollStartY = 0;
-    let isScrollDragging = false;
-    
-    contents.forEach(content => {
-        // Prevenir scroll de la página cuando la persiana está abierta
-        content.addEventListener('touchstart', (e) => {
+            // Revivir sliders/elementos dinámicos
+            reviveContent();
+        }
+
+        /* === CERRAR PERSIANA === */
+        function closePersiana() {
             if (!isOpen) return;
-            
-            scrollStartY = e.touches[0].clientY;
-            
-            // Si está en el inicio del scroll (top = 0)
-            if (content.scrollTop === 0) {
-                isScrollDragging = true;
-            }
-        }, { passive: false });
-        
-        content.addEventListener('touchmove', (e) => {
-            if (!isOpen) return;
-            
-            const currentY = e.touches[0].clientY;
-            const deltaY = currentY - scrollStartY;
-            
-            // Si está en el inicio Y intenta hacer scroll hacia abajo (deltaY > 0)
-            if (content.scrollTop === 0 && deltaY > 0 && isScrollDragging) {
-                e.preventDefault();
+
+            isOpen = false;
+            root.classList.remove('persiana-open');
+            overlay.classList.remove('overlay-visible');
+
+            // Restaurar scroll del body
+            document.body.style.overflow = '';
+            document.body.style.touchAction = '';
+
+            widget.style.height = '0px';
+            currentHeight = 0;
+        }
+
+        /* === SWITCH DE PESTAÑAS === */
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
-                // Convertir a drag de la persiana
-                if (!isDragging) {
-                    isDragging = true;
-                    startY = scrollStartY;
-                    startHeight = currentHeight;
-                    widget.style.transition = 'none';
-                }
-                
-                // Aplicar movimiento de drag
-                let newHeight = startHeight - deltaY;
-                const maxHeight = vh(CFG.OPEN_HEIGHT_VH);
-                newHeight = Math.max(0, Math.min(newHeight, maxHeight));
-                
-                widget.style.height = newHeight + 'px';
-                currentHeight = newHeight;
-            } else if (content.scrollTop > 0) {
-                // Si hay scroll disponible, permitir scroll normal
-                isScrollDragging = false;
-            }
+                e.preventDefault();
+
+                const targetTab = tab.dataset.tab;
+
+                // Cambiar tabs activos
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Cambiar contenido activo
+                contents.forEach(c => {
+                    if (c.dataset.content === targetTab) {
+                        c.classList.add('active');
+                    } else {
+                        c.classList.remove('active');
+                    }
+                });
+
+                // Revivir contenido nuevo
+                reviveContent();
+            });
+        });
+
+        /* === CERRAR AL HACER CLICK O TOCAR FUERA === */
+        overlay.addEventListener('click', (e) => {
+            closePersiana();
+        });
+
+        overlay.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            closePersiana();
         }, { passive: false });
-        
-        content.addEventListener('touchend', () => {
-            if (isScrollDragging) {
-                isScrollDragging = false;
-                endDrag();
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closePersiana();
+        });
+
+        /* === DRAG: INICIO === */
+        function startDrag(e) {
+            // Evitar drag si se hace click en tabs o botón cerrar
+            if (e.target.closest('.comments-tab') || e.target.closest('.comments-close-btn')) {
+                return;
+            }
+
+            isDragging = true;
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
+            startHeight = currentHeight;
+
+            widget.style.transition = 'none';
+        }
+
+        /* === DRAG: MOVIMIENTO === */
+        function moveDrag(e) {
+            if (!isDragging || !isOpen) return;
+
+            const currentY = e.touches ? e.touches[0].clientY : e.clientY;
+            const deltaY = startY - currentY; // Positivo = arrastrar hacia arriba
+
+            let newHeight = startHeight + deltaY;
+            const maxHeight = vh(CFG.OPEN_HEIGHT_VH);
+
+            // Limitar altura
+            newHeight = Math.max(0, Math.min(newHeight, maxHeight));
+
+            widget.style.height = newHeight + 'px';
+            currentHeight = newHeight;
+        }
+
+        /* === DRAG: FIN === */
+        function endDrag() {
+            if (!isDragging) return;
+
+            isDragging = false;
+            widget.style.transition = '';
+
+            // Efecto imán: si está por debajo del umbral, cerrar
+            const threshold = vh(CFG.CLOSE_THRESHOLD_VH);
+
+            if (currentHeight < threshold) {
+                closePersiana();
+            } else {
+                // Volver a altura completa
+                const targetHeight = vh(CFG.OPEN_HEIGHT_VH);
+                widget.style.height = targetHeight + 'px';
+                currentHeight = targetHeight;
+            }
+        }
+
+        /* === SCROLL: DETECTAR LÍMITE Y CERRAR === */
+        let scrollStartY = 0;
+        let isScrollDragging = false;
+
+        contents.forEach(content => {
+            // Prevenir scroll de la página cuando la persiana está abierta
+            content.addEventListener('touchstart', (e) => {
+                if (!isOpen) return;
+
+                scrollStartY = e.touches[0].clientY;
+
+                // Si está en el inicio del scroll (top = 0)
+                if (content.scrollTop === 0) {
+                    isScrollDragging = true;
+                }
+            }, { passive: false });
+
+            content.addEventListener('touchmove', (e) => {
+                if (!isOpen) return;
+
+                const currentY = e.touches[0].clientY;
+                const deltaY = currentY - scrollStartY;
+
+                // Si está en el inicio Y intenta hacer scroll hacia abajo (deltaY > 0)
+                if (content.scrollTop === 0 && deltaY > 0 && isScrollDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Convertir a drag de la persiana
+                    if (!isDragging) {
+                        isDragging = true;
+                        startY = scrollStartY;
+                        startHeight = currentHeight;
+                        widget.style.transition = 'none';
+                    }
+
+                    // Aplicar movimiento de drag
+                    let newHeight = startHeight - deltaY;
+                    const maxHeight = vh(CFG.OPEN_HEIGHT_VH);
+                    newHeight = Math.max(0, Math.min(newHeight, maxHeight));
+
+                    widget.style.height = newHeight + 'px';
+                    currentHeight = newHeight;
+                } else if (content.scrollTop > 0) {
+                    // Si hay scroll disponible, permitir scroll normal
+                    isScrollDragging = false;
+                }
+            }, { passive: false });
+
+            content.addEventListener('touchend', () => {
+                if (isScrollDragging) {
+                    isScrollDragging = false;
+                    endDrag();
+                }
+            });
+        });
+
+        /* === EVENTOS DE DRAG === */
+        handler.addEventListener('mousedown', startDrag);
+        handler.addEventListener('touchstart', startDrag, { passive: true });
+
+        document.addEventListener('mousemove', moveDrag);
+        document.addEventListener('touchmove', moveDrag, { passive: true });
+
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        /* === REVIVIR CONTENIDO DINÁMICO === */
+        function reviveContent() {
+            window.dispatchEvent(new Event('resize'));
+            if (typeof jQuery !== 'undefined') jQuery(window).trigger('resize');
+        }
+
+        /* === TRIGGER: ABRIR CON ID CSS === */
+        document.addEventListener('click', (e) => {
+            const trigger = e.target.closest('#open-comments-persiana');
+            if (trigger) {
+                e.preventDefault();
+                openPersiana();
             }
         });
-    });
 
-    /* === EVENTOS DE DRAG === */
-    handler.addEventListener('mousedown', startDrag);
-    handler.addEventListener('touchstart', startDrag, { passive: true });
-    
-    document.addEventListener('mousemove', moveDrag);
-    document.addEventListener('touchmove', moveDrag, { passive: true });
-    
-    document.addEventListener('mouseup', endDrag);
-    document.addEventListener('touchend', endDrag);
+        /* === API GLOBAL === */
+        window.openCommentsPersiana = openPersiana;
+        window.closeCommentsPersiana = closePersiana;
 
-    /* === REVIVIR CONTENIDO DINÁMICO === */
-    function reviveContent() {
-        window.dispatchEvent(new Event('resize'));
-        if (typeof jQuery !== 'undefined') jQuery(window).trigger('resize');
-    }
-
-    /* === TRIGGER: ABRIR CON ID CSS === */
-    document.addEventListener('click', (e) => {
-        const trigger = e.target.closest('#open-comments-persiana');
-        if (trigger) {
-            e.preventDefault();
-            openPersiana();
-        }
-    });
-
-    /* === API GLOBAL === */
-    window.openCommentsPersiana = openPersiana;
-    window.closeCommentsPersiana = closePersiana;
-
-})();
+    })();
 </script>
 
 <!-- 
