@@ -34,11 +34,17 @@
     width: 100%;
     height: 100%;
     background: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   /* FEED DE VIDEO */
   .video-feed {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     height: 100%;
     overflow: hidden;
     /* Scroll controlado por JS */
@@ -55,14 +61,20 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
     /* Animación Suave */
+    background: #000;
   }
 
   .video-item video {
-    max-height: 100%;
-    max-width: 100%;
+    max-height: 90%;
+    max-width: 90%;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    border-radius: 8px;
   }
 
   /* PANEL LATERAL */
@@ -219,9 +231,25 @@
       }
     };
 
-    // INIT
-    renderVideos();
-    feed.addEventListener('wheel', handleScroll);
+    // INIT - Esperar a que el contenedor tenga dimensiones
+    function init() {
+      if (feed && feed.offsetHeight > 0) {
+        renderVideos();
+        feed.addEventListener('wheel', handleScroll);
+        console.log('✅ Para Ti inicializado con altura:', feed.offsetHeight);
+      } else {
+        // Reintentar hasta que el contenedor tenga altura
+        setTimeout(init, 100);
+      }
+    }
+
+    // Intentar inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      // Pequeño delay para asegurar que Elementor haya terminado
+      setTimeout(init, 50);
+    }
 
   })();
 </script>

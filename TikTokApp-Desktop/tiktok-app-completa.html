@@ -82,9 +82,10 @@
       "sidebar header"
       "sidebar content";
     grid-template-columns: var(--tk-sidebar-w) 1fr;
-    grid-template-rows: var(--tk-header-h) 1fr;
+    grid-template-rows: var(--tk-header-h) minmax(0, 1fr);
     width: 100%;
     height: 100%;
+    min-height: 0;
     background: var(--tk-bg);
     overflow: hidden;
   }
@@ -162,6 +163,8 @@
     overflow: hidden;
     /* El scroll lo maneja el hijo */
     background: #000;
+    min-height: 0;
+    height: 100%;
   }
 
   .content-section {
@@ -170,6 +173,62 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  /* Fix para plantillas Elementor dentro de content-section */
+  .content-section .elementor,
+  .content-section .elementor-section-wrap,
+  .content-section .elementor-section,
+  .content-section .elementor-container,
+  .content-section .elementor-row,
+  .content-section .elementor-column,
+  .content-section .elementor-column-wrap,
+  .content-section .elementor-widget-wrap,
+  .content-section .elementor-widget,
+  .content-section .elementor-widget-container,
+  .content-section .elementor-element {
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    position: relative !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .content-section .elementor-inner {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+
+  .content-section .elementor-section-height-full,
+  .content-section .elementor-section-height-min-height {
+    min-height: 0 !important;
+    height: 100% !important;
+  }
+
+  /* Asegurar que el contenedor del widget HTML ocupe todo */
+  .content-section .elementor-widget-html,
+  .content-section .elementor-widget-html .elementor-widget-container {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+
+  /* El div hijo directo del widget container debe ocupar todo */
+  .content-section .elementor-widget-container>div {
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    position: relative !important;
   }
 
   /* CONTROLES VENTANA */

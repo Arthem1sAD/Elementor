@@ -16,209 +16,325 @@
 -->
 
 <style>
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🔧 FIX VENTANA FLOTANTE + TIKTOK APP
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* PASO 1: El .window-content debe ser flex parent correcto */
-.app-window[data-app="tiktok"] .window-content,
-#tiktok-window .window-content,
-.app-window #tiktokAppContainer + .window-content {
-  flex: 1 1 0 !important;
-  min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-  background: #000 !important;
-  position: relative !important;
-  width: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* PASO 2: El contenedor TikTok debe usar flex y ocupar todo el espacio */
-.app-window[data-app="tiktok"] .window-content .tiktok-app-container,
-.app-window #tiktokAppContainer,
-#tiktokAppContainer {
-  flex: 1 1 0 !important;
-  min-height: 0 !important;
-  width: 100% !important;
-  display: grid !important;
-  overflow: hidden !important;
-}
-
-/* PASO 3: Corregir el grid de TikTok para que funcione con el flex parent */
-.app-window[data-app="tiktok"] .tiktok-app-container {
-  display: grid;
-  grid-template-rows: var(--tiktok-header-height, 40px) minmax(0, 1fr);
-  grid-template-columns: var(--tiktok-sidebar-width, 240px) 1fr;
-  grid-template-areas:
-    "header header"
-    "sidebar content";
-  width: 100%;
-  background: #000;
-  overflow: hidden;
-}
-
-/* PASO 4: Asegurar que header y sidebar no colapsen */
-.app-window[data-app="tiktok"] .tiktok-header,
-#tiktokAppContainer .tiktok-header {
-  grid-area: header;
-  height: var(--tiktok-header-height, 40px);
-  min-height: var(--tiktok-header-height, 40px);
-  max-height: var(--tiktok-header-height, 40px);
-  flex-shrink: 0;
-  overflow: hidden;
-  z-index: 100;
-}
-
-.app-window[data-app="tiktok"] .tiktok-sidebar,
-#tiktokAppContainer .tiktok-sidebar {
-  grid-area: sidebar;
-  min-height: 0;
-  max-height: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.app-window[data-app="tiktok"] .tiktok-content,
-#tiktokAppContainer .tiktok-content {
-  grid-area: content;
-  min-height: 0;
-  max-height: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* PASO 5: Fix para elementos scrolleables dentro del grid */
-.app-window[data-app="tiktok"] .sidebar-nav {
-  min-height: 0;
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.app-window[data-app="tiktok"] .content-sections {
-  min-height: 0;
-  height: 100%;
-  position: relative;
-}
-
-.app-window[data-app="tiktok"] .content-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* PASO 6: Fix para las secciones internas (Para Ti, Explorar, Siguiendo) */
-.app-window[data-app="tiktok"] .parati-container,
-.app-window[data-app="tiktok"] .explorar-container,
-.app-window[data-app="tiktok"] .siguiendo-container {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-/* PASO 7: Corregir Elementor dentro de TikTok App */
-.app-window[data-app="tiktok"] .window-content > .elementor,
-.app-window[data-app="tiktok"] .window-content .elementor {
-  height: 100% !important;
-  width: 100% !important;
-}
-
-.app-window[data-app="tiktok"] .window-content .elementor-section-wrap,
-.app-window[data-app="tiktok"] .window-content .elementor-inner,
-.app-window[data-app="tiktok"] .window-content .elementor-container,
-.app-window[data-app="tiktok"] .window-content .elementor-column-wrap,
-.app-window[data-app="tiktok"] .window-content .elementor-widget-wrap {
-  height: 100% !important;
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important;
-}
-
-.app-window[data-app="tiktok"] .window-content .elementor-section.elementor-section-height-full,
-.app-window[data-app="tiktok"] .window-content .elementor-section.elementor-section-height-min-height {
-  height: 100% !important;
-  min-height: 0 !important;
-  flex: 1 !important;
-}
-
-.app-window[data-app="tiktok"] .window-content .elementor-widget-html {
-  height: 100% !important;
-  flex: 1 !important;
-}
-
-.app-window[data-app="tiktok"] .window-content .elementor-widget-container {
-  height: 100% !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* PASO 8: Fix para animaciones de maximize y snap */
-.app-window[data-app="tiktok"].animating-maximize .tiktok-app-container,
-.app-window[data-app="tiktok"].animating-snap .tiktok-app-container {
-  transition: none;
-}
-
-/* PASO 9: Responsive - Sidebar colapsado */
-@media (max-width: 1200px) {
-  .app-window[data-app="tiktok"] .tiktok-app-container {
-    grid-template-columns: var(--tiktok-sidebar-collapsed, 72px) 1fr;
+  /* PASO 1: El .window-content debe ser flex parent correcto */
+  .app-window[data-app="tiktok"] .window-content,
+  #tiktok-window .window-content,
+  .app-window #tiktokAppContainer+.window-content {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    position: relative !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-}
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* PASO 2: El contenedor TikTok debe usar flex y ocupar todo el espacio */
+  .app-window[data-app="tiktok"] .window-content .tiktok-app-container,
+  .app-window #tiktokAppContainer,
+  #tiktokAppContainer {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    display: grid !important;
+    overflow: hidden !important;
+  }
+
+  /* PASO 3: Corregir el grid de TikTok para que funcione con el flex parent */
+  .app-window[data-app="tiktok"] .tiktok-app-container {
+    display: grid;
+    grid-template-rows: var(--tiktok-header-height, 40px) minmax(0, 1fr);
+    grid-template-columns: var(--tiktok-sidebar-width, 240px) 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar content";
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  /* PASO 4: Asegurar que header y sidebar no colapsen */
+  .app-window[data-app="tiktok"] .tiktok-header,
+  #tiktokAppContainer .tiktok-header {
+    grid-area: header;
+    height: var(--tiktok-header-height, 40px);
+    min-height: var(--tiktok-header-height, 40px);
+    max-height: var(--tiktok-header-height, 40px);
+    flex-shrink: 0;
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  .app-window[data-app="tiktok"] .tiktok-sidebar,
+  #tiktokAppContainer .tiktok-sidebar {
+    grid-area: sidebar;
+    min-height: 0;
+    max-height: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-window[data-app="tiktok"] .tiktok-content,
+  #tiktokAppContainer .tiktok-content,
+  #tiktok-window .tiktok-content {
+    grid-area: content;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* PASO 5: Fix para elementos scrolleables dentro del grid */
+  .app-window[data-app="tiktok"] .sidebar-nav {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .app-window[data-app="tiktok"] .content-sections {
+    min-height: 0;
+    height: 100%;
+    position: relative;
+  }
+
+  .app-window[data-app="tiktok"] .content-section,
+  #tiktok-window .content-section,
+  [id^="section-"] {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* PASO 6: Fix para las secciones internas (Para Ti, Explorar, Siguiendo) */
+  .app-window[data-app="tiktok"] .parati-container,
+  .app-window[data-app="tiktok"] .explorar-container,
+  .app-window[data-app="tiktok"] .siguiendo-container,
+  .app-window[data-app="tiktok"] .parati-layout,
+  #tiktok-window .parati-layout,
+  .tiktok-content .parati-layout,
+  .content-section .parati-layout,
+  .parati-layout {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+    background: #000 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+
+  /* Fix video feed to fill available space */
+  .app-window[data-app="tiktok"] .video-feed,
+  #tiktok-window .video-feed,
+  .tiktok-content .video-feed,
+  .content-section .video-feed,
+  .parati-layout .video-feed {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    position: relative !important;
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+
+  /* Fix video items */
+  .app-window[data-app="tiktok"] .video-item,
+  #tiktok-window .video-item,
+  .tiktok-content .video-item,
+  .video-feed .video-item {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Fix videos */
+  .app-window[data-app="tiktok"] .video-item video,
+  #tiktok-window .video-item video,
+  .tiktok-content .video-item video,
+  .video-feed .video-item video {
+    max-height: 90% !important;
+    max-width: 90% !important;
+    object-fit: contain !important;
+  }
+
+  /* Fix side panel */
+  .app-window[data-app="tiktok"] .side-panel,
+  #tiktok-window .side-panel,
+  .tiktok-content .side-panel,
+  .content-section .side-panel,
+  .parati-layout .side-panel {
+    width: 350px !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #121212 !important;
+  }
+
+  /* PASO 6B: Fix para contenedor padre del parati-layout */
+  .tiktok-content>div,
+  .content-section>div,
+  #section-parati>div {
+    height: 100% !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  /* PASO 7: Corregir Elementor dentro de TikTok App */
+  .app-window[data-app="tiktok"] .window-content>.elementor,
+  .app-window[data-app="tiktok"] .window-content .elementor,
+  #tiktok-window .window-content>.elementor,
+  #tiktok-window .window-content .elementor,
+  #tiktok-window .elementor {
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+  }
+
+  .app-window[data-app="tiktok"] .window-content .elementor-section-wrap,
+  .app-window[data-app="tiktok"] .window-content .elementor-inner,
+  .app-window[data-app="tiktok"] .window-content .elementor-container,
+  .app-window[data-app="tiktok"] .window-content .elementor-column-wrap,
+  .app-window[data-app="tiktok"] .window-content .elementor-widget-wrap,
+  #tiktok-window .elementor-section-wrap,
+  #tiktok-window .elementor-inner,
+  #tiktok-window .elementor-container,
+  #tiktok-window .elementor-column-wrap,
+  #tiktok-window .elementor-widget-wrap,
+  .tiktok-content .elementor-section-wrap,
+  .tiktok-content .elementor-inner,
+  .tiktok-content .elementor-container,
+  .tiktok-content .elementor-column-wrap,
+  .tiktok-content .elementor-widget-wrap {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+  }
+
+  .app-window[data-app="tiktok"] .window-content .elementor-section.elementor-section-height-full,
+  .app-window[data-app="tiktok"] .window-content .elementor-section.elementor-section-height-min-height,
+  #tiktok-window .elementor-section.elementor-section-height-full,
+  #tiktok-window .elementor-section.elementor-section-height-min-height,
+  .tiktok-content .elementor-section {
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 !important;
+  }
+
+  .app-window[data-app="tiktok"] .window-content .elementor-widget-html,
+  #tiktok-window .elementor-widget-html,
+  .tiktok-content .elementor-widget-html {
+    height: 100% !important;
+    width: 100% !important;
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+  }
+
+  .app-window[data-app="tiktok"] .window-content .elementor-widget-container,
+  #tiktok-window .elementor-widget-container,
+  .tiktok-content .elementor-widget-container {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+
+  /* Forzar que el contenido HTML ocupe todo */
+  .tiktok-content .elementor-widget-container>div,
+  #tiktok-window .elementor-widget-container>div {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* PASO 8: Fix para animaciones de maximize y snap */
+  .app-window[data-app="tiktok"].animating-maximize .tiktok-app-container,
+  .app-window[data-app="tiktok"].animating-snap .tiktok-app-container {
+    transition: none;
+  }
+
+  /* PASO 9: Responsive - Sidebar colapsado */
+  @media (max-width: 1200px) {
+    .app-window[data-app="tiktok"] .tiktok-app-container {
+      grid-template-columns: var(--tiktok-sidebar-collapsed, 72px) 1fr;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎯 ÁREA DE ARRASTRE (DRAG) PARA TIKTOK
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* El header de TikTok es el área de drag principal */
-.app-window[data-app="tiktok"] .window-drag-area {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--tiktok-header-height, 40px);
-  z-index: 1;
-  cursor: move;
-}
+  /* El header de TikTok es el área de drag principal */
+  .app-window[data-app="tiktok"] .window-drag-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--tiktok-header-height, 40px);
+    z-index: 1;
+    cursor: move;
+  }
 
-/* Los controles de ventana deben estar sobre el drag area */
-.app-window[data-app="tiktok"] .tiktok-header .header-content,
-.app-window[data-app="tiktok"] .tiktok-header .window-controls {
-  position: relative;
-  z-index: 10;
-}
+  /* Los controles de ventana deben estar sobre el drag area */
+  .app-window[data-app="tiktok"] .tiktok-header .header-content,
+  .app-window[data-app="tiktok"] .tiktok-header .window-controls {
+    position: relative;
+    z-index: 10;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎨 AJUSTES VISUALES ESPECÍFICOS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* Cuando está maximizada, quitar bordes redondeados */
-.app-window[data-app="tiktok"].maximized {
-  border-radius: 0;
-}
+  /* Cuando está maximizada, quitar bordes redondeados */
+  .app-window[data-app="tiktok"].maximized {
+    border-radius: 0;
+  }
 
-.app-window[data-app="tiktok"].maximized .tiktok-sidebar {
-  border-radius: 0;
-}
+  .app-window[data-app="tiktok"].maximized .tiktok-sidebar {
+    border-radius: 0;
+  }
 
-/* Cuando está en snap, ajustar */
-.app-window[data-app="tiktok"].snapped-left,
-.app-window[data-app="tiktok"].snapped-right {
-  border-radius: 0;
-}
+  /* Cuando está en snap, ajustar */
+  .app-window[data-app="tiktok"].snapped-left,
+  .app-window[data-app="tiktok"].snapped-right {
+    border-radius: 0;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🔧 DEBUG (descomentar para ver las áreas)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/*
+  /*
 .app-window[data-app="tiktok"] .window-content {
   outline: 3px solid red !important;
 }
@@ -242,210 +358,210 @@
 </style>
 
 <script>
-(function() {
-  'use strict';
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔧 CONFIGURACIÓN DE LA VENTANA TIKTOK
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const TIKTOK_WINDOW_CONFIG = {
-    // Identificadores
-    windowId: 'tiktok-window',
-    appName: 'tiktok',
-    
-    // Dimensiones por defecto
-    defaultWidth: 1400,
-    defaultHeight: 800,
-    minWidth: 800,
-    minHeight: 500,
-    
-    // Posición inicial (centrada)
-    initialPosition: 'center',
-    
-    // Icono para la taskbar
-    taskbarIcon: 'URL_ICONO_TIKTOK', // Cambia esto por tu icono
-    taskbarLabel: 'TikTok',
-    
-    // Plantilla Elementor que contiene tiktok-app-completa.html
-    contentTemplateId: 'ID_PLANTILLA_TIKTOK_APP'
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🪟 REGISTRAR VENTANA TIKTOK EN EL SISTEMA
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  // Esperar a que el sistema de ventanas esté disponible
-  function initTikTokWindow() {
-    // Verificar si el sistema de ventanas está disponible
-    if (typeof window.WindowManager !== 'undefined') {
-      registerTikTokApp();
-    } else {
-      // Si aún no está listo, intentar de nuevo
-      setTimeout(initTikTokWindow, 100);
+  (function () {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔧 CONFIGURACIÓN DE LA VENTANA TIKTOK
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const TIKTOK_WINDOW_CONFIG = {
+      // Identificadores
+      windowId: 'tiktok-window',
+      appName: 'tiktok',
+
+      // Dimensiones por defecto
+      defaultWidth: 1400,
+      defaultHeight: 800,
+      minWidth: 800,
+      minHeight: 500,
+
+      // Posición inicial (centrada)
+      initialPosition: 'center',
+
+      // Icono para la taskbar
+      taskbarIcon: 'URL_ICONO_TIKTOK', // Cambia esto por tu icono
+      taskbarLabel: 'TikTok',
+
+      // Plantilla Elementor que contiene tiktok-app-completa.html
+      contentTemplateId: 'ID_PLANTILLA_TIKTOK_APP'
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🪟 REGISTRAR VENTANA TIKTOK EN EL SISTEMA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    // Esperar a que el sistema de ventanas esté disponible
+    function initTikTokWindow() {
+      // Verificar si el sistema de ventanas está disponible
+      if (typeof window.WindowManager !== 'undefined') {
+        registerTikTokApp();
+      } else {
+        // Si aún no está listo, intentar de nuevo
+        setTimeout(initTikTokWindow, 100);
+      }
     }
-  }
-  
-  function registerTikTokApp() {
-    // Registrar la app en el sistema de ventanas
-    if (window.WindowManager && window.WindowManager.registerApp) {
-      window.WindowManager.registerApp({
-        id: TIKTOK_WINDOW_CONFIG.appName,
-        windowId: TIKTOK_WINDOW_CONFIG.windowId,
-        icon: TIKTOK_WINDOW_CONFIG.taskbarIcon,
-        label: TIKTOK_WINDOW_CONFIG.taskbarLabel,
-        defaultSize: {
-          width: TIKTOK_WINDOW_CONFIG.defaultWidth,
-          height: TIKTOK_WINDOW_CONFIG.defaultHeight
-        },
-        minSize: {
-          width: TIKTOK_WINDOW_CONFIG.minWidth,
-          height: TIKTOK_WINDOW_CONFIG.minHeight
-        }
-      });
-    }
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔌 CONEXIÓN CON CONTROLES DE VENTANA
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  // Observar cuando se crea la ventana TikTok
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === 1 && node.classList && node.classList.contains('app-window')) {
-          if (node.dataset.app === 'tiktok' || node.id === TIKTOK_WINDOW_CONFIG.windowId) {
-            setupTikTokWindowControls(node);
+
+    function registerTikTokApp() {
+      // Registrar la app en el sistema de ventanas
+      if (window.WindowManager && window.WindowManager.registerApp) {
+        window.WindowManager.registerApp({
+          id: TIKTOK_WINDOW_CONFIG.appName,
+          windowId: TIKTOK_WINDOW_CONFIG.windowId,
+          icon: TIKTOK_WINDOW_CONFIG.taskbarIcon,
+          label: TIKTOK_WINDOW_CONFIG.taskbarLabel,
+          defaultSize: {
+            width: TIKTOK_WINDOW_CONFIG.defaultWidth,
+            height: TIKTOK_WINDOW_CONFIG.defaultHeight
+          },
+          minSize: {
+            width: TIKTOK_WINDOW_CONFIG.minWidth,
+            height: TIKTOK_WINDOW_CONFIG.minHeight
           }
-        }
+        });
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔌 CONEXIÓN CON CONTROLES DE VENTANA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    // Observar cuando se crea la ventana TikTok
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.classList && node.classList.contains('app-window')) {
+            if (node.dataset.app === 'tiktok' || node.id === TIKTOK_WINDOW_CONFIG.windowId) {
+              setupTikTokWindowControls(node);
+            }
+          }
+        });
       });
     });
-  });
-  
-  // Observar el body para detectar nuevas ventanas
-  observer.observe(document.body, { childList: true, subtree: true });
-  
-  // Configurar controles cuando se detecta la ventana
-  function setupTikTokWindowControls(windowElement) {
-    // Buscar los botones de control dentro de tiktok-app-completa
-    const minimizeBtn = windowElement.querySelector('#tiktokMinimizeBtn');
-    const maximizeBtn = windowElement.querySelector('#tiktokMaximizeBtn');
-    const closeBtn = windowElement.querySelector('#tiktokCloseBtn');
-    
-    if (minimizeBtn) {
-      minimizeBtn.addEventListener('click', () => {
-        if (window.minimizeWindow) {
-          window.minimizeWindow(windowElement.id);
-        }
-      });
-    }
-    
-    if (maximizeBtn) {
-      maximizeBtn.addEventListener('click', () => {
-        if (window.toggleMaximize) {
-          window.toggleMaximize(windowElement.id);
-        }
-      });
-    }
-    
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        if (window.closeWindow) {
-          window.closeWindow(windowElement.id);
-        }
-      });
-    }
-    
-    // Marcar la ventana con el atributo data-app para los estilos
-    if (!windowElement.dataset.app) {
-      windowElement.dataset.app = 'tiktok';
-    }
-    
-    console.log('✅ Controles de ventana TikTok configurados');
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🌐 API GLOBAL PARA ABRIR TIKTOK
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  window.openTikTokApp = function() {
-    if (window.openWindow) {
-      window.openWindow(TIKTOK_WINDOW_CONFIG.windowId);
-    } else {
-      console.warn('Sistema de ventanas no disponible');
-    }
-  };
-  
-  // Escuchar eventos personalizados
-  window.addEventListener('open-tiktok-app', window.openTikTokApp);
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🪟 HELPERS GLOBALES PARA CONTROLES (MIN/MAX/CLOSE)
-  // ═══════════════════════════════════════════════════════════════════════════════
+    // Observar el body para detectar nuevas ventanas
+    observer.observe(document.body, { childList: true, subtree: true });
 
-  function resolveWindowElement(id) {
-    return document.getElementById(id) || document.querySelector(`.app-window[data-app="${TIKTOK_WINDOW_CONFIG.appName}"]`);
-  }
+    // Configurar controles cuando se detecta la ventana
+    function setupTikTokWindowControls(windowElement) {
+      // Buscar los botones de control dentro de tiktok-app-completa
+      const minimizeBtn = windowElement.querySelector('#tiktokMinimizeBtn');
+      const maximizeBtn = windowElement.querySelector('#tiktokMaximizeBtn');
+      const closeBtn = windowElement.querySelector('#tiktokCloseBtn');
 
-  if (typeof window.minimizeWindow !== 'function') {
-    window.minimizeWindow = function(id) {
-      const win = resolveWindowElement(id);
-      if (win && typeof win.minimizeWindow === 'function') {
-        return win.minimizeWindow();
+      if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', () => {
+          if (window.minimizeWindow) {
+            window.minimizeWindow(windowElement.id);
+          }
+        });
       }
-      if (window.WindowManager && typeof window.WindowManager.minimize === 'function') {
-        window.WindowManager.minimize(id);
+
+      if (maximizeBtn) {
+        maximizeBtn.addEventListener('click', () => {
+          if (window.toggleMaximize) {
+            window.toggleMaximize(windowElement.id);
+          }
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          if (window.closeWindow) {
+            window.closeWindow(windowElement.id);
+          }
+        });
+      }
+
+      // Marcar la ventana con el atributo data-app para los estilos
+      if (!windowElement.dataset.app) {
+        windowElement.dataset.app = 'tiktok';
+      }
+
+      console.log('✅ Controles de ventana TikTok configurados');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🌐 API GLOBAL PARA ABRIR TIKTOK
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    window.openTikTokApp = function () {
+      if (window.openWindow) {
+        window.openWindow(TIKTOK_WINDOW_CONFIG.windowId);
+      } else {
+        console.warn('Sistema de ventanas no disponible');
       }
     };
-  }
 
-  if (typeof window.toggleMaximize !== 'function') {
-    window.toggleMaximize = function(id) {
-      const win = resolveWindowElement(id);
-      if (win && typeof win.maximizeWindow === 'function') {
-        // Alternar según estado
-        if (win.classList.contains('maximized')) {
-          return win.restoreWindow ? win.restoreWindow() : win.maximizeWindow();
-        }
-        return win.maximizeWindow();
-      }
-      if (window.WindowManager && typeof window.WindowManager.toggleMaximize === 'function') {
-        window.WindowManager.toggleMaximize(id);
-      }
-    };
-  }
+    // Escuchar eventos personalizados
+    window.addEventListener('open-tiktok-app', window.openTikTokApp);
 
-  if (typeof window.closeWindow !== 'function') {
-    window.closeWindow = function(id) {
-      const win = resolveWindowElement(id);
-      if (win && typeof win.closeWindow === 'function') {
-        return win.closeWindow();
-      }
-      if (window.WindowManager && typeof window.WindowManager.close === 'function') {
-        window.WindowManager.close(id);
-      }
-    };
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🚀 INICIALIZACIÓN
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  // Buscar ventana existente al cargar
-  document.addEventListener('DOMContentLoaded', () => {
-    initTikTokWindow();
-    
-    // Buscar si la ventana ya existe
-    const existingWindow = document.querySelector('.app-window[data-app="tiktok"], #' + TIKTOK_WINDOW_CONFIG.windowId);
-    if (existingWindow) {
-      setupTikTokWindowControls(existingWindow);
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🪟 HELPERS GLOBALES PARA CONTROLES (MIN/MAX/CLOSE)
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function resolveWindowElement(id) {
+      return document.getElementById(id) || document.querySelector(`.app-window[data-app="${TIKTOK_WINDOW_CONFIG.appName}"]`);
     }
-  });
-  
-  console.log('✅ Integración TikTok + Ventana Flotante cargada');
-  
-})();
+
+    if (typeof window.minimizeWindow !== 'function') {
+      window.minimizeWindow = function (id) {
+        const win = resolveWindowElement(id);
+        if (win && typeof win.minimizeWindow === 'function') {
+          return win.minimizeWindow();
+        }
+        if (window.WindowManager && typeof window.WindowManager.minimize === 'function') {
+          window.WindowManager.minimize(id);
+        }
+      };
+    }
+
+    if (typeof window.toggleMaximize !== 'function') {
+      window.toggleMaximize = function (id) {
+        const win = resolveWindowElement(id);
+        if (win && typeof win.maximizeWindow === 'function') {
+          // Alternar según estado
+          if (win.classList.contains('maximized')) {
+            return win.restoreWindow ? win.restoreWindow() : win.maximizeWindow();
+          }
+          return win.maximizeWindow();
+        }
+        if (window.WindowManager && typeof window.WindowManager.toggleMaximize === 'function') {
+          window.WindowManager.toggleMaximize(id);
+        }
+      };
+    }
+
+    if (typeof window.closeWindow !== 'function') {
+      window.closeWindow = function (id) {
+        const win = resolveWindowElement(id);
+        if (win && typeof win.closeWindow === 'function') {
+          return win.closeWindow();
+        }
+        if (window.WindowManager && typeof window.WindowManager.close === 'function') {
+          window.WindowManager.close(id);
+        }
+      };
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🚀 INICIALIZACIÓN
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    // Buscar ventana existente al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      initTikTokWindow();
+
+      // Buscar si la ventana ya existe
+      const existingWindow = document.querySelector('.app-window[data-app="tiktok"], #' + TIKTOK_WINDOW_CONFIG.windowId);
+      if (existingWindow) {
+        setupTikTokWindowControls(existingWindow);
+      }
+    });
+
+    console.log('✅ Integración TikTok + Ventana Flotante cargada');
+
+  })();
 </script>
 
 <!-- 
