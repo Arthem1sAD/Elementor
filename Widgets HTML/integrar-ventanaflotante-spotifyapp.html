@@ -1,0 +1,222 @@
+<style>
+/* ============================================
+   INTEGRACIÓN VENTANA FLOTANTE + SPOTIFY APP
+   ============================================
+   
+   Este CSS corrige el conflicto entre:
+   - Sistema de ventanas flotantes (flexbox)
+   - Layout Spotify (CSS Grid)
+   
+   Para que el footer se ancle correctamente.
+*/
+
+/* ===== PASO 1: FIX VENTANA FLOTANTE ===== */
+
+/* El .window-content DEBE ser flex parent sin altura fija */
+.app-window .window-content {
+  /* CAMBIAR de esto: */
+  /* flex: 1 1 auto; */
+  /* height: 100%; */
+  
+  /* A ESTO: */
+  flex: 1 1 0 !important; /* El 0 es crucial */
+  min-height: 0 !important;
+  
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: white !important;
+  position: relative !important;
+  width: 100% !important;
+  
+  /* NO usar height: 100% aquí */
+}
+
+/* ===== PASO 2: FIX SPOTIFY CONTAINER ===== */
+
+/* El spotify-app-container DEBE usar flex: 1, NO height: 100% */
+.app-window .window-content .spotify-app-container {
+  /* REMOVER height: 100% */
+  /* CAMBIAR de: */
+  /* flex: 1; */
+  /* height: 100%; */
+  
+  /* A ESTO: */
+  flex: 1 1 0 !important; /* Ocupar todo el espacio disponible */
+  min-height: 0 !important; /* Crucial para que grid funcione con flex parent */
+  width: 100% !important;
+  
+  display: grid !important;
+  overflow: hidden !important;
+  
+  /* NO usar height: 100% */
+}
+
+/* El grid debe usar minmax para evitar colapso */
+.spotify-app-container {
+  display: grid;
+  
+  /* CAMBIAR de: */
+  /* grid-template-rows: var(--spotify-header-height) 1fr var(--spotify-footer-height); */
+  
+  /* A ESTO: */
+  grid-template-rows: 
+    var(--spotify-header-height) 
+    minmax(0, 1fr) 
+    var(--spotify-footer-height);
+  
+  grid-template-columns: var(--spotify-sidebar-width) 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+  
+  /* REMOVER height: 100%; */
+  width: 100%;
+  background: var(--spotify-bg-primary);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* ===== PASO 3: ASEGURAR QUE HEADER/FOOTER NO COLAPSEN ===== */
+
+.spotify-header {
+  grid-area: header;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+  z-index: 100;
+  position: relative;
+  
+  /* Altura FIJA - no debe cambiar */
+  height: var(--spotify-header-height);
+  min-height: var(--spotify-header-height);
+  max-height: var(--spotify-header-height);
+  
+  flex-shrink: 0; /* Por seguridad */
+  overflow: hidden;
+}
+
+.spotify-footer {
+  grid-area: footer;
+  background: var(--spotify-bg-secondary);
+  border-top: 1px solid var(--spotify-border-color);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  
+  /* Altura FIJA - no debe cambiar */
+  height: var(--spotify-footer-height);
+  min-height: var(--spotify-footer-height);
+  max-height: var(--spotify-footer-height);
+  
+  flex-shrink: 0; /* Por seguridad */
+  overflow: hidden; /* CRUCIAL para evitar desbordamiento */
+}
+
+/* ===== PASO 4: SIDEBAR Y CONTENT CON SCROLL ===== */
+
+.spotify-sidebar {
+  grid-area: sidebar;
+  background: var(--spotify-bg-secondary);
+  border-radius: var(--spotify-radius-lg);
+  margin: 8px 0 8px 8px;
+  
+  display: flex;
+  flex-direction: column;
+  
+  /* CRUCIAL para scroll en grid cell */
+  min-height: 0;
+  max-height: 100%;
+  height: 100%; /* Ocupar toda la celda de grid */
+  overflow: hidden;
+}
+
+.spotify-content {
+  grid-area: content;
+  background: var(--spotify-bg-secondary);
+  border-radius: var(--spotify-radius-lg);
+  margin: 8px 8px 8px 8px;
+  
+  /* CRUCIAL para scroll en grid cell */
+  min-height: 0;
+  max-height: 100%;
+  height: 100%; /* Ocupar toda la celda de grid */
+  
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ===== PASO 5: FIX RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+  .spotify-app-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 
+      var(--spotify-header-height) 
+      minmax(200px, 35vh) 
+      minmax(0, 1fr) 
+      var(--spotify-footer-height);
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "content"
+      "footer";
+  }
+  
+  .spotify-sidebar {
+    margin: 0 8px;
+    max-height: 35vh;
+    min-height: 200px;
+  }
+  
+  .spotify-content {
+    margin: 8px;
+  }
+}
+
+/* ===== PASO 6: FIX PARA RESIZE DE VENTANA ===== */
+
+/* Cuando la ventana cambia de tamaño, el grid se adapta automáticamente */
+.app-window.animating-maximize .spotify-app-container,
+.app-window.animating-snap .spotify-app-container {
+  transition: none; /* Evitar transiciones conflictivas */
+}
+
+/* ===== PASO 7: DEBUG (comentar después de verificar) ===== */
+
+/*
+.app-window .window-content {
+  outline: 3px solid red !important;
+}
+
+.spotify-app-container {
+  outline: 3px solid blue !important;
+}
+
+.spotify-header {
+  outline: 2px solid green !important;
+}
+
+.spotify-sidebar {
+  outline: 2px solid yellow !important;
+}
+
+.spotify-content {
+  outline: 2px solid orange !important;
+}
+
+.spotify-footer {
+  outline: 3px solid purple !important;
+}
+*/
+
+/* ===== IMPORTANTE: ORDEN DE APLICACIÓN ===== */
+
+/* Este CSS debe cargarse DESPUÉS de:
+   1. CSS de la ventana flotante
+   2. CSS del layout Spotify
+   
+   Para que los !important funcionen correctamente.
+*/
+
+</style>

@@ -1,0 +1,259 @@
+<script>
+// ===== SISTEMA GLOBAL DE GESTIÓN DE VENTANAS Y TASKBAR =====
+(function() {
+  // Estado global de ventanas
+  const windowStates = {};
+  
+  // Exponer funciones globales para que las ventanas puedan llamarlas
+  window.minimizeWindowGlobal = minimizeWindow;
+  window.removeFromTaskbarGlobal = removeFromTaskbar;
+  window.openWindowFromDesktopGlobal = openWindowFromDesktop;
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    initDesktopIcons();
+    initTaskbar();
+  });
+  
+  // ===== ICONOS DE ESCRITORIO =====
+  function initDesktopIcons() {
+    const icons = document.querySelectorAll('.desktop-icon');
+    
+    icons.forEach(icon => {
+      let lastClick = 0;
+      
+      icon.addEventListener('click', function(e) {
+        const now = new Date().getTime();
+        const timeDiff = now - lastClick;
+        
+        if (timeDiff < 300 && timeDiff > 0) {
+          // DOBLE CLICK - Abrir ventana
+          const windowId = this.getAttribute('data-window');
+          openWindowFromDesktop(windowId);
+          this.classList.remove('selected');
+        } else {
+          // CLICK SIMPLE - Seleccionar icono
+          document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+          this.classList.add('selected');
+        }
+        
+        lastClick = now;
+      });
+    });
+    
+    // Deseleccionar al hacer click en el escritorio
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.desktop-icon') && !e.target.closest('.app-window')) {
+        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+      }
+    });
+  }
+  
+  // ===== ABRIR VENTANA DESDE ESCRITORIO =====
+  function openWindowFromDesktop(windowId) {
+    const windowElement = document.getElementById('window-' + windowId);
+    if (!windowElement) return;
+    
+    // Si la ventana ya existe y está minimizada, restaurarla
+    if (windowStates[windowId] && windowStates[windowId]. minimized) {
+      restoreWindow(windowId);
+      return;
+    }
+    
+    // Si la ventana ya está abierta, traerla al frente
+    if (windowElement.classList.contains('show')) {
+      bringToFront(windowElement);
+      windowElement.style.animation = 'shake 0.3s';
+      setTimeout(() => {
+        windowElement.style.animation = '';
+      }, 300);
+      return;
+    }
+    
+    // Abrir ventana nueva
+    if (windowElement.openWindow) {
+      windowElement.openWindow();
+    }
+    
+    // Guardar estado
+    windowStates[windowId] = {
+      element: windowElement,
+      minimized: false,
+      position:  null
+    };
+    
+    // Agregar a taskbar
+    addToTaskbar(windowId);
+  }
+  
+  // ===== SISTEMA DE TASKBAR =====
+  function initTaskbar() {
+    updateTime();
+    setInterval(updateTime, 60000);
+  }
+  
+  function addToTaskbar(windowId) {
+    const taskbarApps = document.getElementById('taskbar-apps');
+    
+    // Verificar si ya existe
+    if (document.getElementById('taskbar-icon-' + windowId)) {
+      const existingIcon = document.getElementById('taskbar-icon-' + windowId);
+      existingIcon.classList.add('has-window');
+      return;
+    }
+    
+    // Obtener información del icono del escritorio
+    const desktopIcon = document.querySelector(`.desktop-icon[data-window="${windowId}"]`);
+    if (!desktopIcon) return;
+    
+    const iconImg = desktopIcon.querySelector('img').src;
+    const iconName = desktopIcon.querySelector('span').textContent;
+    
+    // Crear icono en taskbar
+    const taskbarIcon = document.createElement('button');
+    taskbarIcon.id = 'taskbar-icon-' + windowId;
+    taskbarIcon.className = 'taskbar-app-icon has-window';
+    taskbarIcon.setAttribute('data-window', windowId);
+    taskbarIcon.title = iconName;
+    
+    const img = document.createElement('img');
+    img.src = iconImg;
+    img.alt = iconName;
+    
+    taskbarIcon.appendChild(img);
+    
+    // Click en taskbar:  restaurar o minimizar
+    taskbarIcon.addEventListener('click', function() {
+      toggleWindowFromTaskbar(windowId);
+    });
+    
+    taskbarApps.appendChild(taskbarIcon);
+  }
+  
+  function removeFromTaskbar(windowId) {
+    const taskbarIcon = document.getElementById('taskbar-icon-' + windowId);
+    if (taskbarIcon) {
+      taskbarIcon.remove();
+    }
+    delete windowStates[windowId];
+  }
+  
+  function toggleWindowFromTaskbar(windowId) {
+    const windowElement = document.getElementById('window-' + windowId);
+    if (!windowElement) return;
+    
+    const state = windowStates[windowId];
+    
+    // Si está minimizada, restaurar
+    if (state && state.minimized) {
+      restoreWindow(windowId);
+    } 
+    // Si está visible, verificar si está al frente
+    else if (windowElement.classList.contains('show')) {
+      const allWindows = document.querySelectorAll('.app-window.show');
+      const topWindow = Array.from(allWindows).reduce((max, w) => {
+        const z = parseInt(window.getComputedStyle(w).zIndex) || 0;
+        const maxZ = parseInt(window.getComputedStyle(max).zIndex) || 0;
+        return z > maxZ ?  w : max;
+      }, allWindows[0]);
+      
+      // Si ya está al frente, minimizar
+      if (topWindow === windowElement) {
+        minimizeWindow(windowId);
+      } else {
+        bringToFront(windowElement);
+      }
+    }
+    // Si está cerrada, abrir
+    else {
+      openWindowFromDesktop(windowId);
+    }
+  }
+  
+  function minimizeWindow(windowId) {
+    const windowElement = document.getElementById('window-' + windowId);
+    if (!windowElement) return;
+    
+    // Guardar posición actual
+    const rect = windowElement.getBoundingClientRect();
+    windowStates[windowId] = {
+      element: windowElement,
+      minimized: true,
+      position: {
+        top: windowElement.style.top,
+        left: windowElement.style.left,
+        width: windowElement.style.width,
+        height: windowElement.style.height,
+        transform: windowElement.style.transform
+      }
+    };
+    
+    // Animación de minimizado
+    windowElement.classList.add('closing');
+    
+    // Animación de rebote en taskbar
+    const taskbarIcon = document.getElementById('taskbar-icon-' + windowId);
+    if (taskbarIcon) {
+      taskbarIcon.classList.add('bouncing');
+      setTimeout(() => {
+        taskbarIcon.classList.remove('bouncing');
+      }, 500);
+    }
+    
+    setTimeout(() => {
+      windowElement.classList.remove('show', 'closing');
+      windowElement.classList.add('minimized');
+    }, 250);
+  }
+  
+  function restoreWindow(windowId) {
+    const state = windowStates[windowId];
+    if (!state) return;
+    
+    const windowElement = state.element;
+    
+    // Restaurar posición guardada
+    if (state.position) {
+      windowElement.style.top = state.position.top;
+      windowElement.style.left = state.position.left;
+      windowElement.style.width = state.position.width;
+      windowElement.style.height = state.position.height;
+      windowElement.style.transform = state.position.transform;
+    }
+    
+    // Mostrar ventana
+    windowElement.style.display = 'flex';
+    windowElement.classList.remove('minimized', 'closing');
+    windowElement.classList.add('opening');
+    
+    setTimeout(() => {
+      windowElement.classList.add('show');
+      windowElement.classList.remove('opening');
+    }, 10);
+    
+    bringToFront(windowElement);
+    
+    // Actualizar estado
+    state.minimized = false;
+  }
+  
+  function bringToFront(windowElement) {
+    const allWindows = document.querySelectorAll('.app-window');
+    let maxZ = 1000;
+    allWindows.forEach(w => {
+      const z = parseInt(window.getComputedStyle(w).zIndex) || 1000;
+      if (z > maxZ) maxZ = z;
+    });
+    windowElement.style.zIndex = maxZ + 1;
+  }
+  
+  function updateTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeElement = document.getElementById('taskbar-time');
+    if (timeElement) {
+      timeElement.textContent = `${hours}:${minutes}`;
+    }
+  }
+})();
+</script>

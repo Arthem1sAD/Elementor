@@ -1,0 +1,138 @@
+<!-- ========================================= -->
+<!-- WIDGET: FORZAR SCROLL EN SIDEBAR Y CONTENIDO PRINCIPAL -->
+<!-- ========================================= -->
+<!-- Coloca este widget HTML en Elementor DESPUÉS del widget spotify-app-completo -->
+<!-- Este CSS forzará scroll en el sidebar menu y el contenido principal -->
+
+<style>
+/* ===== FORZAR SCROLL EN SIDEBAR MENU ===== */
+.spotify-sidebar .sidebar-lists-container {
+  overflow-y: scroll !important;
+  max-height: calc(80vh - 400px) !important; /* Ajusta según tu layout*/
+  min-height: 400px !important;
+}
+
+/* Asegurar que el sidebar tenga contenido suficiente para hacer scroll */
+.sidebar-list {
+  min-height: 600px !important; /* Ajusta según tu contenido */
+}
+
+/* SCROLLBAR PERSONALIZADA PARA SIDEBAR */
+.spotify-sidebar .sidebar-lists-container::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0.2) !important;
+}
+
+.spotify-sidebar .sidebar-lists-container::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,0.2) !important;
+  border-radius: 5px;
+  margin: 4px 0;
+}
+
+.spotify-sidebar .sidebar-lists-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.3) !important;
+  border-radius: 5px;
+  border: 2px solid rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.spotify-sidebar .sidebar-lists-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,0.5) !important;
+}
+
+.spotify-sidebar .sidebar-lists-container::-webkit-scrollbar-thumb:active {
+  background-color: rgba(255,255,255,0.6) !important;
+}
+
+/* ===== FORZAR SCROLL EN CONTENIDO PRINCIPAL ===== */
+.spotify-content {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  height: 100% !important;
+  max-height: calc(35% - 500px) !important;
+}
+
+/* Asegurar que las páginas de contenido tengan altura suficiente */
+
+
+/* Forzar altura en plantillas de Elementor dentro del contenido */
+.content-page .elementor,
+.content-page .elementor-section,
+.content-page .elementor-container,
+.content-page .elementor-widget-wrap {
+
+}
+
+/* SCROLLBAR PERSONALIZADA PARA CONTENIDO PRINCIPAL */
+.spotify-content::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0,0,0,0.2) !important;
+}
+
+.spotify-content::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,0.2) !important;
+  border-radius: 5px;
+  margin: 4px 0;
+}
+
+.spotify-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.3) !important;
+  border-radius: 5px;
+  border: 2px solid rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.spotify-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,0.5) !important;
+}
+
+.spotify-content::-webkit-scrollbar-thumb:active {
+  background-color: rgba(255,255,255,0.6) !important;
+}
+
+.spotify-content::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox scrollbar */
+.spotify-sidebar .sidebar-lists-container,
+.spotify-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) rgba(0,0,0,0.2);
+}
+
+/* ===== AJUSTES ADICIONALES ===== */
+/* Asegurar que el grid no colapse */
+.spotify-app-container {
+  min-height: 600px !important;
+}
+
+/* Hacer visible el scroll desde el principio */
+.spotify-sidebar .sidebar-lists-container,
+.spotify-content {
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
+}
+</style>
+
+<script>
+// Forzar detección de scroll al cargar
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var sidebar = document.querySelector('.sidebar-lists-container');
+    var content = document.querySelector('.spotify-content');
+    
+    if (sidebar) {
+      console.log('[SCROLL] Sidebar scrollHeight:', sidebar.scrollHeight);
+      console.log('[SCROLL] Sidebar clientHeight:', sidebar.clientHeight);
+      sidebar.style.overflowY = 'scroll';
+    }
+    
+    if (content) {
+      console.log('[SCROLL] Content scrollHeight:', content.scrollHeight);
+      console.log('[SCROLL] Content clientHeight:', content.clientHeight);
+      content.style.overflowY = 'scroll';
+    }
+  }, 500);
+});
+</script>

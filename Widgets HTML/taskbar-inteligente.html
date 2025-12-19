@@ -1,0 +1,467 @@
+<!-- Barra de Tareas -->
+<div class="taskbar">
+  <div class="taskbar-start">
+    <button class="start-button">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="8" height="8" fill="currentColor"/>
+        <rect x="10" width="8" height="8" fill="currentColor"/>
+        <rect y="10" width="8" height="8" fill="currentColor"/>
+        <rect x="10" y="10" width="8" height="8" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="taskbar-apps" id="taskbar-apps">
+    <!-- Los iconos de apps abiertas se agregarán dinámicamente aquí -->
+  </div>
+  
+  <div class="taskbar-tray">
+    <span class="taskbar-time" id="taskbar-time">12:00</span>
+  </div>
+</div>
+
+<style>
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(243, 243, 243, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 10000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.taskbar-start {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.start-button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  transition: background 0.2s;
+  border-radius: 4px;
+}
+
+.start-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.taskbar-apps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  padding: 0 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.taskbar-apps::-webkit-scrollbar {
+  display: none;
+}
+
+.taskbar-app-icon {
+  position: relative;
+  width: 44px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  padding: 4px;
+}
+
+.taskbar-app-icon:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.taskbar-app-icon.active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.taskbar-app-icon.minimized {
+  background: transparent;
+}
+
+.taskbar-app-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: transform 0.15s ease;
+}
+
+.taskbar-app-icon:hover img {
+  transform: scale(1.1);
+}
+
+.taskbar-app-icon::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  background: #0078d4;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  width: 0;
+  opacity: 0;
+}
+
+.taskbar-app-icon.active::after {
+  width: 16px;
+  opacity: 1;
+}
+
+.taskbar-app-icon.minimized::after {
+  width: 6px;
+  opacity: 1;
+  background: #666;
+}
+
+@keyframes taskbarBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.2); }
+  50% { transform: scale(0.9); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.taskbar-app-icon.bouncing {
+  animation: taskbarBounce 0.4s ease;
+}
+
+@keyframes taskbarIconEnter {
+  from { opacity: 0; transform: scale(0.5) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.taskbar-app-icon.entering {
+  animation: taskbarIconEnter 0.25s ease forwards;
+}
+
+@keyframes taskbarIconExit {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.5) translateY(10px); }
+}
+
+.taskbar-app-icon.exiting {
+  animation: taskbarIconExit 0.2s ease forwards;
+}
+
+.taskbar-tray {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+.taskbar-time {
+  font-size: 12px;
+  color: #000;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.taskbar-time:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+</style>
+
+<script>
+// ===== TASKBAR - CÓDIGO LIMPIO Y FUNCIONAL =====
+(function() {
+  
+  // Variables globales del módulo
+  var taskbarApps = null;
+  var taskbarItems = {};
+  var DEFAULT_ICON = 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png';
+  var isInitialized = false;
+  
+  // Cola para llamadas antes de inicialización
+  var pendingCalls = [];
+  
+  // ===== FUNCIÓN: Agregar app a taskbar =====
+  function addToTaskbar(windowId, iconUrl, appName) {
+    console.log('[TASKBAR] addToTaskbar:', windowId, iconUrl, appName);
+    
+    if (!taskbarApps) {
+      console.log('[TASKBAR] taskbarApps no existe, encolando...');
+      pendingCalls.push(['add', windowId, iconUrl, appName]);
+      return;
+    }
+    
+    var iconSrc = iconUrl || DEFAULT_ICON;
+    
+    // Si ya existe, solo activar
+    if (taskbarItems[windowId]) {
+      console.log('[TASKBAR] Ya existe, activando');
+      setTaskbarItemActive(windowId, true);
+      return;
+    }
+    
+    // Crear botón
+    var button = document.createElement('button');
+    button.className = 'taskbar-app-icon active entering';
+    button.id = 'taskbar-' + windowId;
+    button.dataset.windowId = windowId;
+    button.title = appName || windowId;
+    
+    var img = document.createElement('img');
+    img.src = iconSrc;
+    img.alt = appName || windowId;
+    img.draggable = false;
+    img.onerror = function() { this.src = DEFAULT_ICON; };
+    
+    button.appendChild(img);
+    taskbarApps.appendChild(button);
+    
+    // Guardar referencia
+    taskbarItems[windowId] = {
+      element: button,
+      isMinimized: false
+    };
+    
+    console.log('[TASKBAR] Icono creado:', windowId);
+    
+    // Quitar clase entering después de animación
+    setTimeout(function() {
+      button.classList.remove('entering');
+    }, 250);
+    
+    // Click handler
+    button.addEventListener('click', function() {
+      toggleWindowFromTaskbar(windowId);
+    });
+  }
+  
+  // ===== FUNCIÓN: Remover app de taskbar =====
+  function removeFromTaskbar(windowId) {
+    console.log('[TASKBAR] removeFromTaskbar:', windowId);
+    
+    var item = taskbarItems[windowId];
+    if (!item) return;
+    
+    item.element.classList.add('exiting');
+    
+    setTimeout(function() {
+      if (item.element.parentNode) {
+        item.element.parentNode.removeChild(item.element);
+      }
+      delete taskbarItems[windowId];
+      console.log('[TASKBAR] Icono removido:', windowId);
+    }, 200);
+  }
+  
+  // ===== FUNCIÓN: Toggle ventana desde taskbar =====
+  function toggleWindowFromTaskbar(windowId) {
+    console.log('[TASKBAR] toggleWindowFromTaskbar:', windowId);
+    
+    var windowElement = document.getElementById(windowId);
+    if (!windowElement) return;
+    
+    var item = taskbarItems[windowId];
+    if (!item) return;
+    
+    // Si está minimizada, restaurar
+    if (item.isMinimized) {
+      if (windowElement.restoreWindow) {
+        windowElement.restoreWindow();
+      } else if (windowElement.openWindow) {
+        windowElement.openWindow();
+      }
+      item.isMinimized = false;
+      item.element.classList.remove('minimized');
+      item.element.classList.add('active');
+    } 
+    // Si está visible, minimizar
+    else if (windowElement.classList.contains('show')) {
+      if (windowElement.minimizeWindow) {
+        windowElement.minimizeWindow();
+      }
+    }
+  }
+  
+  // ===== FUNCIÓN: Marcar activo/inactivo =====
+  function setTaskbarItemActive(windowId, isActive) {
+    var item = taskbarItems[windowId];
+    if (!item) return;
+    
+    if (isActive) {
+      item.element.classList.add('active');
+      item.element.classList.remove('minimized');
+      item.isMinimized = false;
+    } else {
+      item.element.classList.remove('active');
+    }
+  }
+  
+  // ===== FUNCIÓN: Marcar minimizado =====
+  function setTaskbarItemMinimized(windowId) {
+    console.log('[TASKBAR] setTaskbarItemMinimized:', windowId);
+    
+    var item = taskbarItems[windowId];
+    if (!item) {
+      console.log('[TASKBAR] Item no existe para minimizar');
+      return;
+    }
+    
+    item.isMinimized = true;
+    item.element.classList.remove('active');
+    item.element.classList.add('minimized');
+    
+    // Animación bounce
+    item.element.classList.add('bouncing');
+    setTimeout(function() {
+      item.element.classList.remove('bouncing');
+    }, 400);
+  }
+  
+  // ===== FUNCIÓN: Restaurar desde taskbar =====
+  function restoreFromTaskbar(windowId) {
+    console.log('[TASKBAR] restoreFromTaskbar:', windowId);
+    
+    var item = taskbarItems[windowId];
+    if (item) {
+      item.isMinimized = false;
+      item.element.classList.remove('minimized');
+      item.element.classList.add('active');
+    }
+  }
+  
+  // ===== FUNCIÓN: Actualizar reloj =====
+  function updateTime() {
+    var timeEl = document.getElementById('taskbar-time');
+    if (!timeEl) return;
+    
+    var now = new Date();
+    var hours = String(now.getHours()).padStart(2, '0');
+    var minutes = String(now.getMinutes()).padStart(2, '0');
+    timeEl.textContent = hours + ':' + minutes;
+  }
+  
+  // ===== FUNCIÓN: Procesar cola pendiente =====
+  function processPendingCalls() {
+    console.log('[TASKBAR] Procesando', pendingCalls.length, 'llamadas pendientes');
+    
+    for (var i = 0; i < pendingCalls.length; i++) {
+      var call = pendingCalls[i];
+      var action = call[0];
+      
+      if (action === 'add') {
+        addToTaskbar(call[1], call[2], call[3]);
+      } else if (action === 'remove') {
+        removeFromTaskbar(call[1]);
+      } else if (action === 'minimize') {
+        setTaskbarItemMinimized(call[1]);
+      } else if (action === 'restore') {
+        restoreFromTaskbar(call[1]);
+      } else if (action === 'setActive') {
+        setTaskbarItemActive(call[1], call[2]);
+      }
+    }
+    
+    pendingCalls = [];
+  }
+  
+  // ===== FUNCIÓN: Inicializar taskbar =====
+  function initTaskbar() {
+    console.log('[TASKBAR] Inicializando...');
+    
+    taskbarApps = document.getElementById('taskbar-apps');
+    
+    if (!taskbarApps) {
+      console.error('[TASKBAR] ERROR: No se encontró #taskbar-apps');
+      return;
+    }
+    
+    // Iniciar reloj
+    updateTime();
+    setInterval(updateTime, 60000);
+    
+    isInitialized = true;
+    console.log('[TASKBAR] Inicializada correctamente');
+    
+    // Procesar llamadas pendientes
+    processPendingCalls();
+  }
+  
+  // ===== EXPONER FUNCIONES GLOBALES =====
+  window.addToTaskbarGlobal = function(windowId, iconUrl, appName) {
+    if (isInitialized) {
+      addToTaskbar(windowId, iconUrl, appName);
+    } else {
+      console.log('[TASKBAR] No inicializada, encolando addToTaskbar');
+      pendingCalls.push(['add', windowId, iconUrl, appName]);
+    }
+  };
+  
+  window.removeFromTaskbarGlobal = function(windowId) {
+    if (isInitialized) {
+      removeFromTaskbar(windowId);
+    } else {
+      pendingCalls.push(['remove', windowId]);
+    }
+  };
+  
+  window.minimizeWindowGlobal = function(windowId) {
+    if (isInitialized) {
+      setTaskbarItemMinimized(windowId);
+    } else {
+      pendingCalls.push(['minimize', windowId]);
+    }
+  };
+  
+  window.restoreWindowGlobal = function(windowId) {
+    if (isInitialized) {
+      restoreFromTaskbar(windowId);
+    } else {
+      pendingCalls.push(['restore', windowId]);
+    }
+  };
+  
+  window.setTaskbarItemActiveGlobal = function(windowId, isActive) {
+    if (isInitialized) {
+      setTaskbarItemActive(windowId, isActive);
+    } else {
+      pendingCalls.push(['setActive', windowId, isActive]);
+    }
+  };
+  
+  console.log('[TASKBAR] Funciones globales registradas');
+  
+  // ===== INICIAR CUANDO DOM ESTÉ LISTO =====
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTaskbar);
+  } else {
+    initTaskbar();
+  }
+  
+})();
+</script>

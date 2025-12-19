@@ -1,0 +1,184 @@
+<div class="windows-desktop">
+  <div class="desktop-icon" data-window="notepad">
+    <img src="https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png" alt="Notepad">
+    <span>Notepad</span>
+  </div>
+  
+  <div class="desktop-icon" data-window="calculator">
+    <img src="https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png" alt="Calculator">
+    <span>Calculator</span>
+  </div>
+  
+  <div class="desktop-icon" data-window="explorer">
+    <img src="https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png" alt="Explorer">
+    <span>Explorer</span>
+  </div>
+</div>
+
+<style>
+.windows-desktop {
+  padding: 20px;
+  height: calc(100vh - 48px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  gap: 20px;
+  align-content: start;
+}
+
+.desktop-icon {
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.desktop-icon:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.desktop-icon.selected {
+  background: rgba(255,255,255,0.2);
+}
+
+.desktop-icon img {
+  width: 78px;
+  height: 78px;
+  margin-bottom: 5px;
+  pointer-events: none;
+}
+
+.desktop-icon span {
+  display: block;
+  color: white;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  pointer-events: none;
+}
+</style>
+
+<script>
+// ===== ICONOS DEL ESCRITORIO - CÓDIGO ROBUSTO =====
+(function() {
+  
+  // Configuración de apps
+  var appConfig = {
+    'window-notepad': {
+      name: 'Notepad',
+      icon: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png'
+    },
+    'window-calculator': {
+      name: 'Calculator',
+      icon: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png'
+    },
+    'window-explorer': {
+      name: 'Explorer',
+      icon: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png'
+    }
+  };
+  
+  function initDesktopIcons() {
+    console.log('[DESKTOP] Inicializando iconos...');
+    
+    // Buscar el contenedor primero
+    var desktop = document.querySelector('.windows-desktop');
+    if (!desktop) {
+      console.error('[DESKTOP] No se encontró .windows-desktop');
+      return;
+    }
+    
+    // Buscar iconos dentro del contenedor
+    var icons = desktop.querySelectorAll('.desktop-icon');
+    console.log('[DESKTOP] Iconos encontrados:', icons.length);
+    
+    if (icons.length === 0) {
+      console.error('[DESKTOP] No se encontraron iconos');
+      return;
+    }
+    
+    var selectedIcon = null;
+    
+    // Configurar cada icono
+    for (var i = 0; i < icons.length; i++) {
+      (function(icon) {
+        
+        // Click simple - seleccionar
+        icon.addEventListener('click', function(e) {
+          // Deseleccionar todos
+          for (var j = 0; j < icons.length; j++) {
+            icons[j].classList.remove('selected');
+          }
+          // Seleccionar este
+          this.classList.add('selected');
+          selectedIcon = this;
+        });
+        
+        // Doble click - abrir ventana
+        icon.addEventListener('dblclick', function(e) {
+          var windowName = this.getAttribute('data-window');
+          var windowId = 'window-' + windowName;
+          
+          console.log('[DESKTOP] Doble click en:', windowId);
+          
+          var windowElement = document.getElementById(windowId);
+          
+          if (!windowElement) {
+            console.error('[DESKTOP] No se encontró ventana:', windowId);
+            return;
+          }
+          
+          // Abrir ventana
+          if (windowElement.openWindow) {
+            console.log('[DESKTOP] Llamando openWindow()');
+            windowElement.openWindow();
+          } else {
+            console.error('[DESKTOP] openWindow no existe en:', windowId);
+            return;
+          }
+          
+          // Agregar a taskbar
+          if (window.addToTaskbarGlobal) {
+            var config = appConfig[windowId];
+            if (config) {
+              console.log('[DESKTOP] Llamando addToTaskbarGlobal:', windowId, config.icon, config.name);
+              window.addToTaskbarGlobal(windowId, config.icon, config.name);
+            } else {
+              console.log('[DESKTOP] No hay config para:', windowId);
+              window.addToTaskbarGlobal(windowId, null, windowName);
+            }
+          } else {
+            console.error('[DESKTOP] addToTaskbarGlobal no existe');
+          }
+        });
+        
+      })(icons[i]);
+    }
+    
+    // Click en escritorio - deseleccionar
+    desktop.addEventListener('click', function(e) {
+      if (e.target === this) {
+        for (var j = 0; j < icons.length; j++) {
+          icons[j].classList.remove('selected');
+        }
+        selectedIcon = null;
+      }
+    });
+    
+    console.log('[DESKTOP] Iconos inicializados correctamente');
+  }
+  
+  // Iniciar cuando DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDesktopIcons);
+  } else {
+    initDesktopIcons();
+  }
+  
+  // Reintentar después por si Elementor carga tarde
+  setTimeout(initDesktopIcons, 500);
+  setTimeout(initDesktopIcons, 1000);
+  
+})();
+</script>
