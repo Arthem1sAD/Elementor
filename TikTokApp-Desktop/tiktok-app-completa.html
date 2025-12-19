@@ -1,816 +1,271 @@
-<!-- 
-  ═══════════════════════════════════════════════════════════════════════════════
-  🎬 TIKTOK APP COMPLETA - WIDGET PRINCIPAL v1.0
-  ═══════════════════════════════════════════════════════════════════════════════
-  
-  📍 UBICACIÓN: Dentro de la ventana flotante (window-content)
-  📦 ESTRUCTURA: Layout principal con Sidebar + Header mínimo + Área de contenido
-  
-  🔗 PLANTILLAS ELEMENTOR REQUERIDAS:
-  - Sección "Para Ti": [mi_plantilla id="ID_PARA_TI"]
-  - Sección "Explorar": [mi_plantilla id="ID_EXPLORAR"]  
-  - Sección "Siguiendo": [mi_plantilla id="ID_SIGUIENDO"]
-  
-  ═══════════════════════════════════════════════════════════════════════════════
--->
-
 <div class="tiktok-app-container" id="tiktokAppContainer">
-  
-  <!-- ==================== HEADER MÍNIMO ==================== -->
+
   <header class="tiktok-header" id="tiktokHeader">
+    <div class="header-drag-area"></div>
     <div class="header-content">
-      <!-- Izquierda: Espacio vacío para balance -->
-      <div class="header-left"></div>
-      
-      <!-- Centro: Título de sección actual (opcional) -->
-      <div class="header-center">
-        <span class="section-title" id="sectionTitle"></span>
+      <div class="header-left">
       </div>
-      
-      <!-- Derecha: Controles de ventana -->
+
       <div class="header-right">
         <div class="window-controls">
-          <button class="window-btn minimize-btn" id="tiktokMinimizeBtn" title="Minimizar">
+          <button class="window-btn minimize-btn" id="tiktokMinBtn">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-              <rect width="10" height="1" x="1" y="6"/>
+              <rect width="10" height="1" x="1" y="6" />
             </svg>
           </button>
-          <button class="window-btn maximize-btn" id="tiktokMaximizeBtn" title="Maximizar">
+          <button class="window-btn maximize-btn" id="tiktokMaxBtn">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-              <rect width="9" height="9" x="1.5" y="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <rect width="9" height="9" x="1.5" y="1.5" fill="none" stroke="currentColor" stroke-width="1.5" />
             </svg>
           </button>
-          <button class="window-btn close-btn" id="tiktokCloseBtn" title="Cerrar">
+          <button class="window-btn close-btn" id="tiktokCloseBtn">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-              <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" stroke-width="1.5" fill="none" />
             </svg>
           </button>
         </div>
       </div>
     </div>
   </header>
-  
-  <!-- ==================== SIDEBAR DE NAVEGACIÓN ==================== -->
-  <aside class="tiktok-sidebar" id="tiktokSidebar">
-    
-    <!-- Logo -->
+
+  <aside class="tiktok-sidebar">
     <div class="sidebar-logo">
-      <img src="" alt="Logo" id="sidebarLogo" class="logo-img">
-      <!-- 📝 CONFIGURACIÓN: Cambia el src="" por la URL de tu logo -->
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="Logo" class="logo-img">
     </div>
-    
-    <!-- Navegación Principal -->
-    <nav class="sidebar-nav" id="sidebarNav">
-      <div class="nav-item active" data-section="para-ti" data-template-id="ID_PARA_TI">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M12 2L3 9v12a1 1 0 001 1h6v-8h4v8h6a1 1 0 001-1V9l-9-7z"/>
-          </svg>
-        </div>
-        <span class="nav-label">Para ti</span>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="TikTokApp.nav('para-ti')">
+        <span class="nav-icon">🏠</span> <span class="nav-text">Para ti</span>
       </div>
-      
-      <div class="nav-item" data-section="explorar" data-template-id="ID_EXPLORAR">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
-          </svg>
-        </div>
-        <span class="nav-label">Explorar</span>
+      <div class="nav-item" onclick="TikTokApp.nav('explorar')">
+        <span class="nav-icon">🧭</span> <span class="nav-text">Explorar</span>
       </div>
-      
-      <div class="nav-item" data-section="siguiendo" data-template-id="ID_SIGUIENDO">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-          </svg>
-        </div>
-        <span class="nav-label">Siguiendo</span>
-      </div>
-      
-      <div class="nav-item" data-section="live" data-template-id="ID_LIVE">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
-          </svg>
-        </div>
-        <span class="nav-label">LIVE</span>
-      </div>
-      
-      <div class="nav-divider"></div>
-      
-      <div class="nav-item" data-section="cargar" data-template-id="ID_CARGAR">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-        </div>
-        <span class="nav-label">Cargar</span>
-      </div>
-      
-      <div class="nav-item" data-section="perfil" data-template-id="ID_PERFIL">
-        <div class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-        </div>
-        <span class="nav-label">Perfil</span>
+      <div class="nav-item" onclick="TikTokApp.nav('siguiendo')">
+        <span class="nav-icon">👥</span> <span class="nav-text">Siguiendo</span>
       </div>
     </nav>
-    
-    <!-- Opciones del Menú (modifican el área de contenido) -->
-    <div class="sidebar-menu" id="sidebarMenu">
-      <div class="menu-title">Menú</div>
-      <div class="menu-item" data-action="configuracion">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-        </svg>
-        <span>Configuración</span>
-      </div>
-      <div class="menu-item" data-action="modo-oscuro">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M9.37 5.51c-.18.64-.27 1.31-.27 1.99 0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27C17.45 17.19 14.93 19 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49zM12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
-        </svg>
-        <span>Modo oscuro</span>
-      </div>
-    </div>
-    
-    <!-- Footer del Sidebar -->
+
     <div class="sidebar-footer">
-      <div class="footer-links">
-        <a href="#">Acerca de</a>
-        <a href="#">Términos</a>
-        <a href="#">Privacidad</a>
-      </div>
-      <div class="footer-copyright">
-        © 2025 TuMarca
-      </div>
+      <p>© 2025 TikTok Desktop</p>
     </div>
   </aside>
-  
-  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
-  <main class="tiktok-content" id="tiktokContent">
-    
-    <!-- Contenedor de secciones dinámicas -->
-    <div class="content-sections" id="contentSections">
-      
-      <!-- SECCIÓN: Para Ti (activa por defecto) -->
-      <div class="content-section active" data-section-id="para-ti">
-        [mi_plantilla id="ID_PARA_TI"]
-        <!-- 📝 Reemplaza ID_PARA_TI con el ID real de tu plantilla Elementor -->
-      </div>
-      
-      <!-- SECCIÓN: Explorar -->
-      <div class="content-section" data-section-id="explorar">
-        [mi_plantilla id="3410"]
-        <!-- 📝 Reemplaza ID_EXPLORAR con el ID real de tu plantilla Elementor -->
-      </div>
-      
-      <!-- SECCIÓN: Siguiendo -->
-      <div class="content-section" data-section-id="siguiendo">
-        [mi_plantilla id="ID_SIGUIENDO"]
-        <!-- 📝 Reemplaza ID_SIGUIENDO con el ID real de tu plantilla Elementor -->
-      </div>
-      
-      <!-- SECCIÓN: LIVE -->
-      <div class="content-section" data-section-id="live">
-        [mi_plantilla id="ID_LIVE"]
-      </div>
-      
-      <!-- SECCIÓN: Cargar -->
-      <div class="content-section" data-section-id="cargar">
-        [mi_plantilla id="ID_CARGAR"]
-      </div>
-      
-      <!-- SECCIÓN: Perfil -->
-      <div class="content-section" data-section-id="perfil">
-        [mi_plantilla id="ID_PERFIL"]
-      </div>
-      
+
+  <main class="tiktok-content">
+    <div class="content-section active" id="section-para-ti">
+      [mi_plantilla id="3410"]
+    </div>
+
+    <div class="content-section" id="section-explorar" style="display:none;">
+      [mi_plantilla id="ID_PLANTILLA_EXPLORAR"]
+    </div>
+
+    <div class="content-section" id="section-siguiendo" style="display:none;">
+      [mi_plantilla id="ID_PLANTILLA_SIGUIENDO"]
     </div>
   </main>
-  
+
 </div>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════════════════════
-   🎨 VARIABLES CSS - PERSONALIZACIÓN
-   ═══════════════════════════════════════════════════════════════════════════════ */
-:root {
-  /* 📏 DIMENSIONES */
-  --tiktok-header-height: 40px;        /* Altura del header mínimo */
-  --tiktok-sidebar-width: 240px;       /* Ancho del sidebar */
-  --tiktok-sidebar-collapsed: 72px;    /* Ancho cuando está colapsado */
-  
-  /* 🎨 COLORES - TEMA OSCURO TIKTOK */
-  --tiktok-bg-primary: #000000;        /* Fondo principal negro */
-  --tiktok-bg-secondary: #121212;      /* Fondo secundario */
-  --tiktok-bg-sidebar: #121212;        /* Fondo del sidebar */
-  --tiktok-bg-hover: #1f1f1f;          /* Hover en items */
-  --tiktok-bg-active: #2f2f2f;         /* Item activo */
-  
-  --tiktok-text-primary: #ffffff;      /* Texto principal blanco */
-  --tiktok-text-secondary: #a0a0a0;    /* Texto secundario gris */
-  --tiktok-text-muted: #5a5a5a;        /* Texto apagado */
-  
-  --tiktok-accent: #fe2c55;            /* Rojo TikTok */
-  --tiktok-accent-hover: #ff3b5c;      /* Hover del acento */
-  
-  --tiktok-border: rgba(255,255,255,0.1); /* Bordes sutiles */
-  
-  /* ⚡ TRANSICIONES */
-  --tiktok-transition: 0.2s ease;
-  --tiktok-transition-slow: 0.3s ease;
-}
+  /* ===== LAYOUT GRID (ESTILO SPOTIFY) ===== */
+  :root {
+    --tk-header-h: 50px;
+    --tk-sidebar-w: 240px;
+    --tk-bg: #000;
+    --tk-sidebar-bg: #121212;
+    --tk-text: #fff;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   📐 LAYOUT PRINCIPAL - CSS GRID
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-.tiktok-app-container {
-  display: grid;
-  grid-template-rows: var(--tiktok-header-height) minmax(0, 1fr);
-  grid-template-columns: var(--tiktok-sidebar-width) 1fr;
-  grid-template-areas:
-    "header header"
-    "sidebar content";
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  background: var(--tiktok-bg-primary);
-  overflow: hidden;
-  font-family: "TikTok Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  box-sizing: border-box;
-}
-
-.tiktok-app-container * {
-  box-sizing: border-box;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
-   🔝 HEADER MÍNIMO
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-.tiktok-header {
-  grid-area: header;
-  background: transparent;
-  z-index: 100;
-  position: relative;
-  height: var(--tiktok-header-height);
-  min-height: var(--tiktok-header-height);
-  max-height: var(--tiktok-header-height);
-  flex-shrink: 0;
-  /* Área de arrastre para la ventana flotante */
-  -webkit-app-region: drag;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0 12px;
-}
-
-.header-left, .header-center, .header-right {
-  display: flex;
-  align-items: center;
-  -webkit-app-region: no-drag;
-}
-
-.header-left { flex: 1; }
-.header-center { flex: 0; }
-.header-right { 
-  flex: 1; 
-  justify-content: flex-end;
-}
-
-.section-title {
-  color: var(--tiktok-text-primary);
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0;
-  transition: opacity var(--tiktok-transition);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
-   🎛️ CONTROLES DE VENTANA
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-.window-controls {
-  display: flex;
-  gap: 8px;
-}
-
-.window-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: var(--tiktok-text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--tiktok-transition);
-  -webkit-app-region: no-drag;
-}
-
-.window-btn:hover {
-  color: var(--tiktok-text-primary);
-}
-
-.minimize-btn:hover, .maximize-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.close-btn:hover {
-  background: #fe2c55;
-  color: white;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
-   📚 SIDEBAR DE NAVEGACIÓN
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-.tiktok-sidebar {
-  grid-area: sidebar;
-  background: var(--tiktok-bg-sidebar);
-  border-right: 1px solid var(--tiktok-border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
-  height: 100%;
-  padding: 8px 0;
-}
-
-/* Logo */
-.sidebar-logo {
-  padding: 16px 20px;
-  flex-shrink: 0;
-}
-
-.logo-img {
-  max-width: 120px;
-  height: auto;
-}
-
-/* Navegación */
-.sidebar-nav {
-  flex: 1;
-  padding: 8px 12px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all var(--tiktok-transition);
-  color: var(--tiktok-text-secondary);
-  margin-bottom: 4px;
-}
-
-.nav-item:hover {
-  background: var(--tiktok-bg-hover);
-  color: var(--tiktok-text-primary);
-}
-
-.nav-item.active {
-  color: var(--tiktok-accent);
-  font-weight: 700;
-}
-
-.nav-item.active .nav-icon svg {
-  fill: var(--tiktok-accent);
-}
-
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
-  transition: fill var(--tiktok-transition);
-}
-
-.nav-label {
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.nav-divider {
-  height: 1px;
-  background: var(--tiktok-border);
-  margin: 12px 16px;
-}
-
-/* Menú de opciones */
-.sidebar-menu {
-  padding: 8px 12px;
-  border-top: 1px solid var(--tiktok-border);
-}
-
-.menu-title {
-  color: var(--tiktok-text-muted);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  letter-spacing: 0.5px;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: var(--tiktok-text-secondary);
-  font-size: 14px;
-  transition: all var(--tiktok-transition);
-}
-
-.menu-item:hover {
-  background: var(--tiktok-bg-hover);
-  color: var(--tiktok-text-primary);
-}
-
-.menu-item svg {
-  fill: currentColor;
-}
-
-/* Footer del sidebar */
-.sidebar-footer {
-  padding: 16px;
-  border-top: 1px solid var(--tiktok-border);
-  flex-shrink: 0;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  margin-bottom: 8px;
-}
-
-.footer-links a {
-  color: var(--tiktok-text-muted);
-  font-size: 12px;
-  text-decoration: none;
-  transition: color var(--tiktok-transition);
-}
-
-.footer-links a:hover {
-  color: var(--tiktok-text-secondary);
-}
-
-.footer-copyright {
-  color: var(--tiktok-text-muted);
-  font-size: 11px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
-   📺 ÁREA DE CONTENIDO PRINCIPAL
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-.tiktok-content {
-  grid-area: content;
-  background: var(--tiktok-bg-primary);
-  min-height: 0;
-  max-height: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.content-sections {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.content-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--tiktok-transition-slow), visibility var(--tiktok-transition-slow);
-  overflow: hidden;
-}
-
-.content-section.active {
-  opacity: 1;
-  visibility: visible;
-  z-index: 1;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
-   📱 RESPONSIVE - SIDEBAR COLAPSABLE
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
-@media (max-width: 1200px) {
   .tiktok-app-container {
-    grid-template-columns: var(--tiktok-sidebar-collapsed) 1fr;
+    display: grid;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar content";
+    grid-template-columns: var(--tk-sidebar-w) 1fr;
+    grid-template-rows: var(--tk-header-h) 1fr;
+    width: 100%;
+    height: 100%;
+    background: var(--tk-bg);
+    overflow: hidden;
   }
-  
-  .sidebar-logo {
-    padding: 12px;
-    text-align: center;
+
+  /* HEADER */
+  .tiktok-header {
+    grid-area: header;
+    background: rgba(18, 18, 18, 0.95);
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid #333;
+    z-index: 100;
+    -webkit-app-region: drag;
+    /* Permite arrastre nativo si se soporta */
   }
-  
-  .logo-img {
-    max-width: 40px;
+
+  /* Área de arrastre manual para el script de ventanas */
+  .header-drag-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
-  
+
+  .header-content {
+    position: relative;
+    z-index: 10;
+    /* Encima del drag area */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  /* SIDEBAR */
+  .tiktok-sidebar {
+    grid-area: sidebar;
+    background: var(--tk-sidebar-bg);
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+
+  .sidebar-logo img {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+
   .nav-item {
+    padding: 10px 15px;
+    color: #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+  }
+
+  .nav-item:hover,
+  .nav-item.active {
+    background: #2f2f2f;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  /* CONTENIDO */
+  .tiktok-content {
+    grid-area: content;
+    position: relative;
+    overflow: hidden;
+    /* El scroll lo maneja el hijo */
+    background: #000;
+  }
+
+  .content-section {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* CONTROLES VENTANA */
+  .window-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .window-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 12px;
-    gap: 0;
+    cursor: pointer;
   }
-  
-  .nav-label,
-  .menu-title,
-  .menu-item span,
-  .sidebar-footer,
-  .sidebar-menu {
-    display: none;
+
+  .window-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
-  
-  .menu-item {
-    justify-content: center;
+
+  .close-btn:hover {
+    background: #E81123;
   }
-}
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   🔧 SCROLLBAR PERSONALIZADO
-   ═══════════════════════════════════════════════════════════════════════════════ */
+  /* RESPONSIVE */
+  @media (max-width: 800px) {
+    .tiktok-app-container {
+      grid-template-columns: 60px 1fr;
+    }
 
-.sidebar-nav::-webkit-scrollbar {
-  width: 6px;
-}
+    .tiktok-sidebar {
+      padding: 10px 5px;
+      align-items: center;
+    }
 
-.sidebar-nav::-webkit-scrollbar-track {
-  background: transparent;
-}
+    .sidebar-logo img {
+      display: none;
+    }
 
-.sidebar-nav::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 3px;
-}
-
-.sidebar-nav::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.3);
-}
+    .nav-text {
+      display: none;
+    }
+  }
 </style>
 
 <script>
-(function() {
-  'use strict';
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎯 CONFIGURACIÓN - PERSONALIZA AQUÍ
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const CONFIG = {
-    // Logo del sidebar
-    logoSrc: '', // ← Añade la URL de tu logo aquí
-    
-    // Sección por defecto al cargar
-    defaultSection: 'para-ti',
-    
-    // Animaciones
-    transitionDuration: 300,
-    
-    // IDs de las plantillas Elementor para cada sección
-    // (se usan si necesitas cargar contenido dinámicamente)
-    templates: {
-      'para-ti': 'ID_PARA_TI',
-      'explorar': 'ID_EXPLORAR',
-      'siguiendo': 'ID_SIGUIENDO',
-      'live': 'ID_LIVE',
-      'cargar': 'ID_CARGAR',
-      'perfil': 'ID_PERFIL'
-    }
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔌 ELEMENTOS DEL DOM
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const container = document.getElementById('tiktokAppContainer');
-  const sidebar = document.getElementById('tiktokSidebar');
-  const content = document.getElementById('tiktokContent');
-  const sectionTitle = document.getElementById('sectionTitle');
-  const navItems = document.querySelectorAll('.nav-item');
-  const contentSections = document.querySelectorAll('.content-section');
-  const menuItems = document.querySelectorAll('.menu-item');
-  
-  // Controles de ventana
-  const minimizeBtn = document.getElementById('tiktokMinimizeBtn');
-  const maximizeBtn = document.getElementById('tiktokMaximizeBtn');
-  const closeBtn = document.getElementById('tiktokCloseBtn');
-  
-  // Logo
-  const logoImg = document.getElementById('sidebarLogo');
-  if (CONFIG.logoSrc) {
-    logoImg.src = CONFIG.logoSrc;
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🧭 NAVEGACIÓN ENTRE SECCIONES
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  let currentSection = CONFIG.defaultSection;
-  
-  function navigateToSection(sectionId) {
-    if (sectionId === currentSection) return;
-    
-    // Actualizar navegación activa
-    navItems.forEach(item => {
-      item.classList.toggle('active', item.dataset.section === sectionId);
-    });
-    
-    // Cambiar sección visible
-    contentSections.forEach(section => {
-      const isTarget = section.dataset.sectionId === sectionId;
-      section.classList.toggle('active', isTarget);
-    });
-    
-    // Actualizar título si es necesario
-    const activeNav = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
-    if (activeNav && sectionTitle) {
-      // sectionTitle.textContent = activeNav.querySelector('.nav-label').textContent;
-    }
-    
-    currentSection = sectionId;
-    
-    // Emitir evento personalizado
-    window.dispatchEvent(new CustomEvent('tiktok-section-changed', {
-      detail: { section: sectionId }
-    }));
-  }
-  
-  // Event listeners para navegación
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const sectionId = item.dataset.section;
-      navigateToSection(sectionId);
-    });
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // ⚙️ MENÚ DE OPCIONES
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const action = item.dataset.action;
-      
-      switch(action) {
-        case 'configuracion':
-          console.log('Abrir configuración');
-          window.dispatchEvent(new CustomEvent('tiktok-open-settings'));
-          break;
-          
-        case 'modo-oscuro':
-          console.log('Toggle modo oscuro');
-          // Implementar toggle de tema si es necesario
-          break;
-      }
-    });
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🪟 CONTROLES DE VENTANA FLOTANTE
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  // Buscar la ventana padre
-  function getParentWindow() {
-    return container.closest('.app-window');
-  }
-  
-  function resolveWindowId(win) {
-    if (!win) return null;
-    return win.id || win.dataset.windowId || win.dataset.app || null;
-  }
+  (function () {
+    // Navegación interna
+    window.TikTokApp = {
+      nav: function (sectionId) {
+        document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-  if (minimizeBtn) {
-    minimizeBtn.addEventListener('click', () => {
-      const win = getParentWindow();
-      if (win && typeof win.minimizeWindow === 'function') {
-        return win.minimizeWindow();
+        const target = document.getElementById('section-' + sectionId);
+        if (target) target.style.display = 'block';
+
+        // Activar clase en menú (simple logic)
+        event.currentTarget.classList.add('active');
       }
-      const id = resolveWindowId(win);
-      if (id && typeof window.minimizeWindow === 'function') {
-        window.minimizeWindow(id);
-      }
-    });
-  }
-  
-  if (maximizeBtn) {
-    maximizeBtn.addEventListener('click', () => {
-      const win = getParentWindow();
-      if (win && typeof win.maximizeWindow === 'function') {
-        return win.maximizeWindow();
-      }
-      const id = resolveWindowId(win);
-      if (id && typeof window.toggleMaximize === 'function') {
-        window.toggleMaximize(id);
-      }
-    });
-  }
-  
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      const win = getParentWindow();
-      if (win && typeof win.closeWindow === 'function') {
-        return win.closeWindow();
-      }
-      const id = resolveWindowId(win);
-      if (id && typeof window.closeWindow === 'function') {
-        window.closeWindow(id);
-      }
-    });
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🌐 API GLOBAL PARA COMUNICACIÓN ENTRE WIDGETS
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  window.TikTokApp = {
-    // Navegar a una sección específica
-    navigateTo: navigateToSection,
-    
-    // Obtener sección actual
-    getCurrentSection: () => currentSection,
-    
-    // Actualizar contenido de una sección (para carga dinámica)
-    updateSectionContent: (sectionId, content) => {
-      const section = document.querySelector(`.content-section[data-section-id="${sectionId}"]`);
-      if (section) {
-        section.innerHTML = content;
-      }
-    },
-    
-    // Obtener configuración
-    getConfig: () => CONFIG
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🚀 INICIALIZACIÓN
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  // Activar sección por defecto
-  navigateToSection(CONFIG.defaultSection);
-  
-  console.log('✅ TikTok App inicializada');
-  
-})();
+    };
+
+    // Conectar botones de ventana
+    setTimeout(() => {
+      const win = document.getElementById('tiktokAppContainer').closest('.app-window');
+      if (!win) return;
+
+      // Asumimos que el ID de la ventana es 'tiktok-window' o el ID del div padre
+      const winId = win.id;
+
+      document.getElementById('tiktokMinBtn').onclick = () => window.minimizeWindowGlobal(winId);
+
+      document.getElementById('tiktokMaxBtn').onclick = () => {
+        // Lógica simple de toggle maximize
+        if (win.classList.contains('maximized')) {
+          win.classList.remove('maximized');
+        } else {
+          win.classList.add('maximized');
+        }
+      };
+
+      document.getElementById('tiktokCloseBtn').onclick = () => {
+        // Cerrar y remover de taskbar
+        win.classList.remove('show');
+        window.removeFromTaskbarGlobal(winId);
+      };
+
+      // Pasar evento de drag al header
+      const dragArea = document.querySelector('#tiktokHeader .header-drag-area');
+      // (Aquí asumo que tu sistema de ventanas usa una clase .window-drag-area para iniciar el arrastre)
+      // Si tu sistema usa una lógica específica, asegúrate que este div la active.
+
+    }, 1000);
+  })();
 </script>
-
-<!-- 
-═══════════════════════════════════════════════════════════════════════════════
-📝 INSTRUCCIONES DE USO
-═══════════════════════════════════════════════════════════════════════════════
-
-1. UBICACIÓN DEL WIDGET:
-   - Coloca este widget HTML dentro del contenedor de la ventana flotante
-   - Similar a como está spotify-app-completo.html
-
-2. CONFIGURAR PLANTILLAS ELEMENTOR:
-   - Reemplaza [mi_plantilla id="ID_PARA_TI"] con el ID real de tu plantilla
-   - Cada sección usa una plantilla de Elementor diferente
-
-3. CONFIGURAR LOGO:
-   - En CONFIG.logoSrc añade la URL de tu logo
-   - O edita directamente el src="" en <img id="sidebarLogo">
-
-4. NAVEGACIÓN:
-   - La navegación se controla automáticamente con JavaScript
-   - Puedes llamar window.TikTokApp.navigateTo('explorar') desde otros widgets
-
-5. INTEGRACIÓN CON VENTANA FLOTANTE:
-   - Los botones minimizar/maximizar/cerrar se conectan automáticamente
-   - Asegúrate de tener ventanas-flotantes-windows.html y gestion-ventanas-y-taskbar.html
-
-═══════════════════════════════════════════════════════════════════════════════
--->
