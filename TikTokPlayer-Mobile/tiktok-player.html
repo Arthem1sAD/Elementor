@@ -1,14 +1,14 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
-    
+
     .tt-player-wrapper {
         width: 100%;
         max-width: 100%;
-        height: 90vh; 
+        height: 90vh;
         background: #000;
         border-radius: 0;
         overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         position: relative;
         z-index: 1;
         font-family: "TikTok Sans", sans-serif;
@@ -38,7 +38,10 @@
         -webkit-overflow-scrolling: touch;
         position: relative;
     }
-    .tt-scroll-area::-webkit-scrollbar { display: none; }
+
+    .tt-scroll-area::-webkit-scrollbar {
+        display: none;
+    }
 
     .tt-video-slide {
         width: 100%;
@@ -47,7 +50,7 @@
         scroll-snap-align: start;
         scroll-snap-stop: always;
         position: relative;
-        background: #000; 
+        background: #000;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -64,9 +67,9 @@
         object-fit: cover;
     }
 
-    .tt-video-slide video.is-horizontal { 
-        object-fit: contain; 
-        transform: scale(1.2); 
+    .tt-video-slide video.is-horizontal {
+        object-fit: contain;
+        transform: scale(1.2);
     }
 
     .tt-overlay-info {
@@ -75,23 +78,23 @@
         left: 15px;
         right: 90px;
         color: #fff;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         pointer-events: none;
         z-index: 2;
         max-width: calc(100% - 105px);
     }
-    
-    .tt-username { 
-        font-weight: 700; 
-        font-size: 1em; 
+
+    .tt-username {
+        font-weight: 700;
+        font-size: 1em;
         margin-bottom: 4px;
         word-wrap: break-word;
     }
-    
-    .tt-description { 
-        font-weight: 400; 
-        font-size: 0.9em; 
-        opacity: 0.9; 
+
+    .tt-description {
+        font-weight: 400;
+        font-size: 0.9em;
+        opacity: 0.9;
         line-height: 1.3;
         word-wrap: break-word;
     }
@@ -134,7 +137,7 @@
         flex-shrink: 0;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         margin: 0 5px;
         position: relative;
         transition: opacity 0.3s ease;
@@ -142,17 +145,18 @@
 
     /* Imagen activa - completamente visible */
     /* Imagen activa - completamente visible */
-.tt-slider-item.active {
-    opacity: 1;
-}
+    .tt-slider-item.active {
+        opacity: 1;
+    }
 
-/* Imágenes NO activas - opacidad reducida */
-.tt-slider-item:not(.active) {
-    opacity: 0.3;  /* ← Cambia este valor (0.3 = más transparente, 0.8 = menos transparente) */
-}
+    /* Imágenes NO activas - opacidad reducida */
+    .tt-slider-item:not(.active) {
+        opacity: 0.3;
+        /* ← Cambia este valor (0.3 = más transparente, 0.8 = menos transparente) */
+    }
 
-/* ELIMINAR o COMENTAR estos estilos de degradado: */
-/*
+    /* ELIMINAR o COMENTAR estos estilos de degradado: */
+    /*
 .tt-slider-item:not(.active)::before {
     ...
 }
@@ -236,14 +240,14 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     .tt-action-text {
         color: #fff;
         font-size: 11px;
         font-weight: 600;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
 
     .tt-mute-overlay {
@@ -262,11 +266,11 @@
         backdrop-filter: blur(4px);
         transition: opacity 0.3s ease, transform 0.2s ease;
     }
-    
+
     .tt-mute-overlay:active {
         transform: translate(-50%, -50%) scale(0.9);
     }
-    
+
     .tt-mute-overlay svg {
         width: 40px;
         height: 40px;
@@ -280,7 +284,7 @@
 
     .tt-play-icon {
         position: absolute;
-        top: 50%; 
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(2);
         opacity: 0;
@@ -288,6 +292,7 @@
         pointer-events: none;
         z-index: 5;
     }
+
     .tt-video-slide.is-paused .tt-play-icon {
         opacity: 0.7;
     }
@@ -304,8 +309,16 @@
     }
 
     @keyframes scrollHintFade {
-        0%, 100% { opacity: 0; }
-        10%, 90% { opacity: 1; }
+
+        0%,
+        100% {
+            opacity: 0;
+        }
+
+        10%,
+        90% {
+            opacity: 1;
+        }
     }
 
     .tt-scroll-hand {
@@ -316,8 +329,14 @@
     }
 
     @keyframes scrollHandMove {
-        0% { transform: translateY(100px); }
-        50%, 100% { transform: translateY(-20px); }
+        0% {
+            transform: translateY(100px);
+        }
+
+        50%,
+        100% {
+            transform: translateY(-20px);
+        }
     }
 
     .tt-scroll-hand img {
@@ -325,7 +344,7 @@
         height: 100%;
         max-width: 100%;
         object-fit: contain;
-        filter: drop-shadow(0 2px 12px rgba(0,0,0,0.8));
+        filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.8));
     }
 
     .tt-scroll-trail {
@@ -334,29 +353,32 @@
         top: 0;
         width: 4px;
         height: 140px;
-        background: linear-gradient(to top, 
-            rgba(255,255,255,0) 0%,
-            rgba(255,255,255,0.7) 50%,
-            rgba(255,255,255,0) 100%
-        );
+        background: linear-gradient(to top,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.7) 50%,
+                rgba(255, 255, 255, 0) 100%);
         border-radius: 2px;
         animation: scrollTrailMove 5.5s ease-in-out infinite;
         opacity: 0;
     }
 
     @keyframes scrollTrailMove {
-        0% { 
+        0% {
             transform: translateY(70px);
             opacity: 0;
         }
+
         20% {
             opacity: 1;
         }
-        50% { 
+
+        50% {
             transform: translateY(-30px);
             opacity: 0.9;
         }
-        80%, 100% {
+
+        80%,
+        100% {
             opacity: 0;
         }
     }
@@ -366,13 +388,19 @@
     }
 
     @keyframes fadeOutIndicator {
-        to { opacity: 0; visibility: hidden; }
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
     }
 </style>
 
 <div class="tt-player-wrapper" id="tiktok-wrapper">
     <div class="tt-mute-overlay" id="tt-mute-btn">
-        <svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+        </svg>
     </div>
 
     <div class="tt-scroll-indicator">
@@ -386,199 +414,199 @@
 </div>
 
 <script>
-(function() {
-    'use strict';
+    (function () {
+        'use strict';
 
-    // ===================================================================
-    // 🎨 CONFIGURACIÓN GLOBAL - MODIFICA AQUÍ
-    // ===================================================================
-    
-    const CONFIG = {
-        // ========================================
-        // 📏 SLIDER DE MARCA - CONFIGURACIÓN
-        // ========================================
-        brandSlider: {
-            enabled: true,
-            
-            // 🎬 AUTOPLAY
-            autoplay: false,            // ← true = autoplay ON, false = autoplay OFF
-            autoplaySpeed: 5000,       // Velocidad del autoplay (milisegundos)
-            
-            // 📐 SLIDES VISIBLES
-            visibleSlides: 1,          // ← Cuántas imágenes visibles después del activo (1, 2, 3, 4, etc.)
-            slideWidth: '120px',       // Ancho de cada imagen individual
-            slideHeight: '70px',       // Alto del slider
-            peekPrevious: '0px',      // Cuánto se ve del slide anterior (peek izquierdo)
-            
-            // 📍 POSICIÓN EN PANTALLA
-            bottom: '115px',           // Distancia desde abajo
-            left: '0px',               // Distancia desde la izquierda (0px = sin margen)
-            right: 'auto',             // Distancia desde la derecha (usar 'auto' o un valor como '20px')
-            
-            // 🎨 ESTILO VISUAL
-            borderRadius: '8px',       // Esquinas redondeadas
-            boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
-            slideGap: '1px',          // Espacio entre slides
-            marginLeft: '5px',        // Margen interno izquierdo del primer slide
-            marginRight: '5px',       // Margen interno derecho del último slide
-            
-            // ⚙️ COMPORTAMIENTO
-            showDots: true,            // Mostrar puntos indicadores
-            dragSensitivity: 10        // Píxeles mínimos para cambiar slide (menor = más sensible)
-        },
-        // ========================================
-        
-        sideActions: {
-            enabled: true,
-            bottom: '80px',
-            right: '10px',
-            iconSize: '45px',
-            gap: '20px',
-            
-            icons: {
-                like: 'https://cdn-icons-png.flaticon.com/512/2589/2589175.png',
-                comment: 'https://cdn-icons-png.flaticon.com/512/2593/2593491.png',
-                save: 'https://cdn-icons-png.flaticon.com/512/5662/5662990.png',
-                share: 'https://cdn-icons-png.flaticon.com/512/3024/3024593.png'
+        // ===================================================================
+        // 🎨 CONFIGURACIÓN GLOBAL - MODIFICA AQUÍ
+        // ===================================================================
+
+        const CONFIG = {
+            // ========================================
+            // 📏 SLIDER DE MARCA - CONFIGURACIÓN
+            // ========================================
+            brandSlider: {
+                enabled: true,
+
+                // 🎬 AUTOPLAY
+                autoplay: false,            // ← true = autoplay ON, false = autoplay OFF
+                autoplaySpeed: 5000,       // Velocidad del autoplay (milisegundos)
+
+                // 📐 SLIDES VISIBLES
+                visibleSlides: 1,          // ← Cuántas imágenes visibles después del activo (1, 2, 3, 4, etc.)
+                slideWidth: '120px',       // Ancho de cada imagen individual
+                slideHeight: '70px',       // Alto del slider
+                peekPrevious: '0px',      // Cuánto se ve del slide anterior (peek izquierdo)
+
+                // 📍 POSICIÓN EN PANTALLA
+                bottom: '115px',           // Distancia desde abajo
+                left: '0px',               // Distancia desde la izquierda (0px = sin margen)
+                right: 'auto',             // Distancia desde la derecha (usar 'auto' o un valor como '20px')
+
+                // 🎨 ESTILO VISUAL
+                borderRadius: '8px',       // Esquinas redondeadas
+                boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                slideGap: '1px',          // Espacio entre slides
+                marginLeft: '5px',        // Margen interno izquierdo del primer slide
+                marginRight: '5px',       // Margen interno derecho del último slide
+
+                // ⚙️ COMPORTAMIENTO
+                showDots: true,            // Mostrar puntos indicadores
+                dragSensitivity: 10        // Píxeles mínimos para cambiar slide (menor = más sensible)
+            },
+            // ========================================
+
+            sideActions: {
+                enabled: true,
+                bottom: '80px',
+                right: '10px',
+                iconSize: '45px',
+                gap: '20px',
+
+                icons: {
+                    like: 'https://cdn-icons-png.flaticon.com/512/2589/2589175.png',
+                    comment: 'https://cdn-icons-png.flaticon.com/512/2593/2593491.png',
+                    save: 'https://cdn-icons-png.flaticon.com/512/5662/5662990.png',
+                    share: 'https://cdn-icons-png.flaticon.com/512/3024/3024593.png'
+                }
             }
+        };
+
+        // ===================================================================
+        // 📹 VIDEOS - AQUÍ DEFINES TUS VIDEOS Y LOS IDS DE CADA IMAGEN
+        // ===================================================================
+        const VIDEOS = [
+            {
+                id: 'laptop-nitro',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/From-KlickPin-CF-Видео-Видео-MSI-Thin-GF63-156-144Hz-Gaming-Laptop-Intel-Core-i7-12650H-NVIDIA-GeForce-RTX-4050-32GB-RAM-1TB-NVMe-SSD-Type-C-Cooler-Boost-5-Win11-Free-Accessory-Bu…-_-Ноутбук.mp4',
+                username: 'Almacenes Delta',
+                description: 'La reina calidad-precio. Nitro 5 con RTX 3050 🔥',
+                vertical: true,
+                // ⬇️ AQUÍ DEFINES CADA IMAGEN DEL SLIDER CON SU ID ÚNICO
+                brandSlider: [
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',        // ← ID único (solo letras, números y guiones)
+                        link: '#color-negro',            // ← Link de destino (hash o URL completa)
+                        alt: 'Nitro Negro'               // ← Texto alternativo (opcional)
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#color-rojo',
+                        alt: 'Nitro Rojo'
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#color-azul',
+                        alt: 'Nitro Azul'
+                    }
+                ],
+                likes: '1.3M',
+                comments: '6,162'
+            },
+            {
+                id: 'laptop-tuf',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/From-KlickPin-CF-Unleash-Gaming-Power-with-Dell-Alienware-15-Review-Specs-and-Performance-Boost-🚀-Video-nel-2025.mp4',
+                username: 'Almacenes Delta',
+                description: 'Resistencia militar y diseño renovado. TUF F15 🛡️',
+                vertical: false,
+                brandSlider: [
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#especificacion-16gb',
+                        alt: 'TUF 16GB RAM'
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#especificacion-32gb',
+                        alt: 'TUF 32GB RAM'
+                    }
+                ],
+                likes: '856K',
+                comments: '3,421'
+            },
+            {
+                id: 'laptop-msi',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+                username: 'MSIGaming',
+                description: 'Elegancia y potencia en un chasis delgado.',
+                vertical: true,
+                brandSlider: [
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#gpu-rtx3050',
+                        alt: 'MSI RTX 3050'
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#gpu-rtx3060',
+                        alt: 'MSI RTX 3060'
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#gpu-rtx4050',
+                        alt: 'MSI RTX 4050'
+                    },
+                    {
+                        url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
+                        id: 'open-smart-drawer',
+                        link: '#gpu-rtx4060',
+                        alt: 'MSI RTX 4060'
+                    }
+                ],
+                likes: '2.1M',
+                comments: '8,934'
+            }
+        ];
+
+        const BUFFER_SIZE = 2;
+        const SCROLL_THRESHOLD = 0.6;
+
+        let soundOn = false;
+        let currentVideo = null;
+        let currentIndex = 0;
+        let slides = [];
+        let isScrolling = false;
+        let scrollTimeout = null;
+        let hasScrolled = false;
+        let sliderIntervals = new Map();
+        let sliderStates = new Map();
+
+        const scroller = document.getElementById('tt-feed-scroller');
+        const muteBtn = document.getElementById('tt-mute-btn');
+        const wrapper = document.getElementById('tiktok-wrapper');
+
+        // Calcular ancho del contenedor según slides visibles
+        function calculateContainerWidth() {
+            const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);      // 200px
+            const peekPrev = parseInt(CONFIG.brandSlider.peekPrevious);      // 50px
+            const gap = parseInt(CONFIG.brandSlider.slideGap);               // 10px
+            const visibleSlides = CONFIG.brandSlider.visibleSlides;          // 1
+            const marginLeft = parseInt(CONFIG.brandSlider.marginLeft);      // 15px
+
+            // Ancho total = margen + peek anterior + slide activo + slides siguientes + gaps
+            const totalWidth = marginLeft + peekPrev + slideWidth + (slideWidth * visibleSlides) + (gap * (visibleSlides + 1));
+
+            return `${totalWidth}px`;
         }
-    };
 
-    // ===================================================================
-    // 📹 VIDEOS - AQUÍ DEFINES TUS VIDEOS Y LOS IDS DE CADA IMAGEN
-    // ===================================================================
-    const VIDEOS = [
-        {
-            id: 'laptop-nitro',
-            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/From-KlickPin-CF-Видео-Видео-MSI-Thin-GF63-156-144Hz-Gaming-Laptop-Intel-Core-i7-12650H-NVIDIA-GeForce-RTX-4050-32GB-RAM-1TB-NVMe-SSD-Type-C-Cooler-Boost-5-Win11-Free-Accessory-Bu…-_-Ноутбук.mp4',
-            username: 'Almacenes Delta',
-            description: 'La reina calidad-precio. Nitro 5 con RTX 3050 🔥',
-            vertical: true,
-            // ⬇️ AQUÍ DEFINES CADA IMAGEN DEL SLIDER CON SU ID ÚNICO
-            brandSlider: [
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',        // ← ID único (solo letras, números y guiones)
-                    link: '#color-negro',            // ← Link de destino (hash o URL completa)
-                    alt: 'Nitro Negro'               // ← Texto alternativo (opcional)
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#color-rojo',
-                    alt: 'Nitro Rojo'
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#color-azul',
-                    alt: 'Nitro Azul'
-                }
-            ],
-            likes: '1.3M',
-            comments: '6,162'
-        },
-        {
-            id: 'laptop-tuf',
-            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/From-KlickPin-CF-Unleash-Gaming-Power-with-Dell-Alienware-15-Review-Specs-and-Performance-Boost-🚀-Video-nel-2025.mp4',
-            username: 'Almacenes Delta',
-            description: 'Resistencia militar y diseño renovado. TUF F15 🛡️',
-            vertical: false,
-            brandSlider: [
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#especificacion-16gb',
-                    alt: 'TUF 16GB RAM'
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#especificacion-32gb',
-                    alt: 'TUF 32GB RAM'
-                }
-            ],
-            likes: '856K',
-            comments: '3,421'
-        },
-        {
-            id: 'laptop-msi',
-            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
-            username: 'MSIGaming',
-            description: 'Elegancia y potencia en un chasis delgado.',
-            vertical: true,
-            brandSlider: [
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#gpu-rtx3050',
-                    alt: 'MSI RTX 3050'
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#gpu-rtx3060',
-                    alt: 'MSI RTX 3060'
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#gpu-rtx4050',
-                    alt: 'MSI RTX 4050'
-                },
-                {
-                    url: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/Screenshot-2025-12-12-124657.png',
-                    id: 'open-smart-drawer',
-                    link: '#gpu-rtx4060',
-                    alt: 'MSI RTX 4060'
-                }
-            ],
-            likes: '2.1M',
-            comments: '8,934'
-        }
-    ];
+        function createSlider(images, slideId) {
+            if (!images || images.length === 0) return '';
 
-    const BUFFER_SIZE = 2;
-    const SCROLL_THRESHOLD = 0.6;
+            const itemsHTML = images.map((item, index) => {
+                const url = typeof item === 'string' ? item : item.url;
+                const id = typeof item === 'string' ? '' : (item.id || '');
+                const link = typeof item === 'string' ? '#' : (item.link || '#');
+                const alt = typeof item === 'string' ? `Brand ${index + 1}` : (item.alt || `Brand ${index + 1}`);
 
-    let soundOn = false;
-    let currentVideo = null;
-    let currentIndex = 0;
-    let slides = [];
-    let isScrolling = false;
-    let scrollTimeout = null;
-    let hasScrolled = false;
-    let sliderIntervals = new Map();
-    let sliderStates = new Map();
-
-    const scroller = document.getElementById('tt-feed-scroller');
-    const muteBtn = document.getElementById('tt-mute-btn');
-    const wrapper = document.getElementById('tiktok-wrapper');
-
-    // Calcular ancho del contenedor según slides visibles
-    function calculateContainerWidth() {
-    const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);      // 200px
-    const peekPrev = parseInt(CONFIG.brandSlider.peekPrevious);      // 50px
-    const gap = parseInt(CONFIG.brandSlider.slideGap);               // 10px
-    const visibleSlides = CONFIG.brandSlider.visibleSlides;          // 1
-    const marginLeft = parseInt(CONFIG.brandSlider.marginLeft);      // 15px
-    
-    // Ancho total = margen + peek anterior + slide activo + slides siguientes + gaps
-    const totalWidth = marginLeft + peekPrev + slideWidth + (slideWidth * visibleSlides) + (gap * (visibleSlides + 1));
-    
-    return `${totalWidth}px`;
-}
-
-    function createSlider(images, slideId) {
-        if (!images || images.length === 0) return '';
-
-        const itemsHTML = images.map((item, index) => {
-            const url = typeof item === 'string' ? item : item.url;
-            const id = typeof item === 'string' ? '' : (item.id || '');
-            const link = typeof item === 'string' ? '#' : (item.link || '#');
-            const alt = typeof item === 'string' ? `Brand ${index + 1}` : (item.alt || `Brand ${index + 1}`);
-            
-            return `
+                return `
                 <a href="${link}" 
                    class="tt-slider-item ${index === 0 ? 'active' : ''}" 
                    data-index="${index}"
@@ -587,9 +615,9 @@
                     <img src="${url}" alt="${alt}" crossorigin="anonymous" draggable="false">
                 </a>
             `;
-        }).join('');
+            }).join('');
 
-        const dotsHTML = CONFIG.brandSlider.showDots && images.length > 1 ? `
+            const dotsHTML = CONFIG.brandSlider.showDots && images.length > 1 ? `
             <div class="tt-slider-dots">
                 ${images.map((_, i) => `
                     <div class="tt-slider-dot ${i === 0 ? 'active' : ''}"></div>
@@ -597,7 +625,7 @@
             </div>
         ` : '';
 
-        return `
+            return `
             <div class="tt-brand-slider" data-slide-id="${slideId}">
                 <div class="tt-slider-container">
                     <div class="tt-slider-track">
@@ -607,207 +635,207 @@
                 </div>
             </div>
         `;
-    }
+        }
 
-    function updateSlideClasses(track, currentSlide, totalSlides) {
-        const items = track.querySelectorAll('.tt-slider-item');
-        
-        items.forEach((item, index) => {
-            item.classList.remove('active', 'prev', 'next');
-            
-            if (index === currentSlide) {
-                item.classList.add('active');
-            } else if (index === currentSlide - 1 || (currentSlide === 0 && index === totalSlides - 1)) {
-                item.classList.add('prev');
-            } else if (index === currentSlide + 1 || (currentSlide === totalSlides - 1 && index === 0)) {
-                item.classList.add('next');
-            }
-        });
-    }
+        function updateSlideClasses(track, currentSlide, totalSlides) {
+            const items = track.querySelectorAll('.tt-slider-item');
 
-    function updateSliderPosition(slider, currentSlide) {
-        const track = slider.querySelector('.tt-slider-track');
-        const dots = slider.querySelectorAll('.tt-slider-dot');
-        const slideId = slider.dataset.slideId;
-        const state = sliderStates.get(slideId);
-        
-        if (!state) return;
+            items.forEach((item, index) => {
+                item.classList.remove('active', 'prev', 'next');
 
-        const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);
-        const gap = parseInt(CONFIG.brandSlider.slideGap);
-        const peekPrev = parseInt(CONFIG.brandSlider.peekPrevious);
-        const marginLeft = parseInt(CONFIG.brandSlider.marginLeft);
-        
-        const offset = -(currentSlide * (slideWidth + gap)) + marginLeft + peekPrev;
-        track.style.transform = `translateX(${offset}px)`;
-        
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentSlide);
-        });
-        
-        updateSlideClasses(track, currentSlide, state.totalSlides);
-    }
+                if (index === currentSlide) {
+                    item.classList.add('active');
+                } else if (index === currentSlide - 1 || (currentSlide === 0 && index === totalSlides - 1)) {
+                    item.classList.add('prev');
+                } else if (index === currentSlide + 1 || (currentSlide === totalSlides - 1 && index === 0)) {
+                    item.classList.add('next');
+                }
+            });
+        }
 
-    function initSliderAutoplay(slider, images) {
-        if (!CONFIG.brandSlider.autoplay || !slider || images.length <= 1) return;
+        function updateSliderPosition(slider, currentSlide) {
+            const track = slider.querySelector('.tt-slider-track');
+            const dots = slider.querySelectorAll('.tt-slider-dot');
+            const slideId = slider.dataset.slideId;
+            const state = sliderStates.get(slideId);
 
-        const slideId = slider.dataset.slideId;
-        
-        const state = {
-            currentSlide: 0,
-            totalSlides: images.length,
-            isPaused: false
-        };
-        
-        sliderStates.set(slideId, state);
+            if (!state) return;
 
-        const interval = setInterval(() => {
-            if (!state.isPaused) {
-                state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
-                updateSliderPosition(slider, state.currentSlide);
-            }
-        }, CONFIG.brandSlider.autoplaySpeed);
+            const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);
+            const gap = parseInt(CONFIG.brandSlider.slideGap);
+            const peekPrev = parseInt(CONFIG.brandSlider.peekPrevious);
+            const marginLeft = parseInt(CONFIG.brandSlider.marginLeft);
 
-        sliderIntervals.set(slideId, interval);
-        
-        updateSliderPosition(slider, 0);
-    }
+            const offset = -(currentSlide * (slideWidth + gap)) + marginLeft + peekPrev;
+            track.style.transform = `translateX(${offset}px)`;
 
-    function initSliderDrag(slider, images) {
-        if (!slider || images.length <= 1) return;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
 
-        const track = slider.querySelector('.tt-slider-track');
-        const sliderElement = slider; // El elemento .tt-brand-slider
-        const slideId = slider.dataset.slideId;
-        let state = sliderStates.get(slideId);
-        
-        if (!state) {
-            state = {
+            updateSlideClasses(track, currentSlide, state.totalSlides);
+        }
+
+        function initSliderAutoplay(slider, images) {
+            if (!CONFIG.brandSlider.autoplay || !slider || images.length <= 1) return;
+
+            const slideId = slider.dataset.slideId;
+
+            const state = {
                 currentSlide: 0,
                 totalSlides: images.length,
                 isPaused: false
             };
+
             sliderStates.set(slideId, state);
+
+            const interval = setInterval(() => {
+                if (!state.isPaused) {
+                    state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
+                    updateSliderPosition(slider, state.currentSlide);
+                }
+            }, CONFIG.brandSlider.autoplaySpeed);
+
+            sliderIntervals.set(slideId, interval);
+
+            updateSliderPosition(slider, 0);
         }
 
-        let isDragging = false;
-        let hasMoved = false;
-        let startX = 0;
-        let currentX = 0;
-        let startTransform = 0;
-        const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);
-        const gap = parseInt(CONFIG.brandSlider.slideGap);
+        function initSliderDrag(slider, images) {
+            if (!slider || images.length <= 1) return;
 
-        const getPositionX = (e) => {
-            return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-        };
+            const track = slider.querySelector('.tt-slider-track');
+            const sliderElement = slider; // El elemento .tt-brand-slider
+            const slideId = slider.dataset.slideId;
+            let state = sliderStates.get(slideId);
 
-        const handleStart = (e) => {
-            isDragging = true;
-            hasMoved = false;
-            startX = getPositionX(e);
-            currentX = startX;
-            
-            const currentTransform = track.style.transform;
-            const match = currentTransform.match(/translateX\(([^)]+)\)/);
-            startTransform = match ? parseFloat(match[1]) : 0;
-            
-            track.classList.add('is-dragging');
-            sliderElement.style.cursor = 'grabbing';
-            
-            if (CONFIG.brandSlider.autoplay) {
-                state.isPaused = true;
+            if (!state) {
+                state = {
+                    currentSlide: 0,
+                    totalSlides: images.length,
+                    isPaused: false
+                };
+                sliderStates.set(slideId, state);
             }
-        };
 
-        const handleMove = (e) => {
-            if (!isDragging) return;
-            
-            currentX = getPositionX(e);
-            const diff = currentX - startX;
-            
-            if (Math.abs(diff) > 3) {
-                hasMoved = true;
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            
-            track.style.transform = `translateX(${startTransform + diff}px)`;
-        };
+            let isDragging = false;
+            let hasMoved = false;
+            let startX = 0;
+            let currentX = 0;
+            let startTransform = 0;
+            const slideWidth = parseInt(CONFIG.brandSlider.slideWidth);
+            const gap = parseInt(CONFIG.brandSlider.slideGap);
 
-        const handleEnd = (e) => {
-            if (!isDragging) return;
-            
-            isDragging = false;
-            track.classList.remove('is-dragging');
-            sliderElement.style.cursor = 'grab';
-            
-            const diff = currentX - startX;
-            const threshold = CONFIG.brandSlider.dragSensitivity;
-            
-            if (!hasMoved || Math.abs(diff) < 5) {
-                updateSliderPosition(slider, state.currentSlide);
-                return;
-            }
-            
-            if (Math.abs(diff) > threshold) {
-                if (diff > 0) {
-                    state.currentSlide = (state.currentSlide - 1 + state.totalSlides) % state.totalSlides;
-                } else {
-                    state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
+            const getPositionX = (e) => {
+                return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            };
+
+            const handleStart = (e) => {
+                isDragging = true;
+                hasMoved = false;
+                startX = getPositionX(e);
+                currentX = startX;
+
+                const currentTransform = track.style.transform;
+                const match = currentTransform.match(/translateX\(([^)]+)\)/);
+                startTransform = match ? parseFloat(match[1]) : 0;
+
+                track.classList.add('is-dragging');
+                sliderElement.style.cursor = 'grabbing';
+
+                if (CONFIG.brandSlider.autoplay) {
+                    state.isPaused = true;
                 }
-            }
-            
-            updateSliderPosition(slider, state.currentSlide);
-            
-            if (CONFIG.brandSlider.autoplay) {
-                setTimeout(() => {
-                    state.isPaused = false;
-                }, 1000);
-            }
-        };
+            };
 
-        // Mouse events en el slider
-        sliderElement.addEventListener('mousedown', handleStart, { passive: true });
-        document.addEventListener('mousemove', handleMove, { passive: false });
-        document.addEventListener('mouseup', handleEnd, { passive: true });
-        
-        // Touch events en el slider
-        sliderElement.addEventListener('touchstart', handleStart, { passive: true });
-        sliderElement.addEventListener('touchmove', handleMove, { passive: false });
-        sliderElement.addEventListener('touchend', handleEnd, { passive: true });
-        
-        // Prevenir clicks en links cuando hubo arrastre
-        const sliderLinks = slider.querySelectorAll('.tt-slider-item');
-        sliderLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (hasMoved) {
+            const handleMove = (e) => {
+                if (!isDragging) return;
+
+                currentX = getPositionX(e);
+                const diff = currentX - startX;
+
+                if (Math.abs(diff) > 3) {
+                    hasMoved = true;
                     e.preventDefault();
                     e.stopPropagation();
-                    hasMoved = false;
                 }
-            }, { capture: true });
-        });
-    }
 
-    function stopSlider(slideId) {
-        if (sliderIntervals.has(slideId)) {
-            clearInterval(sliderIntervals.get(slideId));
-            sliderIntervals.delete(slideId);
+                track.style.transform = `translateX(${startTransform + diff}px)`;
+            };
+
+            const handleEnd = (e) => {
+                if (!isDragging) return;
+
+                isDragging = false;
+                track.classList.remove('is-dragging');
+                sliderElement.style.cursor = 'grab';
+
+                const diff = currentX - startX;
+                const threshold = CONFIG.brandSlider.dragSensitivity;
+
+                if (!hasMoved || Math.abs(diff) < 5) {
+                    updateSliderPosition(slider, state.currentSlide);
+                    return;
+                }
+
+                if (Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        state.currentSlide = (state.currentSlide - 1 + state.totalSlides) % state.totalSlides;
+                    } else {
+                        state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
+                    }
+                }
+
+                updateSliderPosition(slider, state.currentSlide);
+
+                if (CONFIG.brandSlider.autoplay) {
+                    setTimeout(() => {
+                        state.isPaused = false;
+                    }, 1000);
+                }
+            };
+
+            // Mouse events en el slider
+            sliderElement.addEventListener('mousedown', handleStart, { passive: true });
+            document.addEventListener('mousemove', handleMove, { passive: false });
+            document.addEventListener('mouseup', handleEnd, { passive: true });
+
+            // Touch events en el slider
+            sliderElement.addEventListener('touchstart', handleStart, { passive: true });
+            sliderElement.addEventListener('touchmove', handleMove, { passive: false });
+            sliderElement.addEventListener('touchend', handleEnd, { passive: true });
+
+            // Prevenir clicks en links cuando hubo arrastre
+            const sliderLinks = slider.querySelectorAll('.tt-slider-item');
+            sliderLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (hasMoved) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hasMoved = false;
+                    }
+                }, { capture: true });
+            });
         }
-        sliderStates.delete(slideId);
-    }
 
-    function createSlide(videoData, index) {
-        const slide = document.createElement('div');
-        slide.className = 'tt-video-slide';
-        slide.dataset.targetId = videoData.id;
-        slide.dataset.index = index;
-        const slideId = `${videoData.id}-${index}`;
+        function stopSlider(slideId) {
+            if (sliderIntervals.has(slideId)) {
+                clearInterval(sliderIntervals.get(slideId));
+                sliderIntervals.delete(slideId);
+            }
+            sliderStates.delete(slideId);
+        }
 
-        const orientClass = videoData.vertical ? '' : 'is-horizontal';
+        function createSlide(videoData, index) {
+            const slide = document.createElement('div');
+            slide.className = 'tt-video-slide';
+            slide.dataset.targetId = videoData.id;
+            slide.dataset.index = index;
+            const slideId = `${videoData.id}-${index}`;
 
-        let slideHTML = `
+            const orientClass = videoData.vertical ? '' : 'is-horizontal';
+
+            let slideHTML = `
             <div class="tt-play-icon">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(255, 255, 255, 0.36)">
                     <path d="M8 5v14l11-7z"/>
@@ -825,265 +853,265 @@
             </video>
         `;
 
-        if (CONFIG.brandSlider.enabled && videoData.brandSlider && videoData.brandSlider.length > 0) {
-            slideHTML += createSlider(videoData.brandSlider, slideId);
-        }
+            if (CONFIG.brandSlider.enabled && videoData.brandSlider && videoData.brandSlider.length > 0) {
+                slideHTML += createSlider(videoData.brandSlider, slideId);
+            }
 
-        if (CONFIG.sideActions.enabled) {
-            slideHTML += `<div class="tt-side-actions"></div>`;
-        }
+            if (CONFIG.sideActions.enabled) {
+                slideHTML += `<div class="tt-side-actions"></div>`;
+            }
 
-        slideHTML += `
+            slideHTML += `
             <div class="tt-overlay-info">
                 <div class="tt-username">${videoData.username}</div>
                 <div class="tt-description">${videoData.description}</div>
             </div>
         `;
 
-        slide.innerHTML = slideHTML;
+            slide.innerHTML = slideHTML;
 
-        if (CONFIG.brandSlider.enabled) {
-            const brandSlider = slide.querySelector('.tt-brand-slider');
-            if (brandSlider) {
-                const containerWidth = calculateContainerWidth();
-                
-                brandSlider.style.width = containerWidth;
-                brandSlider.style.height = CONFIG.brandSlider.slideHeight;
-                brandSlider.style.bottom = CONFIG.brandSlider.bottom;
-                brandSlider.style.left = CONFIG.brandSlider.left;
-                
-                if (CONFIG.brandSlider.right !== 'auto') {
-                    brandSlider.style.right = CONFIG.brandSlider.right;
-                    brandSlider.style.left = 'auto';
+            if (CONFIG.brandSlider.enabled) {
+                const brandSlider = slide.querySelector('.tt-brand-slider');
+                if (brandSlider) {
+                    const containerWidth = calculateContainerWidth();
+
+                    brandSlider.style.width = containerWidth;
+                    brandSlider.style.height = CONFIG.brandSlider.slideHeight;
+                    brandSlider.style.bottom = CONFIG.brandSlider.bottom;
+                    brandSlider.style.left = CONFIG.brandSlider.left;
+
+                    if (CONFIG.brandSlider.right !== 'auto') {
+                        brandSlider.style.right = CONFIG.brandSlider.right;
+                        brandSlider.style.left = 'auto';
+                    }
+
+                    const sliderItems = brandSlider.querySelectorAll('.tt-slider-item');
+                    sliderItems.forEach(item => {
+                        item.style.width = CONFIG.brandSlider.slideWidth;
+                        item.style.minWidth = CONFIG.brandSlider.slideWidth;
+                        item.style.height = CONFIG.brandSlider.slideHeight;
+                        item.style.borderRadius = CONFIG.brandSlider.borderRadius;
+                        item.style.boxShadow = CONFIG.brandSlider.boxShadow;
+                    });
+
+                    const track = brandSlider.querySelector('.tt-slider-track');
+                    if (track) {
+                        track.style.gap = CONFIG.brandSlider.slideGap;
+                    }
+
+                    setTimeout(() => {
+                        initSliderAutoplay(brandSlider, videoData.brandSlider);
+                        initSliderDrag(brandSlider, videoData.brandSlider);
+                    }, 100);
                 }
-                
-                const sliderItems = brandSlider.querySelectorAll('.tt-slider-item');
-                sliderItems.forEach(item => {
-                    item.style.width = CONFIG.brandSlider.slideWidth;
-                    item.style.minWidth = CONFIG.brandSlider.slideWidth;
-                    item.style.height = CONFIG.brandSlider.slideHeight;
-                    item.style.borderRadius = CONFIG.brandSlider.borderRadius;
-                    item.style.boxShadow = CONFIG.brandSlider.boxShadow;
-                });
-                
-                const track = brandSlider.querySelector('.tt-slider-track');
-                if (track) {
-                    track.style.gap = CONFIG.brandSlider.slideGap;
+            }
+
+            if (CONFIG.sideActions.enabled) {
+                const sideActions = slide.querySelector('.tt-side-actions');
+                if (sideActions) {
+                    sideActions.style.bottom = CONFIG.sideActions.bottom;
+                    sideActions.style.right = CONFIG.sideActions.right;
+                    sideActions.style.gap = CONFIG.sideActions.gap;
+
+                    const icons = sideActions.querySelectorAll('.tt-action-icon');
+                    icons.forEach(icon => {
+                        icon.style.width = CONFIG.sideActions.iconSize;
+                        icon.style.height = CONFIG.sideActions.iconSize;
+                    });
                 }
-                
-                setTimeout(() => {
-                    initSliderAutoplay(brandSlider, videoData.brandSlider);
-                    initSliderDrag(brandSlider, videoData.brandSlider);
-                }, 100);
             }
-        }
 
-        if (CONFIG.sideActions.enabled) {
-            const sideActions = slide.querySelector('.tt-side-actions');
-            if (sideActions) {
-                sideActions.style.bottom = CONFIG.sideActions.bottom;
-                sideActions.style.right = CONFIG.sideActions.right;
-                sideActions.style.gap = CONFIG.sideActions.gap;
-                
-                const icons = sideActions.querySelectorAll('.tt-action-icon');
-                icons.forEach(icon => {
-                    icon.style.width = CONFIG.sideActions.iconSize;
-                    icon.style.height = CONFIG.sideActions.iconSize;
-                });
-            }
-        }
+            const video = slide.querySelector('video');
 
-        const video = slide.querySelector('video');
-
-        video.addEventListener('loadedmetadata', () => {
-            if (video.videoWidth > video.videoHeight) {
-                video.classList.add('is-horizontal');
-            }
-        });
-
-        slide.addEventListener('click', (e) => {
-            if (e.target.closest('.tt-mute-overlay') || 
-                e.target.closest('.tt-brand-slider') || 
-                e.target.closest('.tt-action-button')) {
-                return;
-            }
-            
-            if (video.paused) {
-                video.play();
-                slide.classList.remove('is-paused');
-            } else {
-                video.pause();
-                slide.classList.add('is-paused');
-            }
-        });
-
-        const actionButtons = slide.querySelectorAll('.tt-action-button');
-        actionButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const action = btn.dataset.action;
-                handleAction(action, videoData.id, btn);
+            video.addEventListener('loadedmetadata', () => {
+                if (video.videoWidth > video.videoHeight) {
+                    video.classList.add('is-horizontal');
+                }
             });
-        });
 
-        slide.dataset.slideUniqueId = slideId;
+            slide.addEventListener('click', (e) => {
+                if (e.target.closest('.tt-mute-overlay') ||
+                    e.target.closest('.tt-brand-slider') ||
+                    e.target.closest('.tt-action-button')) {
+                    return;
+                }
 
-        return slide;
-    }
-
-    function handleAction(action, videoId, button) {
-        console.log(`Acción: ${action} en video: ${videoId}`);
-        
-        if (action === 'like') {
-            button.classList.toggle('is-liked');
-        }
-        
-        window.dispatchEvent(new CustomEvent('tt-action-clicked', {
-            detail: { action, videoId }
-        }));
-    }
-
-    function initSlides() {
-        for (let i = 0; i < VIDEOS.length + BUFFER_SIZE; i++) {
-            const videoIndex = i % VIDEOS.length;
-            const slide = createSlide(VIDEOS[videoIndex], i);
-            scroller.appendChild(slide);
-            slides.push(slide);
-        }
-    }
-
-    function loadMoreSlides(direction) {
-        if (direction === 'down') {
-            const lastSlide = slides[slides.length - 1];
-            const lastIndex = parseInt(lastSlide.dataset.index);
-            const nextIndex = lastIndex + 1;
-            const videoIndex = nextIndex % VIDEOS.length;
-            
-            const slide = createSlide(VIDEOS[videoIndex], nextIndex);
-            scroller.appendChild(slide);
-            slides.push(slide);
-            
-            if (slides.length > VIDEOS.length * 3) {
-                const removed = slides.shift();
-                const slideId = removed.dataset.slideUniqueId;
-                if (slideId) stopSlider(slideId);
-                observer.unobserve(removed);
-                removed.remove();
-            }
-            
-            observer.observe(slide);
-        } else if (direction === 'up') {
-            const firstSlide = slides[0];
-            const firstIndex = parseInt(firstSlide.dataset.index);
-            const prevIndex = firstIndex - 1;
-            
-            if (prevIndex < 0) return;
-            
-            const videoIndex = prevIndex % VIDEOS.length;
-            const slide = createSlide(VIDEOS[videoIndex], prevIndex);
-            scroller.insertBefore(slide, slides[0]);
-            slides.unshift(slide);
-            
-            const slideHeight = slide.offsetHeight;
-            scroller.scrollTop += slideHeight;
-            
-            if (slides.length > VIDEOS.length * 3) {
-                const removed = slides.pop();
-                const slideId = removed.dataset.slideUniqueId;
-                if (slideId) stopSlider(slideId);
-                observer.unobserve(removed);
-                removed.remove();
-            }
-            
-            observer.observe(slide);
-        }
-    }
-
-    scroller.addEventListener('scroll', () => {
-        if (!hasScrolled) {
-            hasScrolled = true;
-            wrapper.classList.add('scrolled');
-        }
-        
-        if (isScrolling) return;
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const scrollTop = scroller.scrollTop;
-            const scrollHeight = scroller.scrollHeight;
-            const clientHeight = scroller.clientHeight;
-
-            if (scrollHeight - (scrollTop + clientHeight) < clientHeight * 2) {
-                loadMoreSlides('down');
-            }
-
-            if (scrollTop < clientHeight * 2) {
-                loadMoreSlides('up');
-            }
-        }, 100);
-    });
-
-    let observer = null;
-
-    function initObserver() {
-        observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const slide = entry.target;
-                const video = slide.querySelector('video');
-                const targetId = slide.dataset.targetId;
-
-                if (entry.isIntersecting) {
-                    currentVideo = video;
-                    currentIndex = parseInt(slide.dataset.index);
-                    
-                    if (video) {
-                        video.currentTime = 0;
-                        video.muted = !soundOn;
-                        
-                        video.play().then(() => {
-                            slide.classList.remove('is-paused');
-                        }).catch(e => console.log('Autoplay bloqueado'));
-                    }
-                    
-                    window.dispatchEvent(new CustomEvent('tt-product-change', { 
-                        detail: { id: targetId } 
-                    }));
-                } else {
-                    if (video) {
-                        video.pause();
-                        video.muted = true;
-                    }
+                if (video.paused) {
+                    video.play();
                     slide.classList.remove('is-paused');
+                } else {
+                    video.pause();
+                    slide.classList.add('is-paused');
                 }
             });
-        }, {
-            root: scroller,
-            threshold: SCROLL_THRESHOLD
-        });
 
-        slides.forEach(slide => observer.observe(slide));
-    }
+            const actionButtons = slide.querySelectorAll('.tt-action-button');
+            actionButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const action = btn.dataset.action;
+                    handleAction(action, videoData.id, btn);
+                });
+            });
 
-    muteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        soundOn = true;
-        
-        if (currentVideo) {
-            currentVideo.muted = false;
+            slide.dataset.slideUniqueId = slideId;
+
+            return slide;
         }
-        
-        muteBtn.classList.add('is-hidden');
-    });
 
-    window.addEventListener('beforeunload', () => {
-        sliderIntervals.forEach((interval, key) => {
-            clearInterval(interval);
+        function handleAction(action, videoId, button) {
+            console.log(`Acción: ${action} en video: ${videoId}`);
+
+            if (action === 'like') {
+                button.classList.toggle('is-liked');
+            }
+
+            window.dispatchEvent(new CustomEvent('tt-action-clicked', {
+                detail: { action, videoId }
+            }));
+        }
+
+        function initSlides() {
+            for (let i = 0; i < VIDEOS.length + BUFFER_SIZE; i++) {
+                const videoIndex = i % VIDEOS.length;
+                const slide = createSlide(VIDEOS[videoIndex], i);
+                scroller.appendChild(slide);
+                slides.push(slide);
+            }
+        }
+
+        function loadMoreSlides(direction) {
+            if (direction === 'down') {
+                const lastSlide = slides[slides.length - 1];
+                const lastIndex = parseInt(lastSlide.dataset.index);
+                const nextIndex = lastIndex + 1;
+                const videoIndex = nextIndex % VIDEOS.length;
+
+                const slide = createSlide(VIDEOS[videoIndex], nextIndex);
+                scroller.appendChild(slide);
+                slides.push(slide);
+
+                if (slides.length > VIDEOS.length * 3) {
+                    const removed = slides.shift();
+                    const slideId = removed.dataset.slideUniqueId;
+                    if (slideId) stopSlider(slideId);
+                    observer.unobserve(removed);
+                    removed.remove();
+                }
+
+                observer.observe(slide);
+            } else if (direction === 'up') {
+                const firstSlide = slides[0];
+                const firstIndex = parseInt(firstSlide.dataset.index);
+                const prevIndex = firstIndex - 1;
+
+                if (prevIndex < 0) return;
+
+                const videoIndex = prevIndex % VIDEOS.length;
+                const slide = createSlide(VIDEOS[videoIndex], prevIndex);
+                scroller.insertBefore(slide, slides[0]);
+                slides.unshift(slide);
+
+                const slideHeight = slide.offsetHeight;
+                scroller.scrollTop += slideHeight;
+
+                if (slides.length > VIDEOS.length * 3) {
+                    const removed = slides.pop();
+                    const slideId = removed.dataset.slideUniqueId;
+                    if (slideId) stopSlider(slideId);
+                    observer.unobserve(removed);
+                    removed.remove();
+                }
+
+                observer.observe(slide);
+            }
+        }
+
+        scroller.addEventListener('scroll', () => {
+            if (!hasScrolled) {
+                hasScrolled = true;
+                wrapper.classList.add('scrolled');
+            }
+
+            if (isScrolling) return;
+
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollTop = scroller.scrollTop;
+                const scrollHeight = scroller.scrollHeight;
+                const clientHeight = scroller.clientHeight;
+
+                if (scrollHeight - (scrollTop + clientHeight) < clientHeight * 2) {
+                    loadMoreSlides('down');
+                }
+
+                if (scrollTop < clientHeight * 2) {
+                    loadMoreSlides('up');
+                }
+            }, 100);
         });
-        sliderIntervals.clear();
-        sliderStates.clear();
-    });
 
-    initSlides();
-    initObserver();
-})();
+        let observer = null;
+
+        function initObserver() {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const slide = entry.target;
+                    const video = slide.querySelector('video');
+                    const targetId = slide.dataset.targetId;
+
+                    if (entry.isIntersecting) {
+                        currentVideo = video;
+                        currentIndex = parseInt(slide.dataset.index);
+
+                        if (video) {
+                            video.currentTime = 0;
+                            video.muted = !soundOn;
+
+                            video.play().then(() => {
+                                slide.classList.remove('is-paused');
+                            }).catch(e => console.log('Autoplay bloqueado'));
+                        }
+
+                        window.dispatchEvent(new CustomEvent('tt-product-change', {
+                            detail: { id: targetId }
+                        }));
+                    } else {
+                        if (video) {
+                            video.pause();
+                            video.muted = true;
+                        }
+                        slide.classList.remove('is-paused');
+                    }
+                });
+            }, {
+                root: scroller,
+                threshold: SCROLL_THRESHOLD
+            });
+
+            slides.forEach(slide => observer.observe(slide));
+        }
+
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            soundOn = true;
+
+            if (currentVideo) {
+                currentVideo.muted = false;
+            }
+
+            muteBtn.classList.add('is-hidden');
+        });
+
+        window.addEventListener('beforeunload', () => {
+            sliderIntervals.forEach((interval, key) => {
+                clearInterval(interval);
+            });
+            sliderIntervals.clear();
+            sliderStates.clear();
+        });
+
+        initSlides();
+        initObserver();
+    })();
 </script>

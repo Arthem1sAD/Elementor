@@ -15,31 +15,31 @@
 -->
 
 <div class="siguiendo-container" id="siguiendoContainer">
-  
+
   <!-- ==================== HEADER ==================== -->
   <div class="siguiendo-header">
     <h2 class="siguiendo-title">Siguiendo</h2>
     <p class="siguiendo-subtitle">Creadores que sigues</p>
   </div>
-  
+
   <!-- ==================== GRID DE CREADORES ==================== -->
   <div class="siguiendo-grid" id="siguiendoGrid">
     <!-- Los creadores se inyectan aquí dinámicamente -->
   </div>
-  
+
 </div>
 
 <!-- ==================== VISTA DE PERFIL DE CREADOR ==================== -->
 <div class="creator-view-overlay" id="creatorViewOverlay">
   <div class="creator-view" id="creatorView">
-    
+
     <!-- Botón volver -->
     <button class="creator-back-btn" id="creatorBackBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
       </svg>
     </button>
-    
+
     <!-- Header del perfil -->
     <div class="creator-profile-header" id="creatorProfileHeader">
       <img class="creator-avatar-large" id="creatorAvatarLarge" src="" alt="Avatar">
@@ -67,69 +67,90 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Tabs del perfil -->
     <div class="creator-tabs" id="creatorTabs">
       <div class="creator-tab active" data-tab="videos">
         <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/>
+          <path
+            d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z" />
         </svg>
         Videos
       </div>
       <div class="creator-tab" data-tab="liked">
         <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
         Me gusta
       </div>
     </div>
-    
+
     <!-- Galería de videos del creador -->
     <div class="creator-videos-gallery" id="creatorVideosGallery">
       <!-- Los videos se inyectan aquí -->
     </div>
-    
+
   </div>
 </div>
 
 <!-- ==================== POPUP DE VIDEO INDIVIDUAL ==================== -->
 <div class="video-detail-overlay" id="videoDetailOverlay">
   <div class="video-detail" id="videoDetail">
-    
+
     <!-- Botón cerrar -->
     <button class="detail-close-btn" id="detailCloseBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
       </svg>
     </button>
-    
+
     <!-- Contenido del popup -->
     <div class="detail-content">
-      
+
       <!-- Área del video -->
       <div class="detail-video-area">
-        <div class="detail-player">
+        <div class="detail-player" id="detailPlayer">
           <video id="detailVideo" playsinline loop></video>
-          
+
+          <!-- Indicador de Play/Pause con animación fade -->
+          <div class="detail-play-indicator" id="detailPlayIndicator">
+            <svg viewBox="0 0 24 24" class="indicator-play" style="display:none;">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg viewBox="0 0 24 24" class="indicator-pause" style="display:none;">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </div>
+
           <!-- Navegación -->
           <div class="detail-nav">
             <button class="detail-nav-btn" id="detailNavUp">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
               </svg>
             </button>
             <button class="detail-nav-btn" id="detailNavDown">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
               </svg>
             </button>
           </div>
+
+          <!-- Indicador visual de mute (no interactivo) -->
+          <div class="detail-mute-indicator" id="detailMuteIndicator">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+            </svg>
+          </div>
         </div>
       </div>
-      
+
       <!-- Panel de comentarios -->
       <div class="detail-sidebar">
-        
+
         <!-- Ficha de perfil mini -->
         <div class="detail-profile-card">
           <div class="profile-row">
@@ -140,14 +161,14 @@
             </div>
             <button class="follow-btn-mini" id="detailFollowBtn">Seguir</button>
           </div>
-          
+
           <!-- Link -->
           <div class="detail-link-wrapper">
             <input type="text" class="detail-link" id="detailLink" readonly value="">
             <button class="copy-btn" id="detailCopyBtn">Copiar enlace</button>
           </div>
         </div>
-        
+
         <!-- Switch y comentarios -->
         <div class="detail-comments-section">
           <div class="detail-switch" id="detailSwitch">
@@ -158,7 +179,7 @@
               Reseñas
             </div>
           </div>
-          
+
           <div class="detail-comments-content">
             <div class="detail-tab-content active" data-content="comentarios" id="detailTabComentarios">
               [mi_plantilla id="ID_COMENTARIOS"]
@@ -168,927 +189,1545 @@
             </div>
           </div>
         </div>
-        
+
         <div class="detail-comment-input">
           <span class="login-prompt">Iniciar sesión para comentar</span>
         </div>
-        
+
       </div>
     </div>
   </div>
 </div>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎨 VARIABLES CSS - SECCIÓN SIGUIENDO
    ═══════════════════════════════════════════════════════════════════════════════ */
-:root {
-  --siguiendo-bg: #000000;
-  --siguiendo-card-bg: #1f1f1f;
-  --siguiendo-hover: rgba(255,255,255,0.1);
-  --siguiendo-text: #ffffff;
-  --siguiendo-text-secondary: #a0a0a0;
-  --siguiendo-accent: #fe2c55;
-  --siguiendo-border: rgba(255,255,255,0.1);
-  
-  /* Grid */
-  --siguiendo-columns: 3;
-  --siguiendo-gap: 20px;
-}
+  :root {
+    --siguiendo-bg: #000000;
+    --siguiendo-card-bg: #1f1f1f;
+    --siguiendo-hover: rgba(255, 255, 255, 0.1);
+    --siguiendo-text: #ffffff;
+    --siguiendo-text-secondary: #a0a0a0;
+    --siguiendo-accent: #fe2c55;
+    --siguiendo-border: rgba(255, 255, 255, 0.1);
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+    /* Grid */
+    --siguiendo-columns: 3;
+    --siguiendo-gap: 20px;
+    /* Gap horizontal entre tarjetas */
+    --siguiendo-row-gap: 445px;
+    /* Gap vertical entre filas - AJUSTA ESTE VALOR para más/menos espacio entre filas */
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📐 LAYOUT PRINCIPAL
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.siguiendo-container {
-  width: 100%;
-  height: 100%;
-  background: var(--siguiendo-bg);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  font-family: "TikTok Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
+  .siguiendo-container {
+    width: 100%;
+    height: 100%;
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+    background: var(--siguiendo-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: "TikTok Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📝 HEADER
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.siguiendo-header {
-  padding: 24px 32px 16px;
-  flex-shrink: 0;
-}
+  .siguiendo-header {
+    padding: 24px 32px 16px;
+    flex-shrink: 0;
+  }
 
-.siguiendo-title {
-  color: var(--siguiendo-text);
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 4px 0;
-}
+  .siguiendo-title {
+    color: var(--siguiendo-text);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+  }
 
-.siguiendo-subtitle {
-  color: var(--siguiendo-text-secondary);
-  font-size: 14px;
-  margin: 0;
-}
+  .siguiendo-subtitle {
+    color: var(--siguiendo-text-secondary);
+    font-size: 14px;
+    margin: 0;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    👥 GRID DE CREADORES
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.siguiendo-grid {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 32px 32px;
-  display: grid;
-  grid-template-columns: repeat(var(--siguiendo-columns), 1fr);
-  gap: var(--siguiendo-gap);
-  align-content: start;
-}
+  .siguiendo-grid {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 32px 662px;
+    display: grid;
+    grid-template-columns: repeat(var(--siguiendo-columns), 1fr);
+    gap: var(--siguiendo-row-gap) var(--siguiendo-gap);
+    /* Primero row-gap (vertical), luego column-gap (horizontal) */
+    align-content: start;
+  }
 
-.siguiendo-grid::-webkit-scrollbar {
-  width: 8px;
-}
+  .siguiendo-grid::-webkit-scrollbar {
+    width: 8px;
+  }
 
-.siguiendo-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
+  .siguiendo-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.siguiendo-grid::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 4px;
-}
+  .siguiendo-grid::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎴 TARJETA DE CREADOR
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.creator-card {
-  position: relative;
-  aspect-ratio: 9/14;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--siguiendo-card-bg);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+  .creator-card {
+    position: relative;
+    aspect-ratio: 9/14;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--siguiendo-card-bg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-.creator-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-}
+  .creator-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
 
-.creator-card:hover .card-video {
-  opacity: 1;
-}
+  .card-preview-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
 
-.creator-card:hover .card-preview-img {
-  opacity: 0;
-}
+  .card-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    /* Permite que los clicks pasen al .creator-card */
+  }
 
-.card-preview-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
+  /* Info del creador encima del video */
+  .creator-card-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 5;
+    pointer-events: none;
+    /* Permite que los clicks pasen al .creator-card */
+  }
 
-.card-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+  .creator-card-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+  }
 
-/* Info del creador encima del video */
-.creator-card-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 5;
-}
+  .creator-card-info {
+    flex: 1;
+    min-width: 0;
+    pointer-events: none;
+  }
 
-.creator-card-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.5);
-}
+  .creator-card-username {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.creator-card-info {
-  flex: 1;
-  min-width: 0;
-}
+  .creator-card-name {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.creator-card-username {
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  /* Badge verificado */
+  .verified-badge {
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
 
-.creator-card-name {
-  color: rgba(255,255,255,0.8);
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .verified-badge svg {
+    fill: #20d5ec;
+  }
 
-/* Badge verificado */
-.verified-badge {
-  width: 14px;
-  height: 14px;
-  display: inline-flex;
-  vertical-align: middle;
-  margin-left: 4px;
-}
+  /* Footer de la tarjeta */
+  .creator-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 60px 16px 16px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    z-index: 5;
+    pointer-events: none;
+    /* Permite que los clicks pasen al .creator-card */
+  }
 
-.verified-badge svg {
-  fill: #20d5ec;
-}
+  .creator-card-follow-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--siguiendo-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    pointer-events: auto;
+    /* El botón SÍ responde a clicks */
+  }
 
-/* Footer de la tarjeta */
-.creator-card-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 60px 16px 16px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  z-index: 5;
-}
+  .creator-card-follow-btn:hover {
+    background: #ff3b5c;
+  }
 
-.creator-card-follow-btn {
-  width: 100%;
-  padding: 10px;
-  background: var(--siguiendo-accent);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
+  .creator-card-follow-btn.following {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 
-.creator-card-follow-btn:hover {
-  background: #ff3b5c;
-}
-
-.creator-card-follow-btn.following {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    👤 VISTA DE PERFIL DE CREADOR
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.creator-view-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--siguiendo-bg);
-  z-index: 10000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  overflow: hidden;
-}
+  .creator-view-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--siguiendo-bg);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    overflow: hidden;
+  }
 
-.creator-view-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+  .creator-view-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.creator-view {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
+  .creator-view {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
 
-/* Botón volver */
-.creator-back-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  transition: background 0.2s ease;
-}
+  /* Botón volver */
+  .creator-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: background 0.2s ease;
+  }
 
-.creator-back-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
+  .creator-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-/* Header del perfil */
-.creator-profile-header {
-  padding: 80px 32px 32px;
-  display: flex;
-  gap: 32px;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--siguiendo-border);
-}
+  /* Header del perfil */
+  .creator-profile-header {
+    padding: 80px 32px 32px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--siguiendo-border);
+  }
 
-.creator-avatar-large {
-  width: 116px;
-  height: 116px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
+  .creator-avatar-large {
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
 
-.creator-profile-info {
-  flex: 1;
-  min-width: 0;
-}
+  .creator-profile-info {
+    flex: 1;
+    min-width: 0;
+  }
 
-.creator-username-large {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--siguiendo-text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
+  .creator-username-large {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--siguiendo-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
 
-.creator-name-large {
-  font-size: 16px;
-  color: var(--siguiendo-text-secondary);
-  margin-bottom: 16px;
-}
+  .creator-name-large {
+    font-size: 16px;
+    color: var(--siguiendo-text-secondary);
+    margin-bottom: 16px;
+  }
 
-.creator-stats {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 12px;
-}
+  .creator-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 12px;
+  }
 
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.stat-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--siguiendo-text);
-}
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--siguiendo-text);
+  }
 
-.stat-label {
-  font-size: 13px;
-  color: var(--siguiendo-text-secondary);
-}
+  .stat-label {
+    font-size: 13px;
+    color: var(--siguiendo-text-secondary);
+  }
 
-.creator-bio {
-  color: var(--siguiendo-text);
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 12px 0 16px;
-}
+  .creator-bio {
+    color: var(--siguiendo-text);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 12px 0 16px;
+  }
 
-.creator-actions {
-  display: flex;
-  gap: 12px;
-}
+  .creator-actions {
+    display: flex;
+    gap: 12px;
+  }
 
-.action-btn {
-  padding: 8px 24px;
-  border-radius: 4px;
-  border: 1px solid var(--siguiendo-border);
-  background: transparent;
-  color: var(--siguiendo-text);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+  .action-btn {
+    padding: 8px 24px;
+    border-radius: 4px;
+    border: 1px solid var(--siguiendo-border);
+    background: transparent;
+    color: var(--siguiendo-text);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
 
-.action-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
+  .action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-.action-btn.primary {
-  background: var(--siguiendo-accent);
-  border-color: var(--siguiendo-accent);
-}
+  .action-btn.primary {
+    background: var(--siguiendo-accent);
+    border-color: var(--siguiendo-accent);
+  }
 
-.action-btn.primary:hover {
-  background: #ff3b5c;
-}
+  .action-btn.primary:hover {
+    background: #ff3b5c;
+  }
 
-/* Tabs del perfil */
-.creator-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--siguiendo-border);
-  padding: 0 32px;
-}
+  /* Tabs del perfil */
+  .creator-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--siguiendo-border);
+    padding: 0 32px;
+  }
 
-.creator-tab {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 24px;
-  color: var(--siguiendo-text-secondary);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.2s ease;
-}
+  .creator-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    color: var(--siguiendo-text-secondary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+  }
 
-.creator-tab:hover {
-  color: var(--siguiendo-text);
-}
+  .creator-tab:hover {
+    color: var(--siguiendo-text);
+  }
 
-.creator-tab.active {
-  color: var(--siguiendo-text);
-}
+  .creator-tab.active {
+    color: var(--siguiendo-text);
+  }
 
-.creator-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--siguiendo-text);
-}
+  .creator-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--siguiendo-text);
+  }
 
-.creator-tab svg {
-  fill: currentColor;
-}
+  .creator-tab svg {
+    fill: currentColor;
+  }
 
-/* Galería de videos del creador */
-.creator-videos-gallery {
-  flex: 1;
-  padding: 24px 32px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
-  align-content: start;
-}
+  /* Galería de videos del creador */
+  .creator-videos-gallery {
+    flex: 1;
+    padding: 24px 32px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    align-content: start;
+  }
 
-.creator-video-card {
-  position: relative;
-  aspect-ratio: 9/12;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--siguiendo-card-bg);
-  transition: transform 0.2s ease;
-}
+  .creator-video-card {
+    position: relative;
+    aspect-ratio: 9/12;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--siguiendo-card-bg);
+    transition: transform 0.2s ease;
+  }
 
-.creator-video-card:hover {
-  transform: scale(1.02);
-}
+  .creator-video-card:hover {
+    transform: scale(1.02);
+  }
 
-.creator-video-card img,
-.creator-video-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .creator-video-card video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.creator-video-stats {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-}
+  .creator-video-stats {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
 
-.creator-video-stats svg {
-  width: 16px;
-  height: 16px;
-  fill: #fff;
-}
+  .creator-video-stats svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+  }
 
-/* Etiqueta "Anclado" */
-.pinned-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  padding: 4px 8px;
-  background: var(--siguiendo-accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 4px;
-}
+  /* Etiqueta "Anclado" */
+  .pinned-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    background: var(--siguiendo-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 4px;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
+   🔊 CONTROLES DE VIDEO (MUTE/UNMUTE Y PLAY/PAUSE)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+  .video-control-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .video-control-btn {
+    width: 64px;
+    /* AJUSTA ESTE VALOR para cambiar el tamaño del botón */
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    /* AJUSTA LA OPACIDAD (0.6) para más/menos transparencia */
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: background 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .video-control-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    /* AJUSTA LA OPACIDAD al hacer hover */
+    transform: scale(1.1);
+  }
+
+  .video-control-btn svg {
+    width: 28px;
+    /* AJUSTA ESTE VALOR para cambiar el tamaño del ícono */
+    height: 28px;
+    fill: #fff;
+  }
+
+  /* Ocultar botón cuando no hay hover en la tarjeta */
+  .creator-video-card .video-control-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .creator-video-card:hover .video-control-overlay {
+    opacity: 1;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎬 POPUP DE VIDEO DETALLE
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.video-detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.95);
-  z-index: 10001;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .video-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.video-detail-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+  .video-detail-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.video-detail {
-  width: 95%;
-  max-width: 1100px;
-  height: 90%;
-  max-height: 750px;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
+  .video-detail {
+    width: 95%;
+    max-width: 1100px;
+    height: 90%;
+    max-height: 750px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
 
-.detail-close-btn {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
+  .detail-close-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
 
-.detail-close-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
+  .detail-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-.detail-content {
-  flex: 1;
-  display: flex;
-  margin-top: 60px;
-  overflow: hidden;
-}
+  .detail-content {
+    flex: 1;
+    display: flex;
+    margin-top: 60px;
+    overflow: hidden;
+  }
 
-.detail-video-area {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: relative;
-}
+  .detail-video-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+  }
 
-.detail-player {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-}
+  .detail-player {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    cursor: pointer;
+  }
 
-.detail-player video {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 8px;
-  object-fit: contain;
-}
+  .detail-player video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+  }
 
-.detail-nav {
-  position: absolute;
-  right: -55px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  /* Indicador de Play/Pause con animación fade */
+  .detail-play-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
-.detail-nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .detail-play-indicator.show {
+    opacity: 1;
+    animation: detailFadeInOut 1.2s ease forwards;
+  }
 
-.detail-nav-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
+  @keyframes detailFadeInOut {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
 
-/* Sidebar de comentarios */
-.detail-sidebar {
-  width: 380px;
-  background: #121212;
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid var(--siguiendo-border);
-}
+    15% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
 
-.detail-profile-card {
-  padding: 16px;
-  border-bottom: 1px solid var(--siguiendo-border);
-}
+    50% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
 
-.profile-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
 
-.detail-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  .detail-play-indicator svg {
+    width: 80px;
+    height: 80px;
+    fill: rgba(255, 255, 255, 0.6);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
 
-.profile-text {
-  flex: 1;
-  min-width: 0;
-}
+  .detail-nav {
+    position: absolute;
+    right: -55px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-.detail-username {
-  font-weight: 700;
-  font-size: 15px;
-  color: #fff;
-}
+  .detail-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.detail-date {
-  font-size: 12px;
-  color: var(--siguiendo-text-secondary);
-}
+  .detail-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-.follow-btn-mini {
-  padding: 6px 16px;
-  background: var(--siguiendo-accent);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-}
+  /* Indicador de mute centrado - solo visual, no interactivo */
+  .detail-mute-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    opacity: 0.7;
+  }
 
-.detail-link-wrapper {
-  display: flex;
-  gap: 8px;
-}
+  .detail-mute-indicator svg {
+    fill: #fff;
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
 
-.detail-link {
-  flex: 1;
-  background: rgba(255,255,255,0.1);
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  color: var(--siguiendo-text-secondary);
-  font-size: 12px;
-  outline: none;
-}
+  .detail-mute-indicator.hidden {
+    display: none;
+  }
 
-.copy-btn {
-  padding: 8px 14px;
-  background: transparent;
-  border: 1px solid var(--siguiendo-border);
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
+  /* Sidebar de comentarios */
+  .detail-sidebar {
+    width: 380px;
+    background: #121212;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--siguiendo-border);
+  }
 
-.copy-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
+  .detail-profile-card {
+    padding: 16px;
+    border-bottom: 1px solid var(--siguiendo-border);
+  }
 
-/* Switch en detalle */
-.detail-comments-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+  .profile-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
 
-.detail-switch {
-  display: flex;
-  border-bottom: 1px solid var(--siguiendo-border);
-}
+  .detail-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-.detail-switch-tab {
-  flex: 1;
-  text-align: center;
-  padding: 14px 12px;
-  color: var(--siguiendo-text-secondary);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  position: relative;
-}
+  .profile-text {
+    flex: 1;
+    min-width: 0;
+  }
 
-.detail-switch-tab.active {
-  color: #fff;
-}
+  .detail-username {
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+  }
 
-.detail-switch-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #fff;
-}
+  .detail-date {
+    font-size: 12px;
+    color: var(--siguiendo-text-secondary);
+  }
 
-.detail-comments-content {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-}
+  .follow-btn-mini {
+    padding: 6px 16px;
+    background: var(--siguiendo-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+  }
 
-.detail-tab-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  padding: 16px;
-  opacity: 0;
-  visibility: hidden;
-}
+  .detail-link-wrapper {
+    display: flex;
+    gap: 8px;
+  }
 
-.detail-tab-content.active {
-  opacity: 1;
-  visibility: visible;
-}
+  .detail-link {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: var(--siguiendo-text-secondary);
+    font-size: 12px;
+    outline: none;
+  }
 
-.detail-comment-input {
-  padding: 16px;
-  border-top: 1px solid var(--siguiendo-border);
-}
+  .copy-btn {
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--siguiendo-border);
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
 
-.login-prompt {
-  display: block;
-  text-align: center;
-  color: var(--siguiendo-accent);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* Switch en detalle */
+  .detail-comments-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .detail-switch {
+    display: flex;
+    border-bottom: 1px solid var(--siguiendo-border);
+  }
+
+  .detail-switch-tab {
+    flex: 1;
+    text-align: center;
+    padding: 14px 12px;
+    color: var(--siguiendo-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .detail-switch-tab.active {
+    color: #fff;
+  }
+
+  .detail-switch-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fff;
+  }
+
+  .detail-comments-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .detail-tab-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .detail-tab-content.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .detail-comment-input {
+    padding: 16px;
+    border-top: 1px solid var(--siguiendo-border);
+  }
+
+  .login-prompt {
+    display: block;
+    text-align: center;
+    color: var(--siguiendo-accent);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📱 RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 1200px) {
-  :root { --siguiendo-columns: 2; }
-  .creator-videos-gallery { grid-template-columns: repeat(4, 1fr); }
-}
+  @media (max-width: 1200px) {
+    :root {
+      --siguiendo-columns: 2;
+    }
 
-@media (max-width: 900px) {
-  :root { --siguiendo-columns: 2; }
-  .creator-videos-gallery { grid-template-columns: repeat(3, 1fr); }
-  
-  .detail-sidebar {
-    width: 320px;
+    .creator-videos-gallery {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
-}
 
-@media (max-width: 700px) {
-  .detail-content {
-    flex-direction: column;
+  @media (max-width: 900px) {
+    :root {
+      --siguiendo-columns: 2;
+    }
+
+    .creator-videos-gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .detail-sidebar {
+      width: 320px;
+    }
   }
-  
-  .detail-sidebar {
-    width: 100%;
-    height: 50%;
+
+  @media (max-width: 700px) {
+    .detail-content {
+      flex-direction: column;
+    }
+
+    .detail-sidebar {
+      width: 100%;
+      height: 50%;
+    }
   }
-}
 </style>
 
 <script>
-(function() {
-  'use strict';
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎯 CONFIGURACIÓN
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const CONFIG = {
-    previewDuration: 5, // Segundos de preview
-    
-    templates: {
-      comentarios: 'ID_COMENTARIOS_DEFAULT',
-      resenas: 'ID_RESENAS_DEFAULT'
-    }
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 👥 CREADORES - CONFIGURA AQUÍ
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const CREATORS = [
-    {
-      id: 'creator-1',
-      username: '@kimberlyloaiza',
-      displayName: 'Kimberly Loaiza',
-      avatar: 'URL_AVATAR',
-      verified: true,
-      following: '405',
-      followers: '83.7M',
-      likes: '4.2B',
-      bio: 'Hola linduras ✨ Únete al grupo 🐨',
-      link: 'jukilopstore.com/',
-      previewVideo: 'URL_VIDEO_PREVIEW', // Video corto para la tarjeta
-      videos: [
-        {
-          id: 'video-1',
-          thumbnail: 'URL_THUMBNAIL',
-          src: 'URL_VIDEO_COMPLETO',
-          likes: '24.6M',
-          comments: '120K',
-          date: 'Hace 3 días',
-          pinned: true,
-          commentsTemplateId: 'ID_COMENTARIOS_VIDEO'
-        },
-        {
-          id: 'video-2',
-          thumbnail: 'URL_THUMBNAIL_2',
-          src: 'URL_VIDEO_2',
-          likes: '8.6M',
-          comments: '45K',
-          date: 'Hace 5 días',
-          commentsTemplateId: 'ID_COMENTARIOS_VIDEO_2'
-        },
-        // Más videos...
-      ]
-    },
-    {
-      id: 'creator-2',
-      username: '@feid',
-      displayName: 'Feid',
-      avatar: 'URL_AVATAR_2',
-      verified: true,
-      following: '120',
-      followers: '45.2M',
-      likes: '890M',
-      bio: '🎵 Música | FERXXO',
-      previewVideo: 'URL_VIDEO_PREVIEW_2',
-      videos: []
-    },
-    // Añade más creadores...
-  ];
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔌 ELEMENTOS DEL DOM
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const container = document.getElementById('siguiendoContainer');
-  const grid = document.getElementById('siguiendoGrid');
-  
-  // Vista de creador
-  const creatorOverlay = document.getElementById('creatorViewOverlay');
-  const creatorBackBtn = document.getElementById('creatorBackBtn');
-  const creatorAvatarLarge = document.getElementById('creatorAvatarLarge');
-  const creatorUsernameLarge = document.getElementById('creatorUsernameLarge');
-  const creatorNameLarge = document.getElementById('creatorNameLarge');
-  const creatorFollowing = document.getElementById('creatorFollowing');
-  const creatorFollowers = document.getElementById('creatorFollowers');
-  const creatorLikes = document.getElementById('creatorLikes');
-  const creatorBio = document.getElementById('creatorBio');
-  const creatorVideosGallery = document.getElementById('creatorVideosGallery');
-  const creatorTabs = document.querySelectorAll('.creator-tab');
-  
-  // Popup de video
-  const detailOverlay = document.getElementById('videoDetailOverlay');
-  const detailCloseBtn = document.getElementById('detailCloseBtn');
-  const detailVideo = document.getElementById('detailVideo');
-  const detailNavUp = document.getElementById('detailNavUp');
-  const detailNavDown = document.getElementById('detailNavDown');
-  const detailAvatar = document.getElementById('detailAvatar');
-  const detailUsername = document.getElementById('detailUsername');
-  const detailDate = document.getElementById('detailDate');
-  const detailLink = document.getElementById('detailLink');
-  const detailCopyBtn = document.getElementById('detailCopyBtn');
-  const detailCommentsCount = document.getElementById('detailCommentsCount');
-  const detailSwitchTabs = document.querySelectorAll('.detail-switch-tab');
-  const detailTabContents = document.querySelectorAll('.detail-tab-content');
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎬 ESTADO
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  let currentCreator = null;
-  let currentVideoIndex = -1;
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎴 CREAR TARJETAS DE CREADORES
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function createCreatorCard(creator) {
-    const card = document.createElement('div');
-    card.className = 'creator-card';
-    card.dataset.creatorId = creator.id;
-    
-    card.innerHTML = `
+  (function () {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎯 CONFIGURACIÓN
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const CONFIG = {
+      previewDuration: 8, // Segundos de preview
+
+      templates: {
+        comentarios: 'ID_COMENTARIOS_DEFAULT',
+        resenas: 'ID_RESENAS_DEFAULT'
+      }
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 👥 CREADORES - CONFIGURA AQUÍ
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const CREATORS = [
+      {
+        id: 'creator-1',
+        username: '@kimberlyloaiza',
+        displayName: 'Kimberly Loaiza',
+        avatar: 'https://placehold.co/120x120/FF69B4/FFFFFF/png?text=KL',
+        verified: true,
+        following: '405',
+        followers: '83.7M',
+        likes: '4.2B',
+        bio: 'Hola linduras ✨ Únete al grupo 🐨',
+        link: 'jukilopstore.com/',
+        previewVideo: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        videos: [
+          {
+            id: 'video-1',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '24.6M',
+            comments: '120K',
+            date: 'Hace 3 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_1',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_1'
+          },
+          {
+            id: 'video-2',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '8.6M',
+            comments: '45K',
+            date: 'Hace 5 días',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_2',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_2'
+          },
+          {
+            id: 'video-3',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V3',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '12.3M',
+            comments: '78K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_3',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_3'
+          },
+          {
+            id: 'video-4',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V4',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.2M',
+            comments: '32K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_4',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_4'
+          },
+          {
+            id: 'video-5',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V5',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '9.8M',
+            comments: '56K',
+            date: 'Hace 2 semanas',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_5',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_5'
+          },
+          {
+            id: 'video-6',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V6',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '3.4M',
+            comments: '21K',
+            date: 'Hace 2 semanas',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_6',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_6'
+          },
+          {
+            id: 'video-7',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V7',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '15.7M',
+            comments: '89K',
+            date: 'Hace 3 semanas',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_7',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_7'
+          },
+          {
+            id: 'video-8',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V8',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '6.9M',
+            comments: '42K',
+            date: 'Hace 3 semanas',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_8',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_8'
+          },
+          {
+            id: 'video-9',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V9',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '18.2M',
+            comments: '95K',
+            date: 'Hace 1 mes',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_9',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_9'
+          },
+          {
+            id: 'video-10',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V10',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '7.5M',
+            comments: '48K',
+            date: 'Hace 1 mes',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_10',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_10'
+          },
+          {
+            id: 'video-11',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V11',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '11.4M',
+            comments: '67K',
+            date: 'Hace 1 mes',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_11',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_11'
+          },
+          {
+            id: 'video-12',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V12',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '4.8M',
+            comments: '29K',
+            date: 'Hace 2 meses',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_12',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_12'
+          },
+          {
+            id: 'video-13',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V13',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '13.9M',
+            comments: '81K',
+            date: 'Hace 2 meses',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_13',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_13'
+          },
+          {
+            id: 'video-14',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V14',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '8.1M',
+            comments: '52K',
+            date: 'Hace 2 meses',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_14',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_14'
+          },
+          {
+            id: 'video-15',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=V15',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '16.3M',
+            comments: '93K',
+            date: 'Hace 3 meses',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_15',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_15'
+          },
+          {
+            id: 'video-16',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=V16',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '10.7M',
+            comments: '64K',
+            date: 'Hace 3 meses',
+            commentsTemplateId: 'ID_COMENTARIOS_VIDEO_16',
+            resenasTemplateId: 'ID_RESENAS_VIDEO_16'
+          }
+        ]
+      },
+      {
+        id: 'creator-2',
+        username: '@feid',
+        displayName: 'Feid',
+        avatar: 'https://placehold.co/120x120/4169E1/FFFFFF/png?text=FEID',
+        verified: true,
+        following: '120',
+        followers: '45.2M',
+        likes: '890M',
+        bio: '🎵 Música | FERXXO',
+        link: 'feid.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'feid-video-1',
+            thumbnail: 'https://placehold.co/300x400/4169E1/FFFFFF/png?text=F1',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.2M',
+            comments: '28K',
+            date: 'Hace 4 días',
+            commentsTemplateId: 'ID_COMENTARIOS_FEID_1',
+            resenasTemplateId: 'ID_RESENAS_FEID_1'
+          },
+          {
+            id: 'feid-video-2',
+            thumbnail: 'https://placehold.co/300x400/1E90FF/FFFFFF/png?text=F2',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '3.8M',
+            comments: '19K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_FEID_2',
+            resenasTemplateId: 'ID_RESENAS_FEID_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-3',
+        username: '@badgyal',
+        displayName: 'Bad Gyal',
+        avatar: 'https://placehold.co/120x120/9370DB/FFFFFF/png?text=BG',
+        verified: true,
+        following: '89',
+        followers: '12.5M',
+        likes: '234M',
+        bio: '🔥 La más dura | BCN',
+        link: 'badgyal.com',
+        previewVideo: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        videos: [
+          {
+            id: 'badgyal-video-1',
+            thumbnail: 'https://placehold.co/300x400/9370DB/FFFFFF/png?text=BG1',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '8.9M',
+            comments: '45K',
+            date: 'Hace 2 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BG_1',
+            resenasTemplateId: 'ID_RESENAS_BG_1'
+          },
+          {
+            id: 'badgyal-video-2',
+            thumbnail: 'https://placehold.co/300x400/BA55D3/FFFFFF/png?text=BG2',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '6.2M',
+            comments: '31K',
+            date: 'Hace 5 días',
+            commentsTemplateId: 'ID_COMENTARIOS_BG_2',
+            resenasTemplateId: 'ID_RESENAS_BG_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-4',
+        username: '@karolg',
+        displayName: 'KAROL G',
+        avatar: 'https://placehold.co/120x120/FF1493/FFFFFF/png?text=KG',
+        verified: true,
+        following: '156',
+        followers: '67.8M',
+        likes: '1.2B',
+        bio: '🦋 Bichota | La más ficha',
+        link: 'karolg.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'karolg-video-1',
+            thumbnail: 'https://placehold.co/300x400/FF1493/FFFFFF/png?text=KG1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '22.4M',
+            comments: '156K',
+            date: 'Hace 1 día',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_KG_1',
+            resenasTemplateId: 'ID_RESENAS_KG_1'
+          },
+          {
+            id: 'karolg-video-2',
+            thumbnail: 'https://placehold.co/300x400/FF69B4/FFFFFF/png?text=KG2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '18.7M',
+            comments: '98K',
+            date: 'Hace 3 días',
+            commentsTemplateId: 'ID_COMENTARIOS_KG_2',
+            resenasTemplateId: 'ID_RESENAS_KG_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-5',
+        username: '@ryancastro',
+        displayName: 'Ryan Castro',
+        avatar: 'https://placehold.co/120x120/FF8C00/FFFFFF/png?text=RC',
+        verified: true,
+        following: '234',
+        followers: '28.3M',
+        likes: '567M',
+        bio: '🎤 El Cantante del Ghetto',
+        link: 'ryancastro.com',
+        previewVideo: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        videos: [
+          {
+            id: 'ryan-video-1',
+            thumbnail: 'https://placehold.co/300x400/FF8C00/FFFFFF/png?text=RC1',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '11.3M',
+            comments: '67K',
+            date: 'Hace 6 días',
+            commentsTemplateId: 'ID_COMENTARIOS_RC_1',
+            resenasTemplateId: 'ID_RESENAS_RC_1'
+          },
+          {
+            id: 'ryan-video-2',
+            thumbnail: 'https://placehold.co/300x400/FFA500/FFFFFF/png?text=RC2',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '9.5M',
+            comments: '54K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_RC_2',
+            resenasTemplateId: 'ID_RESENAS_RC_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-6',
+        username: '@bellakath',
+        displayName: 'Bellakath',
+        avatar: 'https://placehold.co/120x120/00CED1/FFFFFF/png?text=BK',
+        verified: true,
+        following: '178',
+        followers: '19.6M',
+        likes: '345M',
+        bio: '💎 Gatita | 🇲🇽',
+        link: 'bellakath.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'bella-video-1',
+            thumbnail: 'https://placehold.co/300x400/00CED1/FFFFFF/png?text=BK1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '7.8M',
+            comments: '42K',
+            date: 'Hace 4 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BK_1',
+            resenasTemplateId: 'ID_RESENAS_BK_1'
+          },
+          {
+            id: 'bella-video-2',
+            thumbnail: 'https://placehold.co/300x400/48D1CC/FFFFFF/png?text=BK2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.9M',
+            comments: '33K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_BK_2',
+            resenasTemplateId: 'ID_RESENAS_BK_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-7',
+        username: '@bellakath',
+        displayName: 'Bellakath',
+        avatar: 'https://placehold.co/120x120/00CED1/FFFFFF/png?text=BK',
+        verified: true,
+        following: '178',
+        followers: '19.6M',
+        likes: '345M',
+        bio: '💎 Gatita | 🇲🇽',
+        link: 'bellakath.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'bella-video-1',
+            thumbnail: 'https://placehold.co/300x400/00CED1/FFFFFF/png?text=BK1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '7.8M',
+            comments: '42K',
+            date: 'Hace 4 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BK_1',
+            resenasTemplateId: 'ID_RESENAS_BK_1'
+          },
+          {
+            id: 'bella-video-2',
+            thumbnail: 'https://placehold.co/300x400/48D1CC/FFFFFF/png?text=BK2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.9M',
+            comments: '33K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_BK_2',
+            resenasTemplateId: 'ID_RESENAS_BK_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-8',
+        username: '@bellakath',
+        displayName: 'Bellakath',
+        avatar: 'https://placehold.co/120x120/00CED1/FFFFFF/png?text=BK',
+        verified: true,
+        following: '178',
+        followers: '19.6M',
+        likes: '345M',
+        bio: '💎 Gatita | 🇲🇽',
+        link: 'bellakath.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'bella-video-1',
+            thumbnail: 'https://placehold.co/300x400/00CED1/FFFFFF/png?text=BK1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '7.8M',
+            comments: '42K',
+            date: 'Hace 4 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BK_1',
+            resenasTemplateId: 'ID_RESENAS_BK_1'
+          },
+          {
+            id: 'bella-video-2',
+            thumbnail: 'https://placehold.co/300x400/48D1CC/FFFFFF/png?text=BK2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.9M',
+            comments: '33K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_BK_2',
+            resenasTemplateId: 'ID_RESENAS_BK_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-9',
+        username: '@bellakath',
+        displayName: 'Bellakath',
+        avatar: 'https://placehold.co/120x120/00CED1/FFFFFF/png?text=BK',
+        verified: true,
+        following: '178',
+        followers: '19.6M',
+        likes: '345M',
+        bio: '💎 Gatita | 🇲🇽',
+        link: 'bellakath.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'bella-video-1',
+            thumbnail: 'https://placehold.co/300x400/00CED1/FFFFFF/png?text=BK1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '7.8M',
+            comments: '42K',
+            date: 'Hace 4 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BK_1',
+            resenasTemplateId: 'ID_RESENAS_BK_1'
+          },
+          {
+            id: 'bella-video-2',
+            thumbnail: 'https://placehold.co/300x400/48D1CC/FFFFFF/png?text=BK2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.9M',
+            comments: '33K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_BK_2',
+            resenasTemplateId: 'ID_RESENAS_BK_2'
+          }
+        ]
+      },
+      {
+        id: 'creator-10',
+        username: '@bellakath',
+        displayName: 'Bellakath',
+        avatar: 'https://placehold.co/120x120/00CED1/FFFFFF/png?text=BK',
+        verified: true,
+        following: '178',
+        followers: '19.6M',
+        likes: '345M',
+        bio: '💎 Gatita | 🇲🇽',
+        link: 'bellakath.com',
+        previewVideo: 'https://www.w3schools.com/html/movie.mp4',
+        videos: [
+          {
+            id: 'bella-video-1',
+            thumbnail: 'https://placehold.co/300x400/00CED1/FFFFFF/png?text=BK1',
+            src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+            likes: '7.8M',
+            comments: '42K',
+            date: 'Hace 4 días',
+            pinned: true,
+            commentsTemplateId: 'ID_COMENTARIOS_BK_1',
+            resenasTemplateId: 'ID_RESENAS_BK_1'
+          },
+          {
+            id: 'bella-video-2',
+            thumbnail: 'https://placehold.co/300x400/48D1CC/FFFFFF/png?text=BK2',
+            src: 'https://www.w3schools.com/html/movie.mp4',
+            likes: '5.9M',
+            comments: '33K',
+            date: 'Hace 1 semana',
+            commentsTemplateId: 'ID_COMENTARIOS_BK_2',
+            resenasTemplateId: 'ID_RESENAS_BK_2'
+          }
+        ]
+      },
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔌 ELEMENTOS DEL DOM
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const container = document.getElementById('siguiendoContainer');
+    const grid = document.getElementById('siguiendoGrid');
+
+    // Vista de creador
+    const creatorOverlay = document.getElementById('creatorViewOverlay');
+    const creatorBackBtn = document.getElementById('creatorBackBtn');
+    const creatorAvatarLarge = document.getElementById('creatorAvatarLarge');
+    const creatorUsernameLarge = document.getElementById('creatorUsernameLarge');
+    const creatorNameLarge = document.getElementById('creatorNameLarge');
+    const creatorFollowing = document.getElementById('creatorFollowing');
+    const creatorFollowers = document.getElementById('creatorFollowers');
+    const creatorLikes = document.getElementById('creatorLikes');
+    const creatorBio = document.getElementById('creatorBio');
+    const creatorVideosGallery = document.getElementById('creatorVideosGallery');
+    const creatorTabs = document.querySelectorAll('.creator-tab');
+
+    // Popup de video
+    const detailOverlay = document.getElementById('videoDetailOverlay');
+    const detailCloseBtn = document.getElementById('detailCloseBtn');
+    const detailPlayer = document.getElementById('detailPlayer');
+    const detailVideo = document.getElementById('detailVideo');
+    const detailPlayIndicator = document.getElementById('detailPlayIndicator');
+    const detailNavUp = document.getElementById('detailNavUp');
+    const detailNavDown = document.getElementById('detailNavDown');
+    const detailMuteIndicator = document.getElementById('detailMuteIndicator');
+    const detailAvatar = document.getElementById('detailAvatar');
+    const detailUsername = document.getElementById('detailUsername');
+    const detailDate = document.getElementById('detailDate');
+    const detailLink = document.getElementById('detailLink');
+    const detailCopyBtn = document.getElementById('detailCopyBtn');
+    const detailCommentsCount = document.getElementById('detailCommentsCount');
+    const detailSwitchTabs = document.querySelectorAll('.detail-switch-tab');
+    const detailTabContents = document.querySelectorAll('.detail-tab-content');
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎬 ESTADO
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    let currentCreator = null;
+    let currentVideoIndex = -1;
+    let isMuted = true; // Estado global del mute - empieza en mute
+
+    // Estado de la cola de previews del grid principal
+    let previewQueue = [];
+    let currentPreviewIndex = 0;
+    let previewTimer = null;
+    let isHovering = false;
+
+    // Estado de la cola de previews de la galería del creador
+    let galleryPreviewQueue = [];
+    let currentGalleryPreviewIndex = 0;
+    let galleryPreviewTimer = null;
+    let isHoveringGallery = false;
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎴 CREAR TARJETAS DE CREADORES
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function createCreatorCard(creator) {
+      const card = document.createElement('div');
+      card.className = 'creator-card';
+      card.dataset.creatorId = creator.id;
+
+      card.innerHTML = `
       <img class="card-preview-img" src="${creator.videos[0]?.thumbnail || creator.avatar}" alt="${creator.username}" loading="lazy">
-      <video class="card-video" src="${creator.previewVideo}" muted loop playsinline preload="none"></video>
+      <video class="card-video" src="${creator.previewVideo}" poster="${creator.videos[0]?.thumbnail || creator.avatar}" muted playsinline preload="metadata"></video>
       
       <div class="creator-card-header">
         <img class="creator-card-avatar" src="${creator.avatar}" alt="${creator.username}">
@@ -1111,238 +1750,584 @@
         <button class="creator-card-follow-btn following">Siguiendo</button>
       </div>
     `;
-    
-    const video = card.querySelector('.card-video');
-    let previewTimeout;
-    
-    // Hover preview
-    card.addEventListener('mouseenter', () => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-      
-      previewTimeout = setTimeout(() => {
+
+      const video = card.querySelector('.card-video');
+      // Asegurar que el video esté silenciado y cargue el póster
+      video.muted = true;
+
+      // Forzar carga de metadata para mostrar poster frame
+      video.addEventListener('loadeddata', () => {
+        // Pausar para que se vea el poster/primer frame
+        video.pause();
         video.currentTime = 0;
-      }, CONFIG.previewDuration * 1000);
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      clearTimeout(previewTimeout);
-      video.pause();
+      });
+
+      video.load();
+
+      // Agregar video a la cola de previews (mantiene índice)
+      previewQueue.push({
+        card,
+        video,
+        creator
+      });
+
+      // Hover preview - interrumpe la cola
+      card.addEventListener('mouseenter', () => {
+        isHovering = true;
+        cancelPreviewTimer();
+
+        // Pausar todos los otros videos
+        previewQueue.forEach(item => {
+          if (item.video !== video) {
+            item.video.pause();
+            item.video.currentTime = 0;
+          }
+        });
+
+        // Reproducir este video
+        video.currentTime = 0;
+        video.play().catch(() => { });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovering = false;
+        video.pause();
+        video.currentTime = 0;
+
+        // Colocar la cola para continuar desde el siguiente video
+        const idx = previewQueue.findIndex(item => item.video === video);
+        if (idx >= 0) {
+          currentPreviewIndex = (idx + 1) % previewQueue.length;
+        }
+
+        // Reanudar la cola automática
+        playNextPreview();
+      });
+
+      // Click: abrir perfil del creador
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.creator-card-follow-btn')) return;
+        openCreatorView(creator);
+      });
+
+      // Botón seguir
+      const followBtn = card.querySelector('.creator-card-follow-btn');
+      followBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        followBtn.classList.toggle('following');
+        followBtn.textContent = followBtn.classList.contains('following') ? 'Siguiendo' : 'Seguir';
+      });
+
+      return card;
+    }
+
+    function renderCreators() {
+      grid.innerHTML = '';
+      previewQueue = [];
+      currentPreviewIndex = 0;
+      cancelPreviewTimer();
+
+      CREATORS.forEach(creator => {
+        const card = createCreatorCard(creator);
+        grid.appendChild(card);
+      });
+
+      // Esperar a que todos los videos carguen su metadata
+      setTimeout(() => {
+        previewQueue.forEach(item => {
+          item.video.pause();
+          item.video.currentTime = 0;
+        });
+
+        // Iniciar la cola de previews automáticas
+        playNextPreview();
+      }, 500);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔄 COLA AUTOMÁTICA DE PREVIEWS
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function playNextPreview() {
+      if (isHovering) return; // No reproducir si hay hover activo
+
+      if (previewQueue.length === 0) return;
+
+      cancelPreviewTimer();
+
+      // Pausar todos los videos primero
+      previewQueue.forEach(item => {
+        item.video.pause();
+        item.video.currentTime = 0;
+      });
+
+      // Obtener el siguiente video en la cola
+      const currentItem = previewQueue[currentPreviewIndex];
+      const video = currentItem.video;
+
+      // Reproducir durante CONFIG.previewDuration segundos
       video.currentTime = 0;
-    });
-    
-    // Click: abrir perfil del creador
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.creator-card-follow-btn')) return;
-      openCreatorView(creator);
-    });
-    
-    // Botón seguir
-    const followBtn = card.querySelector('.creator-card-follow-btn');
-    followBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      followBtn.classList.toggle('following');
-      followBtn.textContent = followBtn.classList.contains('following') ? 'Siguiendo' : 'Seguir';
-    });
-    
-    return card;
-  }
-  
-  function renderCreators() {
-    grid.innerHTML = '';
-    CREATORS.forEach(creator => {
-      const card = createCreatorCard(creator);
-      grid.appendChild(card);
-    });
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 👤 VISTA DE PERFIL DE CREADOR
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function openCreatorView(creator) {
-    currentCreator = creator;
-    
-    // Actualizar UI
-    creatorAvatarLarge.src = creator.avatar;
-    creatorUsernameLarge.innerHTML = creator.username + (creator.verified ? `
+      video.play().catch(() => { });
+
+      // Después de previewDuration segundos, pasar al siguiente
+      previewTimer = setTimeout(() => {
+        if (!isHovering) {
+          video.pause();
+          video.currentTime = 0;
+
+          // Avanzar al siguiente en la cola
+          currentPreviewIndex = (currentPreviewIndex + 1) % previewQueue.length;
+          playNextPreview();
+        }
+      }, CONFIG.previewDuration * 1000);
+    }
+
+    function cancelPreviewTimer() {
+      if (previewTimer) {
+        clearTimeout(previewTimer);
+        previewTimer = null;
+      }
+    }
+
+    // Función para pausar todos los videos del grid principal
+    function pauseAllMainVideos() {
+      previewQueue.forEach(item => {
+        item.video.pause();
+        item.video.muted = true;
+        item.video.currentTime = 0;
+      });
+      cancelPreviewTimer();
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // � COLA AUTOMÁTICA DE PREVIEWS DE LA GALERÍA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function playNextGalleryPreview() {
+      if (isHoveringGallery) return; // No reproducir si hay hover activo
+
+      if (galleryPreviewQueue.length === 0) return;
+
+      cancelGalleryPreviewTimer();
+
+      // Pausar todos los videos primero
+      galleryPreviewQueue.forEach(item => {
+        item.video.pause();
+        item.video.currentTime = 0;
+      });
+
+      // Obtener el siguiente video en la cola
+      const currentItem = galleryPreviewQueue[currentGalleryPreviewIndex];
+      const video = currentItem.video;
+
+      // Reproducir durante CONFIG.previewDuration segundos
+      video.currentTime = 0;
+      video.play().catch(() => { });
+
+      // Después de previewDuration segundos, pasar al siguiente
+      galleryPreviewTimer = setTimeout(() => {
+        if (!isHoveringGallery) {
+          video.pause();
+          video.currentTime = 0;
+
+          // Avanzar al siguiente en la cola
+          currentGalleryPreviewIndex = (currentGalleryPreviewIndex + 1) % galleryPreviewQueue.length;
+          playNextGalleryPreview();
+        }
+      }, CONFIG.previewDuration * 1000);
+    }
+
+    function cancelGalleryPreviewTimer() {
+      if (galleryPreviewTimer) {
+        clearTimeout(galleryPreviewTimer);
+        galleryPreviewTimer = null;
+      }
+    }
+
+    // Función para pausar y silenciar todos los videos de la galería
+    function pauseAllGalleryVideos() {
+      galleryPreviewQueue.forEach(item => {
+        item.video.pause();
+        item.video.muted = true;
+        item.video.currentTime = 0;
+
+        // Resetear iconos de control
+        const card = item.card;
+        const iconMuted = card.querySelector('.icon-muted');
+        const iconUnmuted = card.querySelector('.icon-unmuted');
+        const iconPlay = card.querySelector('.icon-play');
+        const iconPause = card.querySelector('.icon-pause');
+        const controlBtn = card.querySelector('.video-control-btn');
+
+        if (iconMuted) iconMuted.style.display = 'block';
+        if (iconUnmuted) iconUnmuted.style.display = 'none';
+        if (iconPlay) iconPlay.style.display = 'none';
+        if (iconPause) iconPause.style.display = 'none';
+        if (controlBtn) controlBtn.title = 'Activar sonido';
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // �👤 VISTA DE PERFIL DE CREADOR
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function openCreatorView(creator) {
+      currentCreator = creator;
+
+      // Actualizar UI
+      creatorAvatarLarge.src = creator.avatar;
+      creatorUsernameLarge.innerHTML = creator.username + (creator.verified ? `
       <span class="verified-badge">
         <svg viewBox="0 0 24 24" width="18" height="18">
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
         </svg>
       </span>
     ` : '');
-    creatorNameLarge.textContent = creator.displayName;
-    creatorFollowing.textContent = creator.following;
-    creatorFollowers.textContent = creator.followers;
-    creatorLikes.textContent = creator.likes;
-    creatorBio.textContent = creator.bio || '';
-    
-    // Renderizar videos
-    renderCreatorVideos(creator.videos);
-    
-    // Mostrar overlay
-    creatorOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    // Mover al body
-    if (creatorOverlay.parentElement !== document.body) {
-      document.body.appendChild(creatorOverlay);
+      creatorNameLarge.textContent = creator.displayName;
+      creatorFollowing.textContent = creator.following;
+      creatorFollowers.textContent = creator.followers;
+      creatorLikes.textContent = creator.likes;
+      creatorBio.textContent = creator.bio || '';
+
+      // Renderizar videos
+      renderCreatorVideos(creator.videos);
+
+      // Mostrar overlay
+      creatorOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Mover al body
+      if (creatorOverlay.parentElement !== document.body) {
+        document.body.appendChild(creatorOverlay);
+      }
     }
-  }
-  
-  function closeCreatorView() {
-    creatorOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-    currentCreator = null;
-  }
-  
-  function renderCreatorVideos(videos) {
-    creatorVideosGallery.innerHTML = '';
-    
-    videos.forEach((video, index) => {
-      const card = document.createElement('div');
-      card.className = 'creator-video-card';
-      card.dataset.index = index;
-      
-      card.innerHTML = `
+
+    function closeCreatorView() {
+      creatorOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      currentCreator = null;
+
+      // Detener cola de previews de la galería
+      cancelGalleryPreviewTimer();
+      pauseAllGalleryVideos();
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎬 RENDERIZAR VIDEOS DE CREADOR EN GALERÍA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function renderCreatorVideos(videos) {
+      creatorVideosGallery.innerHTML = '';
+      galleryPreviewQueue = [];
+      currentGalleryPreviewIndex = 0;
+      cancelGalleryPreviewTimer();
+
+      console.log('📹 Renderizando', videos.length, 'videos en galería');
+
+      videos.forEach((video, index) => {
+        const card = document.createElement('div');
+        card.className = 'creator-video-card';
+        card.dataset.index = index;
+
+        // Sin controles en la galería - solo preview mudo para abrir popup
+        card.innerHTML = `
         ${video.pinned ? '<span class="pinned-badge">Anclado</span>' : ''}
-        <img src="${video.thumbnail}" alt="" loading="lazy">
+        <video src="${video.src}" poster="${video.thumbnail}" muted playsinline preload="metadata"></video>
         <div class="creator-video-stats">
           <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           ${video.likes}
         </div>
       `;
-      
-      card.addEventListener('click', () => {
-        openVideoDetail(index);
+
+        // Obtener el elemento video
+        const videoElement = card.querySelector('video');
+        videoElement.muted = true; // Preview siempre mudo
+
+        // Forzar carga de metadata para mostrar poster frame
+        videoElement.addEventListener('loadeddata', () => {
+          videoElement.pause();
+          videoElement.currentTime = 0;
+        });
+
+        videoElement.load();
+
+        // Agregar video a la cola de previews de la galería
+        galleryPreviewQueue.push({
+          card,
+          video: videoElement,
+          data: video
+        });
+
+        // Hover preview - interrumpe la cola (siempre mudo)
+        card.addEventListener('mouseenter', () => {
+          isHoveringGallery = true;
+          cancelGalleryPreviewTimer();
+
+          // Pausar todos los otros videos
+          galleryPreviewQueue.forEach(item => {
+            if (item.video !== videoElement) {
+              item.video.pause();
+              item.video.currentTime = 0;
+            }
+          });
+
+          // Reproducir este video (silenciado)
+          videoElement.currentTime = 0;
+          videoElement.play().catch(() => { });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          isHoveringGallery = false;
+          videoElement.pause();
+          videoElement.currentTime = 0;
+
+          // Colocar la cola para continuar desde el siguiente video
+          const idx = galleryPreviewQueue.findIndex(item => item.video === videoElement);
+          if (idx >= 0) {
+            currentGalleryPreviewIndex = (idx + 1) % galleryPreviewQueue.length;
+          }
+
+          // Reanudar la cola automática
+          playNextGalleryPreview();
+        });
+
+        // Click: Abrir popup del video
+        card.addEventListener('click', () => {
+          cancelGalleryPreviewTimer();
+          openVideoDetail(index);
+        });
+
+        creatorVideosGallery.appendChild(card);
       });
-      
-      creatorVideosGallery.appendChild(card);
+
+      // Esperar a que todos los videos carguen su metadata
+      setTimeout(() => {
+        galleryPreviewQueue.forEach(item => {
+          item.video.pause();
+          item.video.currentTime = 0;
+        });
+
+        // Iniciar la cola de previews automáticas de la galería
+        playNextGalleryPreview();
+      }, 500);
+    }
+
+    creatorBackBtn.addEventListener('click', closeCreatorView);
+
+    // Tabs del creador
+    creatorTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        creatorTabs.forEach(t => t.classList.toggle('active', t === tab));
+        // Aquí puedes cambiar entre "Videos" y "Me gusta"
+      });
     });
-  }
-  
-  creatorBackBtn.addEventListener('click', closeCreatorView);
-  
-  // Tabs del creador
-  creatorTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      creatorTabs.forEach(t => t.classList.toggle('active', t === tab));
-      // Aquí puedes cambiar entre "Videos" y "Me gusta"
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎬 POPUP DE VIDEO DETALLE
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function openVideoDetail(index) {
+      if (!currentCreator) return;
+
+      currentVideoIndex = index;
+      const video = currentCreator.videos[index];
+
+      // Cargar video con estado global de mute
+      detailVideo.src = video.src;
+      detailVideo.muted = isMuted;
+      detailVideo.play().catch(() => { });
+
+      // Actualizar UI
+      detailAvatar.src = currentCreator.avatar;
+      detailUsername.textContent = currentCreator.username;
+      detailDate.textContent = video.date;
+      detailLink.value = `https://tiktok.com/${currentCreator.username}/video/${video.id}`;
+      detailCommentsCount.textContent = video.comments;
+
+      // Cargar comentarios y reseñas específicos del video
+      loadVideoComments(video);
+
+      // Mostrar popup
+      detailOverlay.classList.add('active');
+
+      // Mover al body
+      if (detailOverlay.parentElement !== document.body) {
+        document.body.appendChild(detailOverlay);
+      }
+    }
+
+    function loadVideoComments(video) {
+      const comentariosContainer = document.getElementById('detailTabComentarios');
+      const resenasContainer = document.getElementById('detailTabResenas');
+
+      // Cargar plantilla de comentarios específica del video
+      if (video.commentsTemplateId) {
+        comentariosContainer.innerHTML = `[mi_plantilla id="${video.commentsTemplateId}"]`;
+      } else {
+        comentariosContainer.innerHTML = `[mi_plantilla id="${CONFIG.templates.comentarios}"]`;
+      }
+
+      // Cargar plantilla de reseñas específica del video
+      if (video.resenasTemplateId) {
+        resenasContainer.innerHTML = `[mi_plantilla id="${video.resenasTemplateId}"]`;
+      } else {
+        resenasContainer.innerHTML = `[mi_plantilla id="${CONFIG.templates.resenas}"]`;
+      }
+    }
+
+    function closeVideoDetail() {
+      detailOverlay.classList.remove('active');
+      detailVideo.pause();
+      currentVideoIndex = -1;
+
+      // Reanudar cola de previews de la galería si el perfil sigue abierto
+      if (creatorOverlay.classList.contains('active')) {
+        setTimeout(() => {
+          playNextGalleryPreview();
+        }, 300);
+      }
+    }
+
+    function navigateVideo(direction) {
+      if (!currentCreator) return;
+
+      const newIndex = currentVideoIndex + direction;
+      if (newIndex >= 0 && newIndex < currentCreator.videos.length) {
+        openVideoDetail(newIndex);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎮 FUNCIÓN PARA MOSTRAR INDICADOR DE PLAY/PAUSE
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function showDetailPlayPauseIndicator(isPlaying) {
+      const playIcon = detailPlayIndicator.querySelector('.indicator-play');
+      const pauseIcon = detailPlayIndicator.querySelector('.indicator-pause');
+
+      // Mostrar el icono correcto (play si está pausado, pause si está reproduciéndose)
+      playIcon.style.display = isPlaying ? 'none' : 'block';
+      pauseIcon.style.display = isPlaying ? 'block' : 'none';
+
+      // Quitar clase para reiniciar animación
+      detailPlayIndicator.classList.remove('show');
+
+      // Forzar reflow para reiniciar la animación
+      void detailPlayIndicator.offsetWidth;
+
+      // Agregar clase para mostrar con animación
+      detailPlayIndicator.classList.add('show');
+
+      // Quitar clase después de la animación
+      setTimeout(() => {
+        detailPlayIndicator.classList.remove('show');
+      }, 1200);
+    }
+
+    detailCloseBtn.addEventListener('click', closeVideoDetail);
+
+    detailOverlay.addEventListener('click', (e) => {
+      if (e.target === detailOverlay) {
+        closeVideoDetail();
+      }
     });
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎬 POPUP DE VIDEO DETALLE
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function openVideoDetail(index) {
-    if (!currentCreator) return;
-    
-    currentVideoIndex = index;
-    const video = currentCreator.videos[index];
-    
-    // Cargar video
-    detailVideo.src = video.src;
-    detailVideo.play().catch(() => {});
-    
-    // Actualizar UI
-    detailAvatar.src = currentCreator.avatar;
-    detailUsername.textContent = currentCreator.username;
-    detailDate.textContent = video.date;
-    detailLink.value = `https://tiktok.com/${currentCreator.username}/video/${video.id}`;
-    detailCommentsCount.textContent = video.comments;
-    
-    // Mostrar popup
-    detailOverlay.classList.add('active');
-    
-    // Mover al body
-    if (detailOverlay.parentElement !== document.body) {
-      document.body.appendChild(detailOverlay);
-    }
-  }
-  
-  function closeVideoDetail() {
-    detailOverlay.classList.remove('active');
-    detailVideo.pause();
-    currentVideoIndex = -1;
-  }
-  
-  function navigateVideo(direction) {
-    if (!currentCreator) return;
-    
-    const newIndex = currentVideoIndex + direction;
-    if (newIndex >= 0 && newIndex < currentCreator.videos.length) {
-      openVideoDetail(newIndex);
-    }
-  }
-  
-  detailCloseBtn.addEventListener('click', closeVideoDetail);
-  
-  detailOverlay.addEventListener('click', (e) => {
-    if (e.target === detailOverlay) {
-      closeVideoDetail();
-    }
-  });
-  
-  detailNavUp.addEventListener('click', () => navigateVideo(-1));
-  detailNavDown.addEventListener('click', () => navigateVideo(1));
-  
-  // Copiar link
-  detailCopyBtn.addEventListener('click', () => {
-    detailLink.select();
-    document.execCommand('copy');
-    detailCopyBtn.textContent = '¡Copiado!';
-    setTimeout(() => {
-      detailCopyBtn.textContent = 'Copiar enlace';
-    }, 2000);
-  });
-  
-  // Switch tabs
-  detailSwitchTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTab = tab.dataset.tab;
-      detailSwitchTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === targetTab));
-      detailTabContents.forEach(c => c.classList.toggle('active', c.dataset.content === targetTab));
+
+    // Click en el video para unmute (primer click) o play/pause (siguientes)
+    detailPlayer.addEventListener('click', (e) => {
+      // No hacer nada si se hizo click en los controles de navegación
+      if (e.target.closest('.detail-nav-btn')) return;
+
+      // Si está muted, el primer click quita el mute
+      if (isMuted) {
+        isMuted = false;
+        detailVideo.muted = false;
+
+        // Ocultar el indicador de mute
+        if (detailMuteIndicator) detailMuteIndicator.classList.add('hidden');
+        return;
+      }
+
+      // Si ya no está muted, controlar play/pause
+      if (detailVideo.paused) {
+        detailVideo.play();
+        showDetailPlayPauseIndicator(true);
+      } else {
+        detailVideo.pause();
+        showDetailPlayPauseIndicator(false);
+      }
     });
-  });
-  
-  // Teclado
-  document.addEventListener('keydown', (e) => {
-    if (detailOverlay.classList.contains('active')) {
-      if (e.key === 'Escape') closeVideoDetail();
-      else if (e.key === 'ArrowUp') { navigateVideo(-1); e.preventDefault(); }
-      else if (e.key === 'ArrowDown') { navigateVideo(1); e.preventDefault(); }
-    } else if (creatorOverlay.classList.contains('active')) {
-      if (e.key === 'Escape') closeCreatorView();
-    }
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🌐 API GLOBAL
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  window.SiguiendoSection = {
-    openCreatorView,
-    closeCreatorView,
-    openVideoDetail,
-    closeVideoDetail,
-    getCreators: () => CREATORS,
-    addCreator: (creator) => {
-      CREATORS.push(creator);
-      renderCreators();
-    }
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🚀 INICIALIZACIÓN
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  renderCreators();
-  
-  console.log('✅ Sección "Siguiendo" inicializada');
-  
-})();
+
+    detailNavUp.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateVideo(-1);
+    });
+    detailNavDown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateVideo(1);
+    });
+
+    // Copiar link
+    detailCopyBtn.addEventListener('click', () => {
+      detailLink.select();
+      document.execCommand('copy');
+      detailCopyBtn.textContent = '¡Copiado!';
+      setTimeout(() => {
+        detailCopyBtn.textContent = 'Copiar enlace';
+      }, 2000);
+    });
+
+    // Switch tabs
+    detailSwitchTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+        detailSwitchTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === targetTab));
+        detailTabContents.forEach(c => c.classList.toggle('active', c.dataset.content === targetTab));
+      });
+    });
+
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+      if (detailOverlay.classList.contains('active')) {
+        if (e.key === 'Escape') closeVideoDetail();
+        else if (e.key === 'ArrowUp') { navigateVideo(-1); e.preventDefault(); }
+        else if (e.key === 'ArrowDown') { navigateVideo(1); e.preventDefault(); }
+      } else if (creatorOverlay.classList.contains('active')) {
+        if (e.key === 'Escape') closeCreatorView();
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🌐 API GLOBAL
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    window.SiguiendoSection = {
+      openCreatorView,
+      closeCreatorView,
+      openVideoDetail,
+      closeVideoDetail,
+      getCreators: () => CREATORS,
+      addCreator: (creator) => {
+        CREATORS.push(creator);
+        renderCreators();
+      },
+      // Funciones para pausar videos al cambiar de sección
+      pauseAllVideos: () => {
+        pauseAllMainVideos();
+        pauseAllGalleryVideos();
+        cancelPreviewTimer();
+        cancelGalleryPreviewTimer();
+      }
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🚀 INICIALIZACIÓN
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    renderCreators();
+
+    console.log('✅ Sección "Siguiendo" inicializada');
+
+  })();
 </script>
 
 <!-- 

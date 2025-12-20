@@ -15,7 +15,7 @@
 -->
 
 <div class="explorar-container" id="explorarContainer">
-  
+
   <!-- ==================== HEADER DE CATEGORÍAS ==================== -->
   <div class="explorar-header" id="explorarHeader">
     <div class="categories-scroll">
@@ -31,70 +31,80 @@
       <!-- Añade más categorías aquí -->
     </div>
   </div>
-  
+
   <!-- ==================== GALERÍA DE VIDEOS ==================== -->
   <div class="explorar-gallery" id="explorarGallery">
     <!-- Los videos se inyectan aquí dinámicamente -->
   </div>
-  
+
 </div>
 
 <!-- ==================== POPUP DE VIDEO (se mueve al body) ==================== -->
 <div class="video-popup-overlay" id="videoPopupOverlay">
   <div class="video-popup" id="videoPopup">
-    
+
     <!-- Botón cerrar -->
     <button class="popup-close-btn" id="popupCloseBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
       </svg>
     </button>
-    
+
     <!-- Barra de búsqueda -->
     <div class="popup-search-bar">
       <input type="text" class="popup-search-input" placeholder="Buscar contenido relacionado" id="popupSearchInput">
       <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" class="search-icon">
-        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        <path
+          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
       </svg>
     </div>
-    
+
     <!-- Contenido del popup -->
     <div class="popup-content">
-      
+
       <!-- Área del video -->
       <div class="popup-video-area">
         <div class="popup-player" id="popupPlayer">
           <video id="popupVideo" playsinline loop preload="metadata"></video>
-          
+
+          <!-- Indicador de Play/Pause con animación fade -->
+          <div class="popup-play-indicator" id="popupPlayIndicator">
+            <svg viewBox="0 0 24 24" class="indicator-play" style="display:none;">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg viewBox="0 0 24 24" class="indicator-pause" style="display:none;">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </div>
+
           <!-- Navegación -->
           <div class="popup-nav">
             <button class="popup-nav-btn nav-up" id="popupNavUp">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
               </svg>
             </button>
             <button class="popup-nav-btn nav-down" id="popupNavDown">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
               </svg>
             </button>
           </div>
-          
-          <!-- Control de volumen -->
-          <button class="popup-volume-btn" id="popupVolumeBtn">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" class="volume-on">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+
+          <!-- Indicador visual de mute (no interactivo) -->
+          <div class="popup-mute-indicator" id="popupMuteIndicator">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
             </svg>
-            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" class="volume-off" style="display:none">
-              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-            </svg>
-          </button>
+          </div>
         </div>
       </div>
-      
+
       <!-- Panel lateral de comentarios -->
       <div class="popup-sidebar">
-        
+
         <!-- Ficha de perfil -->
         <div class="popup-profile-card" id="popupProfileCard">
           <div class="profile-header">
@@ -106,22 +116,23 @@
             </div>
             <button class="follow-btn" id="popupFollowBtn">Seguir</button>
           </div>
-          
+
           <!-- Sonido original -->
           <div class="profile-sound" id="popupProfileSound">
             <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
             </svg>
             <span class="sound-name">original sound - username</span>
           </div>
-          
+
           <!-- Link para copiar -->
           <div class="profile-link-wrapper">
-            <input type="text" class="profile-link" id="popupProfileLink" readonly value="https://tiktok.com/@user/video/123">
+            <input type="text" class="profile-link" id="popupProfileLink" readonly
+              value="https://tiktok.com/@user/video/123">
             <button class="copy-link-btn" id="popupCopyLinkBtn">Copiar enlace</button>
           </div>
         </div>
-        
+
         <!-- Switch y comentarios -->
         <div class="popup-comments-section">
           <div class="comments-switch" id="popupCommentsSwitch">
@@ -133,7 +144,7 @@
             </div>
             <div class="switch-indicator"></div>
           </div>
-          
+
           <!-- Contenido de tabs -->
           <div class="popup-comments-content">
             <div class="comments-tab-content active" data-content="comentarios" id="popupTabComentarios">
@@ -144,974 +155,1272 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Input de comentario -->
         <div class="popup-comment-input">
           <span class="login-prompt">Iniciar sesión para comentar</span>
         </div>
-        
+
       </div>
     </div>
   </div>
 </div>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎨 VARIABLES CSS - SECCIÓN EXPLORAR
    ═══════════════════════════════════════════════════════════════════════════════ */
-:root {
-  --explorar-bg: #000000;
-  --explorar-card-bg: #1f1f1f;
-  --explorar-hover: rgba(255,255,255,0.1);
-  --explorar-text: #ffffff;
-  --explorar-text-secondary: #a0a0a0;
-  --explorar-accent: #fe2c55;
-  --explorar-border: rgba(255,255,255,0.1);
-  
-  /* Grid */
-  --explorar-columns: 6;
-  --explorar-gap: 12px;
-  --explorar-card-radius: 8px;
-}
+  :root {
+    --explorar-bg: #000000;
+    --explorar-card-bg: #1f1f1f;
+    --explorar-hover: rgba(255, 255, 255, 0.1);
+    --explorar-text: #ffffff;
+    --explorar-text-secondary: #a0a0a0;
+    --explorar-accent: #fe2c55;
+    --explorar-border: rgba(255, 255, 255, 0.1);
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+    /* Grid */
+    --explorar-columns: 6;
+    --explorar-gap: 12px;
+    --explorar-card-radius: 8px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📐 LAYOUT PRINCIPAL
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.explorar-container {
-  width: 100%;
-  height: 100%;
-  background: var(--explorar-bg);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  font-family: "TikTok Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
+  .explorar-container {
+    width: 100%;
+    height: 100%;
+    background: var(--explorar-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: "TikTok Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🏷️ HEADER DE CATEGORÍAS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.explorar-header {
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--explorar-border);
-  flex-shrink: 0;
-}
+  .explorar-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--explorar-border);
+    flex-shrink: 0;
+  }
 
-.categories-scroll {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 4px;
-}
+  .categories-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+  }
 
-.categories-scroll::-webkit-scrollbar {
-  display: none;
-}
+  .categories-scroll::-webkit-scrollbar {
+    display: none;
+  }
 
-.category-tab {
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: transparent;
-  color: var(--explorar-text);
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid var(--explorar-border);
-}
+  .category-tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: transparent;
+    color: var(--explorar-text);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--explorar-border);
+  }
 
-.category-tab:hover {
-  background: var(--explorar-hover);
-}
+  .category-tab:hover {
+    background: var(--explorar-hover);
+  }
 
-.category-tab.active {
-  background: var(--explorar-text);
-  color: var(--explorar-bg);
-  border-color: var(--explorar-text);
-}
+  .category-tab.active {
+    background: var(--explorar-text);
+    color: var(--explorar-bg);
+    border-color: var(--explorar-text);
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🖼️ GALERÍA DE VIDEOS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.explorar-gallery {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: repeat(var(--explorar-columns), 1fr);
-  gap: var(--explorar-gap);
-  align-content: start;
-}
+  .explorar-gallery {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(var(--explorar-columns), 1fr);
+    gap: var(--explorar-gap);
+    align-content: start;
+  }
 
-.explorar-gallery::-webkit-scrollbar {
-  width: 8px;
-}
+  .explorar-gallery::-webkit-scrollbar {
+    width: 8px;
+  }
 
-.explorar-gallery::-webkit-scrollbar-track {
-  background: transparent;
-}
+  .explorar-gallery::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.explorar-gallery::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
-  border-radius: 4px;
-}
+  .explorar-gallery::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🎬 TARJETA DE VIDEO
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.video-card {
-  position: relative;
-  aspect-ratio: 9/12;
-  border-radius: var(--explorar-card-radius);
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--explorar-card-bg);
-  transition: transform 0.2s ease;
-}
+  .video-card {
+    position: relative;
+    aspect-ratio: 9/12;
+    border-radius: var(--explorar-card-radius);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--explorar-card-bg);
+    transition: transform 0.2s ease;
+  }
 
-.video-card:hover {
-  transform: scale(1.02);
-}
+  .video-card:hover {
+    transform: scale(1.02);
+  }
 
-.video-card:hover .card-video {
-  opacity: 1;
-}
+  .video-card:hover .card-video {
+    opacity: 1;
+  }
 
-.video-card:hover .card-thumbnail {
-  opacity: 0;
-}
+  .video-card:hover .card-thumbnail {
+    opacity: 0;
+  }
 
-.card-thumbnail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
+  .card-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
 
-.card-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+  .card-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
-/* Info overlay en la tarjeta */
-.card-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 12px 12px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-}
+  /* Info overlay en la tarjeta */
+  .card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 12px 12px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  }
 
-.card-stats {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-}
+  .card-stats {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
 
-.card-stats svg {
-  width: 16px;
-  height: 16px;
-  fill: #fff;
-}
+  .card-stats svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+  }
 
-/* Info del usuario */
-.card-user {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-}
+  /* Info del usuario */
+  .card-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
 
-.card-user-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(255,255,255,0.3);
-}
+  .card-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 
-.card-username {
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  .card-username {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
    🪟 POPUP DE VIDEO
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.video-popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
-  z-index: 10000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .video-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.video-popup-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+  .video-popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.video-popup {
-  width: 95%;
-  max-width: 1200px;
-  height: 90%;
-  max-height: 800px;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transform: scale(0.95);
-  transition: transform 0.3s ease;
-}
+  .video-popup {
+    width: 95%;
+    max-width: 1200px;
+    height: 90%;
+    max-height: 800px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
 
-.video-popup-overlay.active .video-popup {
-  transform: scale(1);
-}
+  .video-popup-overlay.active .video-popup {
+    transform: scale(1);
+  }
 
-/* Botón cerrar */
-.popup-close-btn {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  transition: background 0.2s ease;
-}
+  /* Botón cerrar */
+  .popup-close-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: background 0.2s ease;
+  }
 
-.popup-close-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
+  .popup-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-/* Barra de búsqueda */
-.popup-search-bar {
-  position: absolute;
-  top: 16px;
-  left: 80px;
-  right: 24px;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 8px 16px;
-  z-index: 100;
-}
+  /* Barra de búsqueda */
+  .popup-search-bar {
+    position: absolute;
+    top: 16px;
+    left: 80px;
+    right: 24px;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 8px 16px;
+    z-index: 100;
+  }
 
-.popup-search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-}
+  .popup-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
 
-.popup-search-input::placeholder {
-  color: rgba(255,255,255,0.5);
-}
+  .popup-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
 
-.popup-search-bar .search-icon {
-  fill: rgba(255,255,255,0.5);
-  flex-shrink: 0;
-}
+  .popup-search-bar .search-icon {
+    fill: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+  }
 
-/* Contenido del popup */
-.popup-content {
-  flex: 1;
-  display: flex;
-  margin-top: 70px;
-  overflow: hidden;
-}
+  /* Contenido del popup */
+  .popup-content {
+    flex: 1;
+    display: flex;
+    margin-top: 70px;
+    overflow: hidden;
+  }
 
-/* Área del video */
-.popup-video-area {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: relative;
-  min-width: 0;
-}
+  /* Área del video */
+  .popup-video-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    min-width: 0;
+  }
 
-.popup-player {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .popup-player {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.popup-player video {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 8px;
-  object-fit: contain;
-}
+  .popup-player video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+  }
 
-/* Navegación del popup */
-.popup-nav {
-  position: absolute;
-  right: -60px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  /* Navegación del popup */
+  .popup-nav {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-.popup-nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-}
+  .popup-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
 
-.popup-nav-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
+  .popup-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
-/* Control de volumen */
-.popup-volume-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* Indicador de mute centrado - solo visual, no interactivo */
+  .popup-mute-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    opacity: 0.7;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  .popup-mute-indicator svg {
+    fill: #fff;
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
+
+  .popup-mute-indicator.hidden {
+    display: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📝 SIDEBAR DEL POPUP (Comentarios)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-.popup-sidebar {
-  width: 400px;
-  background: #121212;
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid var(--explorar-border);
-}
+  .popup-sidebar {
+    width: 400px;
+    background: #121212;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--explorar-border);
+  }
 
-/* Ficha de perfil */
-.popup-profile-card {
-  padding: 16px;
-  border-bottom: 1px solid var(--explorar-border);
-}
+  /* Ficha de perfil */
+  .popup-profile-card {
+    padding: 16px;
+    border-bottom: 1px solid var(--explorar-border);
+  }
 
-.profile-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+  .profile-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
 
-.profile-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  .profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-.profile-info {
-  flex: 1;
-  min-width: 0;
-}
+  .profile-info {
+    flex: 1;
+    min-width: 0;
+  }
 
-.profile-username {
-  font-weight: 700;
-  font-size: 16px;
-  color: #fff;
-}
+  .profile-username {
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+  }
 
-.profile-name {
-  font-size: 13px;
-  color: var(--explorar-text-secondary);
-}
+  .profile-name {
+    font-size: 13px;
+    color: var(--explorar-text-secondary);
+  }
 
-.profile-date {
-  font-size: 12px;
-  color: var(--explorar-text-secondary);
-  margin-top: 2px;
-}
+  .profile-date {
+    font-size: 12px;
+    color: var(--explorar-text-secondary);
+    margin-top: 2px;
+  }
 
-.follow-btn {
-  padding: 8px 20px;
-  background: var(--explorar-accent);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s ease;
-}
+  .follow-btn {
+    padding: 8px 20px;
+    background: var(--explorar-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
 
-.follow-btn:hover {
-  background: #ff3b5c;
-}
+  .follow-btn:hover {
+    background: #ff3b5c;
+  }
 
-.profile-sound {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
-  margin-bottom: 12px;
-}
+  .profile-sound {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
 
-.profile-sound svg {
-  fill: #fff;
-  flex-shrink: 0;
-}
+  .profile-sound svg {
+    fill: #fff;
+    flex-shrink: 0;
+  }
 
-.sound-name {
-  font-size: 13px;
-  color: #fff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  .sound-name {
+    font-size: 13px;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.profile-link-wrapper {
-  display: flex;
-  gap: 8px;
-}
+  .profile-link-wrapper {
+    display: flex;
+    gap: 8px;
+  }
 
-.profile-link {
-  flex: 1;
-  background: rgba(255,255,255,0.1);
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  color: var(--explorar-text-secondary);
-  font-size: 12px;
-  outline: none;
-}
+  .profile-link {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: var(--explorar-text-secondary);
+    font-size: 12px;
+    outline: none;
+  }
 
-.copy-link-btn {
-  padding: 8px 16px;
-  background: transparent;
-  border: 1px solid var(--explorar-border);
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s ease;
-}
+  .copy-link-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--explorar-border);
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
 
-.copy-link-btn:hover {
-  background: rgba(255,255,255,0.1);
-}
+  .copy-link-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-/* Switch de comentarios en popup */
-.popup-comments-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+  /* Switch de comentarios en popup */
+  .popup-comments-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-.popup-comments-section .comments-switch {
-  display: flex;
-  position: relative;
-  padding: 0 16px;
-  border-bottom: 1px solid var(--explorar-border);
-}
+  .popup-comments-section .comments-switch {
+    display: flex;
+    position: relative;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--explorar-border);
+  }
 
-.popup-comments-section .switch-tab {
-  flex: 1;
-  text-align: center;
-  padding: 14px 12px;
-  color: var(--explorar-text-secondary);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  transition: color 0.3s ease;
-}
+  .popup-comments-section .switch-tab {
+    flex: 1;
+    text-align: center;
+    padding: 14px 12px;
+    color: var(--explorar-text-secondary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
+  }
 
-.popup-comments-section .switch-tab.active {
-  color: #fff;
-}
+  .popup-comments-section .switch-tab.active {
+    color: #fff;
+  }
 
-.popup-comments-section .switch-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #fff;
-}
+  .popup-comments-section .switch-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fff;
+  }
 
-.popup-comments-section .switch-tab .count {
-  margin-left: 4px;
-}
+  .popup-comments-section .switch-tab .count {
+    margin-left: 4px;
+  }
 
-.popup-comments-content {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-}
+  .popup-comments-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
 
-.comments-tab-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  padding: 16px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-}
+  .comments-tab-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
 
-.comments-tab-content.active {
-  opacity: 1;
-  visibility: visible;
-}
+  .comments-tab-content.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-/* Input de comentario */
-.popup-comment-input {
-  padding: 16px;
-  border-top: 1px solid var(--explorar-border);
-}
+  /* Input de comentario */
+  .popup-comment-input {
+    padding: 16px;
+    border-top: 1px solid var(--explorar-border);
+  }
 
-.login-prompt {
-  display: block;
-  text-align: center;
-  color: var(--explorar-accent);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
+  .login-prompt {
+    display: block;
+    text-align: center;
+    color: var(--explorar-accent);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════════════════════════════
+   🔊 CONTROLES DE VIDEO EN POPUP (Play/Pause con animación fade)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+  /* Área clickeable del video */
+  .popup-player {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  /* Overlay para el icono de play/pause */
+  .popup-play-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .popup-play-indicator.show {
+    opacity: 1;
+    animation: fadeInOut 1.2s ease forwards;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    15% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
+
+  .popup-play-indicator svg {
+    width: 80px;
+    height: 80px;
+    fill: rgba(255, 255, 255, 0.6);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
    📱 RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 1400px) {
-  :root { --explorar-columns: 5; }
-}
-
-@media (max-width: 1100px) {
-  :root { --explorar-columns: 4; }
-}
-
-@media (max-width: 900px) {
-  :root { --explorar-columns: 3; }
-  
-  .popup-sidebar {
-    width: 350px;
+  @media (max-width: 1400px) {
+    :root {
+      --explorar-columns: 5;
+    }
   }
-}
 
-@media (max-width: 700px) {
-  :root { --explorar-columns: 2; }
-  
-  .popup-content {
-    flex-direction: column;
+  @media (max-width: 1100px) {
+    :root {
+      --explorar-columns: 4;
+    }
   }
-  
-  .popup-sidebar {
-    width: 100%;
-    height: 50%;
+
+  @media (max-width: 900px) {
+    :root {
+      --explorar-columns: 3;
+    }
+
+    .popup-sidebar {
+      width: 350px;
+    }
   }
-}
+
+  @media (max-width: 700px) {
+    :root {
+      --explorar-columns: 2;
+    }
+
+    .popup-content {
+      flex-direction: column;
+    }
+
+    .popup-sidebar {
+      width: 100%;
+      height: 50%;
+    }
+  }
 </style>
 
 <script>
-(function() {
-  'use strict';
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎯 CONFIGURACIÓN - PERSONALIZA AQUÍ
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const CONFIG = {
-    // Duración máxima de la vista previa (en segundos)
-    previewDuration: 5,
-    
-    // Cargar solo los primeros N segundos del video para preview
-    previewTimeRange: '0-5',
-    
-    // Columnas por defecto del grid
-    defaultColumns: 6,
-    
-    // IDs de plantillas Elementor
-    templates: {
-      comentarios: 'ID_COMENTARIOS_DEFAULT',
-      videosCreador: 'ID_VIDEOS_CREADOR'
-    }
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 📹 VIDEOS - CONFIGURA TUS VIDEOS AQUÍ
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const VIDEOS = [
-    {
-      id: 'video-exp-1',
-      thumbnail: 'URL_THUMBNAIL_1',      // Imagen de vista previa
-      previewSrc: 'URL_VIDEO_PREVIEW_1', // Video corto (5s) para hover
-      fullSrc: 'URL_VIDEO_COMPLETO_1',   // Video completo para popup
-      username: '@sweetly0xz',
-      userAvatar: 'URL_AVATAR_1',
-      displayName: 'Sweetly',
-      description: 'Descripción del video #hashtag',
-      likes: '666.4K',
-      comments: '5.2K',
-      date: 'Hace 5 días',
-      sound: 'original sound - sweetly0xz',
-      link: 'https://tiktok.com/@sweetly0xz/video/123',
-      category: 'comedia',
-      commentsTemplateId: 'ID_COMENTARIOS_VIDEO_1'
-    },
-    {
-      id: 'video-exp-2',
-      thumbnail: 'URL_THUMBNAIL_2',
-      previewSrc: 'URL_VIDEO_PREVIEW_2',
-      fullSrc: 'URL_VIDEO_COMPLETO_2',
-      username: '@bambi.chula',
-      userAvatar: 'URL_AVATAR_2',
-      displayName: 'Bambi',
-      description: 'Voy a tener que bajar mis estándares porque soy horrible de hombre',
-      likes: '749.4K',
-      comments: '3.1K',
-      date: 'Hace 3 días',
-      sound: 'original sound - bambi.chula',
-      link: 'https://tiktok.com/@bambi.chula/video/456',
-      category: 'comedia',
-      commentsTemplateId: 'ID_COMENTARIOS_VIDEO_2'
-    },
-    // Añade más videos...
-  ];
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔌 ELEMENTOS DEL DOM
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  const container = document.getElementById('explorarContainer');
-  const gallery = document.getElementById('explorarGallery');
-  const categoryTabs = document.querySelectorAll('.category-tab');
-  
-  // Popup
-  const popupOverlay = document.getElementById('videoPopupOverlay');
-  const popup = document.getElementById('videoPopup');
-  const popupCloseBtn = document.getElementById('popupCloseBtn');
-  const popupVideo = document.getElementById('popupVideo');
-  const popupNavUp = document.getElementById('popupNavUp');
-  const popupNavDown = document.getElementById('popupNavDown');
-  const popupVolumeBtn = document.getElementById('popupVolumeBtn');
-  
-  // Perfil en popup
-  const popupProfileAvatar = document.getElementById('popupProfileAvatar');
-  const popupProfileUsername = document.getElementById('popupProfileUsername');
-  const popupProfileName = document.getElementById('popupProfileName');
-  const popupProfileDate = document.getElementById('popupProfileDate');
-  const popupProfileSound = document.getElementById('popupProfileSound');
-  const popupProfileLink = document.getElementById('popupProfileLink');
-  const popupCopyLinkBtn = document.getElementById('popupCopyLinkBtn');
-  const popupCommentsCount = document.getElementById('popupCommentsCount');
-  
-  // Switch del popup
-  const popupSwitchTabs = document.querySelectorAll('#popupCommentsSwitch .switch-tab');
-  const popupTabContents = document.querySelectorAll('.comments-tab-content');
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🎬 ESTADO
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  let currentCategory = 'todo';
-  let currentPopupVideoIndex = -1;
-  let filteredVideos = [...VIDEOS];
-  let isMuted = false;
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🖼️ CREAR GALERÍA DE VIDEOS
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function createVideoCard(videoData, index) {
-    const card = document.createElement('div');
-    card.className = 'video-card';
-    card.dataset.videoId = videoData.id;
-    card.dataset.index = index;
-    
-    card.innerHTML = `
-      <img class="card-thumbnail" src="${videoData.thumbnail}" alt="${videoData.username}" loading="lazy">
-      <video class="card-video" src="${videoData.previewSrc}" muted loop playsinline preload="none"></video>
-      <div class="card-overlay">
-        <div class="card-stats">
-          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          ${videoData.likes}
+  (function () {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎯 CONFIGURACIÓN - PERSONALIZA AQUÍ
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const CONFIG = {
+      // Duración de cada preview en la cola automática (en segundos)
+      previewDuration: 5,
+
+      // Columnas por defecto del grid
+      defaultColumns: 6,
+
+      // IDs de plantillas Elementor
+      templates: {
+        comentarios: 'ID_COMENTARIOS_DEFAULT',
+        videosCreador: 'ID_VIDEOS_CREADOR'
+      }
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 📹 VIDEOS - CONFIGURA TUS VIDEOS AQUÍ
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const VIDEOS = [
+      {
+        id: 'video-exp-1',
+        src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        username: '@sweetly0xz',
+        userAvatar: 'https://placehold.co/100x100/FF69B4/FFFFFF/png?text=S',
+        displayName: 'Sweetly',
+        description: 'Descripción del video #hashtag',
+        likes: '666.4K',
+        comments: '5.2K',
+        date: 'Hace 5 días',
+        sound: 'original sound - sweetly0xz',
+        link: 'https://tiktok.com/@sweetly0xz/video/123',
+        category: 'comedia',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_1'
+      },
+      {
+        id: 'video-exp-2',
+        src: 'https://www.w3schools.com/html/movie.mp4',
+        username: '@bambi.chula',
+        userAvatar: 'https://placehold.co/100x100/9370DB/FFFFFF/png?text=B',
+        displayName: 'Bambi',
+        description: 'Voy a tener que bajar mis estándares porque soy horrible de hombre',
+        likes: '749.4K',
+        comments: '3.1K',
+        date: 'Hace 3 días',
+        sound: 'original sound - bambi.chula',
+        link: 'https://tiktok.com/@bambi.chula/video/456',
+        category: 'comedia',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_2'
+      },
+      {
+        id: 'video-exp-3',
+        src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        username: '@dancequeen',
+        userAvatar: 'https://placehold.co/100x100/FF1493/FFFFFF/png?text=D',
+        displayName: 'Dance Queen',
+        description: 'Baile nuevo 💃 #dance #viral',
+        likes: '1.2M',
+        comments: '8.3K',
+        date: 'Hace 1 día',
+        sound: 'original sound - dancequeen',
+        link: 'https://tiktok.com/@dancequeen/video/789',
+        category: 'canto-baile',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_3'
+      },
+      {
+        id: 'video-exp-4',
+        src: 'https://www.w3schools.com/html/movie.mp4',
+        username: '@gamermax',
+        userAvatar: 'https://placehold.co/100x100/4169E1/FFFFFF/png?text=G',
+        displayName: 'GamerMax',
+        description: 'Nueva partida épica 🎮 #gaming',
+        likes: '456K',
+        comments: '2.1K',
+        date: 'Hace 2 días',
+        sound: 'original sound - gamermax',
+        link: 'https://tiktok.com/@gamermax/video/101',
+        category: 'gaming',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_4'
+      },
+      {
+        id: 'video-exp-5',
+        src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/122160208635531013.mp4',
+        username: '@animeworld',
+        userAvatar: 'https://placehold.co/100x100/FF8C00/FFFFFF/png?text=A',
+        displayName: 'AnimeWorld',
+        description: 'Top 10 mejores animes 2024 🔥',
+        likes: '892K',
+        comments: '4.7K',
+        date: 'Hace 4 días',
+        sound: 'anime opening remix',
+        link: 'https://tiktok.com/@animeworld/video/202',
+        category: 'anime',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_5'
+      },
+      {
+        id: 'video-exp-6',
+        src: 'https://www.w3schools.com/html/movie.mp4',
+        username: '@deportivo',
+        userAvatar: 'https://placehold.co/100x100/32CD32/FFFFFF/png?text=DP',
+        displayName: 'Deportivo',
+        description: 'Mejores jugadas de la semana ⚽',
+        likes: '1.5M',
+        comments: '12K',
+        date: 'Hace 6 horas',
+        sound: 'epic sports music',
+        link: 'https://tiktok.com/@deportivo/video/303',
+        category: 'deportes',
+        commentsTemplateId: 'ID_COMENTARIOS_VIDEO_6'
+      }
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔌 ELEMENTOS DEL DOM
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    const container = document.getElementById('explorarContainer');
+    const gallery = document.getElementById('explorarGallery');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+
+    // Popup
+    const popupOverlay = document.getElementById('videoPopupOverlay');
+    const popup = document.getElementById('videoPopup');
+    const popupCloseBtn = document.getElementById('popupCloseBtn');
+    const popupPlayer = document.getElementById('popupPlayer');
+    const popupVideo = document.getElementById('popupVideo');
+    const popupPlayIndicator = document.getElementById('popupPlayIndicator');
+    const popupNavUp = document.getElementById('popupNavUp');
+    const popupNavDown = document.getElementById('popupNavDown');
+    const popupMuteIndicator = document.getElementById('popupMuteIndicator');
+
+    // Perfil en popup
+    const popupProfileAvatar = document.getElementById('popupProfileAvatar');
+    const popupProfileUsername = document.getElementById('popupProfileUsername');
+    const popupProfileName = document.getElementById('popupProfileName');
+    const popupProfileDate = document.getElementById('popupProfileDate');
+    const popupProfileSound = document.getElementById('popupProfileSound');
+    const popupProfileLink = document.getElementById('popupProfileLink');
+    const popupCopyLinkBtn = document.getElementById('popupCopyLinkBtn');
+    const popupCommentsCount = document.getElementById('popupCommentsCount');
+
+    // Switch del popup
+    const popupSwitchTabs = document.querySelectorAll('#popupCommentsSwitch .switch-tab');
+    const popupTabContents = document.querySelectorAll('.comments-tab-content');
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎬 ESTADO
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    let currentCategory = 'todo';
+    let currentPopupVideoIndex = -1;
+    let filteredVideos = [...VIDEOS];
+    let isMuted = true; // Empezar en mute por defecto
+
+    // Estado de la cola de previews automáticos
+    let previewQueue = [];
+    let currentPreviewIndex = 0;
+    let previewTimer = null;
+    let isHovering = false;
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🖼️ CREAR GALERÍA DE VIDEOS CON COLA AUTOMÁTICA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function createVideoCard(videoData, index) {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.dataset.videoId = videoData.id;
+      card.dataset.index = index;
+
+      // Sin controles en la galería - solo preview mudo para abrir popup
+      card.innerHTML = `
+        <video class="card-video" src="${videoData.src}" muted playsinline preload="metadata"></video>
+        <div class="card-overlay">
+          <div class="card-stats">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            ${videoData.likes}
+          </div>
+          <div class="card-user">
+            <img class="card-user-avatar" src="${videoData.userAvatar}" alt="${videoData.username}" loading="lazy">
+            <span class="card-username">${videoData.username}</span>
+          </div>
         </div>
-        <div class="card-user">
-          <img class="card-user-avatar" src="${videoData.userAvatar}" alt="${videoData.username}" loading="lazy">
-          <span class="card-username">${videoData.username}</span>
-        </div>
-      </div>
-    `;
-    
-    const video = card.querySelector('.card-video');
-    let previewTimeout;
-    
-    // Hover: Reproducir preview
-    card.addEventListener('mouseenter', () => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-      
-      // Limitar a X segundos
-      previewTimeout = setTimeout(() => {
+      `;
+
+      const video = card.querySelector('.card-video');
+      video.muted = true; // Preview siempre mudo
+
+      // Forzar carga de metadata para mostrar poster frame
+      video.addEventListener('loadeddata', () => {
+        video.pause();
         video.currentTime = 0;
-      }, CONFIG.previewDuration * 1000);
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      clearTimeout(previewTimeout);
-      video.pause();
+      });
+      video.load();
+
+      // Agregar a la cola de previews
+      previewQueue.push({
+        card,
+        video,
+        data: videoData
+      });
+
+      // Hover preview - interrumpe la cola (siempre mudo)
+      card.addEventListener('mouseenter', () => {
+        isHovering = true;
+        cancelPreviewTimer();
+
+        // Pausar todos los otros videos
+        previewQueue.forEach(item => {
+          if (item.video !== video) {
+            item.video.pause();
+            item.video.currentTime = 0;
+          }
+        });
+
+        // Reproducir este video (silenciado)
+        video.currentTime = 0;
+        video.muted = true;
+        video.play().catch(() => { });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovering = false;
+        video.pause();
+        video.currentTime = 0;
+
+        // Colocar la cola para continuar desde el siguiente video
+        const idx = previewQueue.findIndex(item => item.video === video);
+        if (idx >= 0) {
+          currentPreviewIndex = (idx + 1) % previewQueue.length;
+        }
+
+        // Reanudar la cola automática
+        playNextPreview();
+      });
+
+      // Click: Abrir popup
+      card.addEventListener('click', () => {
+        cancelPreviewTimer();
+        openVideoPopup(index);
+      });
+
+      return card;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔄 COLA AUTOMÁTICA DE PREVIEWS
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function playNextPreview() {
+      if (isHovering) return; // No reproducir si hay hover activo
+      if (previewQueue.length === 0) return;
+
+      cancelPreviewTimer();
+
+      // Pausar todos los videos primero
+      previewQueue.forEach(item => {
+        item.video.pause();
+        item.video.currentTime = 0;
+      });
+
+      // Obtener el siguiente video en la cola
+      const currentItem = previewQueue[currentPreviewIndex];
+      const video = currentItem.video;
+
+      // Reproducir durante CONFIG.previewDuration segundos
       video.currentTime = 0;
-    });
-    
-    // Click: Abrir popup
-    card.addEventListener('click', () => {
-      openVideoPopup(index);
-    });
-    
-    return card;
-  }
-  
-  function renderGallery(videos) {
-    gallery.innerHTML = '';
-    videos.forEach((video, index) => {
-      const card = createVideoCard(video, index);
-      gallery.appendChild(card);
-    });
-  }
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🏷️ FILTRAR POR CATEGORÍA
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function filterByCategory(category) {
-    currentCategory = category;
-    
-    // Actualizar tabs
+      video.play().catch(() => { });
+
+      // Después de previewDuration segundos, pasar al siguiente
+      previewTimer = setTimeout(() => {
+        if (!isHovering) {
+          video.pause();
+          video.currentTime = 0;
+
+          // Avanzar al siguiente en la cola
+          currentPreviewIndex = (currentPreviewIndex + 1) % previewQueue.length;
+          playNextPreview();
+        }
+      }, CONFIG.previewDuration * 1000);
+    }
+
+    function cancelPreviewTimer() {
+      if (previewTimer) {
+        clearTimeout(previewTimer);
+        previewTimer = null;
+      }
+    }
+
+    // Función para pausar todos los videos de la galería y popup
+    function pauseAllVideos() {
+      previewQueue.forEach(item => {
+        item.video.pause();
+        item.video.muted = true;
+        item.video.currentTime = 0;
+      });
+      cancelPreviewTimer();
+
+      // También pausar el popup si está abierto
+      if (popupVideo) {
+        popupVideo.pause();
+        popupVideo.muted = true;
+      }
+    }
+
+    function renderGallery(videos) {
+      gallery.innerHTML = '';
+      previewQueue = [];
+      currentPreviewIndex = 0;
+      cancelPreviewTimer();
+
+      videos.forEach((video, index) => {
+        const card = createVideoCard(video, index);
+        gallery.appendChild(card);
+      });
+
+      // Esperar a que todos los videos carguen su metadata
+      setTimeout(() => {
+        previewQueue.forEach(item => {
+          item.video.pause();
+          item.video.currentTime = 0;
+        });
+
+        // Iniciar la cola de previews automáticas
+        playNextPreview();
+      }, 500);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🏷️ FILTRAR POR CATEGORÍA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function filterByCategory(category) {
+      currentCategory = category;
+
+      // Actualizar tabs
+      categoryTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.category === category);
+      });
+
+      // Filtrar videos
+      if (category === 'todo') {
+        filteredVideos = [...VIDEOS];
+      } else {
+        filteredVideos = VIDEOS.filter(v => v.category === category);
+      }
+
+      renderGallery(filteredVideos);
+    }
+
     categoryTabs.forEach(tab => {
-      tab.classList.toggle('active', tab.dataset.category === category);
-    });
-    
-    // Filtrar videos
-    if (category === 'todo') {
-      filteredVideos = [...VIDEOS];
-    } else {
-      filteredVideos = VIDEOS.filter(v => v.category === category);
-    }
-    
-    renderGallery(filteredVideos);
-  }
-  
-  categoryTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      filterByCategory(tab.dataset.category);
-    });
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🪟 POPUP DE VIDEO
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  function openVideoPopup(index) {
-    currentPopupVideoIndex = index;
-    const videoData = filteredVideos[index];
-    
-    // Cargar video
-    popupVideo.src = videoData.fullSrc;
-    popupVideo.muted = isMuted;
-    popupVideo.play().catch(() => {});
-    
-    // Actualizar perfil
-    popupProfileAvatar.src = videoData.userAvatar;
-    popupProfileUsername.textContent = videoData.username;
-    popupProfileName.textContent = videoData.displayName;
-    popupProfileDate.textContent = videoData.date;
-    popupProfileSound.querySelector('.sound-name').textContent = videoData.sound;
-    popupProfileLink.value = videoData.link;
-    popupCommentsCount.textContent = videoData.comments;
-    
-    // Mostrar popup
-    popupOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    // Mover popup al body si no está ahí
-    if (popupOverlay.parentElement !== document.body) {
-      document.body.appendChild(popupOverlay);
-    }
-  }
-  
-  function closeVideoPopup() {
-    popupOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-    popupVideo.pause();
-    currentPopupVideoIndex = -1;
-  }
-  
-  function navigatePopupVideo(direction) {
-    const newIndex = currentPopupVideoIndex + direction;
-    if (newIndex >= 0 && newIndex < filteredVideos.length) {
-      openVideoPopup(newIndex);
-    }
-  }
-  
-  // Event listeners del popup
-  popupCloseBtn.addEventListener('click', closeVideoPopup);
-  
-  popupOverlay.addEventListener('click', (e) => {
-    if (e.target === popupOverlay) {
-      closeVideoPopup();
-    }
-  });
-  
-  popupNavUp.addEventListener('click', () => navigatePopupVideo(-1));
-  popupNavDown.addEventListener('click', () => navigatePopupVideo(1));
-  
-  // Volumen
-  popupVolumeBtn.addEventListener('click', () => {
-    isMuted = !isMuted;
-    popupVideo.muted = isMuted;
-    
-    popupVolumeBtn.querySelector('.volume-on').style.display = isMuted ? 'none' : 'block';
-    popupVolumeBtn.querySelector('.volume-off').style.display = isMuted ? 'block' : 'none';
-  });
-  
-  // Copiar link
-  popupCopyLinkBtn.addEventListener('click', () => {
-    popupProfileLink.select();
-    document.execCommand('copy');
-    
-    popupCopyLinkBtn.textContent = '¡Copiado!';
-    setTimeout(() => {
-      popupCopyLinkBtn.textContent = 'Copiar enlace';
-    }, 2000);
-  });
-  
-  // Switch de tabs en popup
-  popupSwitchTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTab = tab.dataset.tab;
-      
-      popupSwitchTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === targetTab));
-      popupTabContents.forEach(content => {
-        content.classList.toggle('active', content.dataset.content === targetTab);
+      tab.addEventListener('click', () => {
+        filterByCategory(tab.dataset.category);
       });
     });
-  });
-  
-  // Teclado
-  document.addEventListener('keydown', (e) => {
-    if (!popupOverlay.classList.contains('active')) return;
-    
-    if (e.key === 'Escape') {
-      closeVideoPopup();
-    } else if (e.key === 'ArrowUp') {
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🪟 POPUP DE VIDEO
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function openVideoPopup(index) {
+      currentPopupVideoIndex = index;
+      const videoData = filteredVideos[index];
+
+      // Cargar video
+      popupVideo.src = videoData.src;
+      popupVideo.muted = isMuted;
+      popupVideo.play().catch(() => { });
+
+      // Actualizar perfil
+      popupProfileAvatar.src = videoData.userAvatar;
+      popupProfileUsername.textContent = videoData.username;
+      popupProfileName.textContent = videoData.displayName;
+      popupProfileDate.textContent = videoData.date;
+      popupProfileSound.querySelector('.sound-name').textContent = videoData.sound;
+      popupProfileLink.value = videoData.link;
+      popupCommentsCount.textContent = videoData.comments;
+
+      // Mostrar popup
+      popupOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Mover popup al body si no está ahí
+      if (popupOverlay.parentElement !== document.body) {
+        document.body.appendChild(popupOverlay);
+      }
+    }
+
+    function closeVideoPopup() {
+      popupOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      popupVideo.pause();
+      currentPopupVideoIndex = -1;
+    }
+
+    function navigatePopupVideo(direction) {
+      const newIndex = currentPopupVideoIndex + direction;
+      if (newIndex >= 0 && newIndex < filteredVideos.length) {
+        openVideoPopup(newIndex);
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🎮 FUNCIÓN PARA MOSTRAR INDICADOR DE PLAY/PAUSE
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    function showPlayPauseIndicator(isPlaying) {
+      const playIcon = popupPlayIndicator.querySelector('.indicator-play');
+      const pauseIcon = popupPlayIndicator.querySelector('.indicator-pause');
+
+      // Mostrar el icono correcto (play si está pausado, pause si está reproduciéndose)
+      playIcon.style.display = isPlaying ? 'none' : 'block';
+      pauseIcon.style.display = isPlaying ? 'block' : 'none';
+
+      // Quitar clase para reiniciar animación
+      popupPlayIndicator.classList.remove('show');
+
+      // Forzar reflow para reiniciar la animación
+      void popupPlayIndicator.offsetWidth;
+
+      // Agregar clase para mostrar con animación
+      popupPlayIndicator.classList.add('show');
+
+      // Quitar clase después de la animación
+      setTimeout(() => {
+        popupPlayIndicator.classList.remove('show');
+      }, 1200);
+    }
+
+    // Event listeners del popup
+    popupCloseBtn.addEventListener('click', closeVideoPopup);
+
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) {
+        closeVideoPopup();
+      }
+    });
+
+    // Click en el video para unmute (primer click) o play/pause (siguientes)
+    popupPlayer.addEventListener('click', (e) => {
+      // No hacer nada si se hizo click en los controles de navegación
+      if (e.target.closest('.popup-nav-btn')) return;
+
+      // Si está muted, el primer click quita el mute
+      if (isMuted) {
+        isMuted = false;
+        popupVideo.muted = false;
+
+        // Ocultar el indicador de mute
+        const muteIndicator = popupPlayer.querySelector('.popup-mute-indicator');
+        if (muteIndicator) muteIndicator.classList.add('hidden');
+        return;
+      }
+
+      // Si ya no está muted, controlar play/pause
+      if (popupVideo.paused) {
+        popupVideo.play();
+        showPlayPauseIndicator(true);
+      } else {
+        popupVideo.pause();
+        showPlayPauseIndicator(false);
+      }
+    });
+
+    popupNavUp.addEventListener('click', (e) => {
+      e.stopPropagation();
       navigatePopupVideo(-1);
-      e.preventDefault();
-    } else if (e.key === 'ArrowDown') {
+    });
+    popupNavDown.addEventListener('click', (e) => {
+      e.stopPropagation();
       navigatePopupVideo(1);
-      e.preventDefault();
-    }
-  });
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🌐 API GLOBAL
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  window.ExplorarSection = {
-    filterByCategory,
-    openVideoPopup,
-    closeVideoPopup,
-    getVideos: () => VIDEOS,
-    getFilteredVideos: () => filteredVideos,
-    addVideo: (videoData) => {
-      VIDEOS.push(videoData);
-      filterByCategory(currentCategory);
-    }
-  };
-  
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🚀 INICIALIZACIÓN
-  // ═══════════════════════════════════════════════════════════════════════════════
-  
-  renderGallery(VIDEOS);
-  
-  console.log('✅ Sección "Explorar" inicializada');
-  
-})();
+    });
+
+    // Copiar link
+    popupCopyLinkBtn.addEventListener('click', () => {
+      popupProfileLink.select();
+      document.execCommand('copy');
+
+      popupCopyLinkBtn.textContent = '¡Copiado!';
+      setTimeout(() => {
+        popupCopyLinkBtn.textContent = 'Copiar enlace';
+      }, 2000);
+    });
+
+    // Switch de tabs en popup
+    popupSwitchTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+
+        popupSwitchTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === targetTab));
+        popupTabContents.forEach(content => {
+          content.classList.toggle('active', content.dataset.content === targetTab);
+        });
+      });
+    });
+
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+      if (!popupOverlay.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeVideoPopup();
+      } else if (e.key === 'ArrowUp') {
+        navigatePopupVideo(-1);
+        e.preventDefault();
+      } else if (e.key === 'ArrowDown') {
+        navigatePopupVideo(1);
+        e.preventDefault();
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🌐 API GLOBAL
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    window.ExplorarSection = {
+      filterByCategory,
+      openVideoPopup,
+      closeVideoPopup,
+      getVideos: () => VIDEOS,
+      getFilteredVideos: () => filteredVideos,
+      addVideo: (videoData) => {
+        VIDEOS.push(videoData);
+        filterByCategory(currentCategory);
+      },
+      // Funciones para pausar videos al cambiar de sección
+      pauseAllVideos: pauseAllVideos
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🚀 INICIALIZACIÓN
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    renderGallery(VIDEOS);
+
+    console.log('✅ Sección "Explorar" inicializada');
+
+  })();
 </script>
 
 <!-- 
