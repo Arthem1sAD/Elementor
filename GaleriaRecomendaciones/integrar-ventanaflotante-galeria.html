@@ -1,0 +1,225 @@
+<!-- 
+  ═══════════════════════════════════════════════════════════════════════════════
+  🔗 INTEGRACIÓN: VENTANA FLOTANTE + GALERÍA RECOMENDACIONES
+  ═══════════════════════════════════════════════════════════════════════════════
+  
+  📍 UBICACIÓN: En el mismo contenedor que ventanas-flotantes-windows.html
+  📦 PROPÓSITO: Estilos y configuración para integrar Galería con el sistema
+               de ventanas flotantes
+  
+  ═══════════════════════════════════════════════════════════════════════════════
+-->
+
+<style>
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🖼️ FIX VENTANA FLOTANTE PARA GALERÍA
+     Misma técnica que Spotify App para adaptarse al 100% del width
+     ═══════════════════════════════════════════════════════════════════════════════ */
+
+    /* RESET: El .window-content debe ser flex parent correcto */
+    .app-window[data-app="galeria"] .window-content,
+    #galeria-window .window-content {
+        overflow: hidden !important;
+        background: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* El contenedor galería debe ocupar todo el espacio disponible */
+    .app-window[data-app="galeria"] .window-content .galeria-app-container,
+    .app-window #galeriaAppContainer,
+    #galeriaAppContainer,
+    #galeria-window .galeria-app-container {
+        flex: 1 1 100% !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+    }
+
+    /* Header fijo dentro de la ventana con posición absolute */
+    .app-window[data-app="galeria"] .galeria-header,
+    #galeriaAppContainer .galeria-header,
+    #galeria-window .galeria-header {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 100 !important;
+    }
+
+    /* Grid debe ocupar el espacio restante y scrollear */
+    .app-window[data-app="galeria"] .galeria-grid,
+    #galeriaAppContainer .galeria-grid,
+    #galeria-window .galeria-grid {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        overflow-y: scroll !important;
+        /* Forzar scroll siempre visible */
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* SCROLLBAR PERSONALIZADA PARA GALERÍA */
+    .galeria-grid::-webkit-scrollbar {
+        width: 10px !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        display: block !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 5px !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 5px !important;
+        min-height: 40px !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Firefox scrollbar */
+    .galeria-grid {
+        scrollbar-width: thin !important;
+        scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2) !important;
+    }
+
+    /* Corregir Elementor dentro de la Galería */
+    .app-window[data-app="galeria"] .window-content>.elementor,
+    .app-window[data-app="galeria"] .window-content .elementor,
+    #galeria-window .window-content>.elementor,
+    #galeria-window .window-content .elementor,
+    #galeria-window .elementor {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .app-window[data-app="galeria"] .window-content .elementor-section-wrap,
+    .app-window[data-app="galeria"] .window-content .elementor-inner,
+    .app-window[data-app="galeria"] .window-content .elementor-container,
+    .app-window[data-app="galeria"] .window-content .elementor-column-wrap,
+    .app-window[data-app="galeria"] .window-content .elementor-widget-wrap,
+    #galeria-window .elementor-section-wrap,
+    #galeria-window .elementor-inner,
+    #galeria-window .elementor-container,
+    #galeria-window .elementor-column-wrap,
+    #galeria-window .elementor-widget-wrap {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 0 !important;
+    }
+
+    /* Widget HTML dentro de Elementor */
+    .app-window[data-app="galeria"] .elementor-widget-html,
+    .app-window[data-app="galeria"] .elementor-widget-html .elementor-widget-container,
+    #galeria-window .elementor-widget-html,
+    #galeria-window .elementor-widget-html .elementor-widget-container {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+    }
+
+    /* El div hijo del widget container */
+    .app-window[data-app="galeria"] .elementor-widget-container>div,
+    #galeria-window .elementor-widget-container>div {
+        height: 100% !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Fix para el visor de fotos cuando está dentro de ventana flotante */
+    .app-window[data-app="galeria"] .foto-viewer-overlay,
+    #galeria-window .foto-viewer-overlay {
+        position: fixed !important;
+    }
+</style>
+
+<script>
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔧 CONFIGURACIÓN DE LA VENTANA DE GALERÍA
+    // ═══════════════════════════════════════════════════════════════════════════════
+
+    (function () {
+        const GALERIA_WINDOW_CONFIG = {
+            windowId: 'galeria-window',
+            appName: 'galeria',
+            title: 'Galería de Recomendaciones',
+            icon: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+            width: 1200,
+            height: 700,
+            minWidth: 800,
+            minHeight: 500,
+            contentTemplateId: 'ID_PLANTILLA_GALERIA' // Cambiar por el ID real
+        };
+
+        // Función para abrir la galería
+        function openGaleriaApp() {
+            const windowElement = document.getElementById(GALERIA_WINDOW_CONFIG.windowId);
+
+            if (windowElement && windowElement.openWindow) {
+                windowElement.openWindow();
+
+                if (window.addToTaskbarGlobal) {
+                    window.addToTaskbarGlobal(
+                        GALERIA_WINDOW_CONFIG.windowId,
+                        GALERIA_WINDOW_CONFIG.icon,
+                        GALERIA_WINDOW_CONFIG.title
+                    );
+                }
+            }
+        }
+
+        // Exponer función global
+        window.openGaleriaApp = openGaleriaApp;
+
+        // Escuchar evento personalizado
+        window.addEventListener('open-galeria-app', openGaleriaApp);
+
+        console.log('✅ Integración Galería + Ventana Flotante lista');
+    })();
+</script>
+
+<!-- 
+═══════════════════════════════════════════════════════════════════════════════
+📝 INSTRUCCIONES DE USO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. UBICACIÓN:
+   - Colocar en el mismo contenedor que ventanas-flotantes-windows.html
+
+2. CONFIGURAR:
+   - Cambiar contentTemplateId por el ID de la plantilla de Galería
+   - Cambiar el icono por el de tu app
+
+3. ABRIR LA APP:
+   - window.openGaleriaApp();
+   - O disparar evento: window.dispatchEvent(new Event('open-galeria-app'));
+
+4. ICONO EN ESCRITORIO:
+   <div class="desktop-icon" data-window-id="galeria-window">
+     <img src="icono-galeria.png" alt="Galería">
+     <span>Galería</span>
+   </div>
+
+═══════════════════════════════════════════════════════════════════════════════
+-->

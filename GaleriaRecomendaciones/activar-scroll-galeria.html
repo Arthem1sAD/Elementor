@@ -1,0 +1,301 @@
+<!-- ========================================= -->
+<!-- WIDGET: FORZAR SCROLL EN GALERÍA DE RECOMENDACIONES -->
+<!-- ========================================= -->
+<!-- Coloca este widget HTML en Elementor DESPUÉS del widget galeria-recomendaciones -->
+<!-- O en el mismo contenedor que integrar-ventanaflotante-galeria.html -->
+<!-- Este CSS forzará scroll en la galería de fotos mientras el header permanece fijo -->
+
+<style>
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🔧 FIX CRÍTICO: FORZAR SCROLL Y 100% WIDTH EN GALERÍA
+     ═══════════════════════════════════════════════════════════════════════════════
+     
+     📌 IMPORTANTE: Este archivo soluciona:
+     - Scroll en la galería (flex: 1 1 0 + min-height: 0)
+     - Ancho 100% dentro de ventana flotante
+     - Compatibilidad con Elementor Pro
+     
+     ═══════════════════════════════════════════════════════════════════════════════ */
+
+    /* ===== CONTENEDOR PRINCIPAL - height: 100% para ventana flotante ===== */
+    .galeria-app-container,
+    #galeriaAppContainer {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: 100% !important;
+        /* 100% del padre, NO vh fijo */
+        min-height: 0 !important;
+        /* Crítico para flex scroll */
+        flex: 1 1 100% !important;
+        overflow: hidden !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ===== HEADER FIJO (NO SCROLLEABLE) ===== */
+    .galeria-header {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 100 !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* ===== GALERÍA GRID - FLEX SCROLL ===== */
+    .galeria-grid {
+        flex: 1 1 0 !important;
+        /* 0 es crucial para calcular altura correctamente */
+        min-height: 0 !important;
+        /* Permite que flex calcule overflow */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* SCROLLBAR PERSONALIZADA */
+    .galeria-grid::-webkit-scrollbar {
+        width: 10px !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        display: block !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 5px !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 5px !important;
+        min-height: 40px !important;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Firefox scrollbar */
+    .galeria-grid {
+        scrollbar-width: thin !important;
+        scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2) !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🖼️ FIX PARA VENTANA FLOTANTE - 100% WIDTH Y HEIGHT
+     ═══════════════════════════════════════════════════════════════════════════════ */
+
+    /* Reset ventana flotante para galería */
+    .app-window[data-app="galeria"] .window-content,
+    #galeria-window .window-content,
+    #window-galeria .window-content {
+        overflow: hidden !important;
+        background: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* El contenedor galería debe ocupar todo el espacio */
+    .app-window[data-app="galeria"] .galeria-app-container,
+    #galeria-window .galeria-app-container,
+    #window-galeria .galeria-app-container,
+    .app-window .galeria-app-container {
+        flex: 1 1 100% !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Grid dentro de ventana flotante */
+    .app-window[data-app="galeria"] .galeria-grid,
+    #galeria-window .galeria-grid,
+    #window-galeria .galeria-grid,
+    .app-window .galeria-grid {
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     📦 FIX ELEMENTOR - CADENA COMPLETA DE FLEX
+     ═══════════════════════════════════════════════════════════════════════════════ */
+
+    /* Corregir contenedores de Elementor - hacer cadena flex completa */
+    .app-window[data-app="galeria"] .window-content>.elementor,
+    .app-window[data-app="galeria"] .elementor,
+    #galeria-window .elementor,
+    #window-galeria .elementor,
+    .app-window .elementor {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+    }
+
+    /* Todos los contenedores intermedios de Elementor */
+    .app-window[data-app="galeria"] .elementor-section-wrap,
+    .app-window[data-app="galeria"] .elementor-section,
+    .app-window[data-app="galeria"] .elementor-section-full_width,
+    .app-window[data-app="galeria"] .elementor-inner,
+    .app-window[data-app="galeria"] .elementor-container,
+    .app-window[data-app="galeria"] .elementor-row,
+    .app-window[data-app="galeria"] .elementor-column,
+    .app-window[data-app="galeria"] .elementor-column-wrap,
+    .app-window[data-app="galeria"] .elementor-widget-wrap,
+    #galeria-window .elementor-section-wrap,
+    #galeria-window .elementor-section,
+    #galeria-window .elementor-section-full_width,
+    #galeria-window .elementor-inner,
+    #galeria-window .elementor-container,
+    #galeria-window .elementor-row,
+    #galeria-window .elementor-column,
+    #galeria-window .elementor-column-wrap,
+    #galeria-window .elementor-widget-wrap,
+    #window-galeria .elementor-section-wrap,
+    #window-galeria .elementor-section,
+    #window-galeria .elementor-inner,
+    #window-galeria .elementor-container,
+    #window-galeria .elementor-row,
+    #window-galeria .elementor-column,
+    #window-galeria .elementor-column-wrap,
+    #window-galeria .elementor-widget-wrap {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 0 !important;
+        flex: 1 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Widget HTML dentro de Elementor */
+    .app-window[data-app="galeria"] .elementor-widget-html,
+    .app-window[data-app="galeria"] .elementor-widget-html .elementor-widget-container,
+    #galeria-window .elementor-widget-html,
+    #galeria-window .elementor-widget-html .elementor-widget-container,
+    #window-galeria .elementor-widget-html,
+    #window-galeria .elementor-widget-html .elementor-widget-container {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* El div hijo del widget container */
+    .app-window .elementor-widget-container>div,
+    #galeria-window .elementor-widget-container>div,
+    #window-galeria .elementor-widget-container>div {
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     📱 AJUSTES ADICIONALES
+     ═══════════════════════════════════════════════════════════════════════════════ */
+
+    /* Visor de fotos z-index alto */
+    .foto-viewer-overlay {
+        z-index: 10000 !important;
+        position: fixed !important;
+    }
+
+    /* Tarjetas de foto - asegurar que ocupen el ancho correcto */
+    .galeria-grid .foto-card {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+</style>
+
+<script>
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // 🔧 DIAGNÓSTICO Y FIX DE SCROLL AL CARGAR
+    // ═══════════════════════════════════════════════════════════════════════════════
+    (function () {
+        function initGaleriaScroll() {
+            const galeriaGrid = document.querySelector('.galeria-grid');
+            const galeriaContainer = document.querySelector('.galeria-app-container');
+
+            if (galeriaGrid) {
+                // Forzar propiedades de scroll
+                galeriaGrid.style.cssText += `
+                    flex: 1 1 0 !important;
+                    min-height: 0 !important;
+                    overflow-y: auto !important;
+                    width: 100% !important;
+                `;
+
+                console.log('[GALERIA] ✅ Scroll configurado');
+                console.log('[GALERIA] Grid scrollHeight:', galeriaGrid.scrollHeight);
+                console.log('[GALERIA] Grid clientHeight:', galeriaGrid.clientHeight);
+            }
+
+            if (galeriaContainer) {
+                galeriaContainer.style.cssText += `
+                    flex: 1 1 100% !important;
+                    min-height: 0 !important;
+                    height: 100% !important;
+                    width: 100% !important;
+                `;
+                console.log('[GALERIA] ✅ Container configurado');
+            }
+        }
+
+        // Ejecutar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(initGaleriaScroll, 300));
+        } else {
+            setTimeout(initGaleriaScroll, 300);
+        }
+
+        // También cuando se abra la ventana flotante
+        window.addEventListener('open-galeria-app', () => setTimeout(initGaleriaScroll, 300));
+    })();
+</script>
+
+<!-- 
+═══════════════════════════════════════════════════════════════════════════════
+📝 INSTRUCCIONES DE USO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. UBICACIÓN:
+   - Colocar este widget DESPUÉS de galeria-recomendaciones.html
+   - O en el mismo contenedor que integrar-ventanaflotante-galeria.html
+
+2. FUNCIONALIDAD:
+   - El header permanece fijo con efecto blur
+   - La galería de fotos tiene scroll independiente
+   - Se adapta al 100% del width de la ventana flotante
+   - Compatible con Elementor Pro
+
+3. SI EL SCROLL NO FUNCIONA:
+   - Asegúrate de que este widget esté DESPUÉS del widget principal
+   - Verifica que la galería tenga suficientes fotos
+   - Revisa la consola del navegador para ver los logs
+
+═══════════════════════════════════════════════════════════════════════════════
+-->

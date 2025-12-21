@@ -1,0 +1,1918 @@
+<!-- 
+  ═══════════════════════════════════════════════════════════════════════════════
+  📸 GALERÍA DE RECOMENDACIONES - App de Referencias de Clientes
+  ═══════════════════════════════════════════════════════════════════════════════
+  
+  📍 UBICACIÓN: Widget HTML para Elementor - Ventana Flotante
+  📦 CONTENIDO: Galería de fotos de clientes con información de compra
+  
+  🎯 FUNCIONALIDAD:
+  - Header con blur (opacidad 0.3, 15vh) y botones de ventana
+  - Grid de fotos con scroll, imágenes pasan por detrás del header
+  - Se adapta al 100% del width de la ventana flotante
+  - Títulos en cada imagen (nombre-método-precio)
+  - Click abre foto en grande con información
+  
+  ═══════════════════════════════════════════════════════════════════════════════
+-->
+
+<div class="galeria-app-container" id="galeriaAppContainer">
+
+    <!-- ==================== HEADER CON BLUR ==================== -->
+    <header class="galeria-header" id="galeriaHeader">
+        <div class="header-left">
+            <h1 class="header-title">📸 Galería de Recomendaciones</h1>
+        </div>
+        <div class="header-center">
+            <div class="header-filters">
+                <select class="filter-select" id="filterMetodo">
+                    <option value="todo">Todos los métodos</option>
+                    <option value="presencial">En persona</option>
+                    <option value="envio">Envío</option>
+                    <option value="mercadolibre">Mercado Libre</option>
+                </select>
+                <select class="filter-select" id="filterOrden">
+                    <option value="reciente">Más recientes</option>
+                    <option value="antiguo">Más antiguos</option>
+                    <option value="nombre">Por nombre</option>
+                </select>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="files-count" id="filesCount">0 fotos</span>
+
+            <!-- Botones de ventana -->
+            <div class="window-controls">
+                <button class="window-btn minimize-btn" id="galeriaMinimizeBtn" title="Minimizar">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                        <rect width="10" height="1" x="1" y="6" />
+                    </svg>
+                </button>
+                <button class="window-btn maximize-btn" id="galeriaMaximizeBtn" title="Maximizar">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                        <rect width="9" height="9" x="1.5" y="1.5" fill="none" stroke="currentColor"
+                            stroke-width="1.5" />
+                    </svg>
+                </button>
+                <button class="window-btn close-btn" id="galeriaCloseBtn" title="Cerrar">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                        <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" stroke-width="1.5" fill="none" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== GALERÍA DE FOTOS (SCROLLEABLE) ==================== -->
+    <div class="galeria-grid" id="galeriaGrid">
+        <!-- Las fotos se inyectan aquí dinámicamente -->
+    </div>
+
+</div>
+
+<!-- ==================== VISOR DE FOTO EN GRANDE ==================== -->
+<div class="foto-viewer-overlay" id="fotoViewerOverlay">
+    <div class="foto-viewer" id="fotoViewer">
+
+        <!-- Botón cerrar -->
+        <button class="viewer-close-btn" id="viewerCloseBtn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+        </button>
+
+        <!-- Contenido del visor -->
+        <div class="viewer-content">
+
+            <!-- Área de la imagen -->
+            <div class="viewer-image-area" id="viewerImageArea">
+                <div class="viewer-image-container" id="viewerImageContainer">
+                    <img id="viewerImage" src="" alt="Foto del cliente">
+
+                    <!-- Navegación con flechas -->
+                    <div class="viewer-nav">
+                        <button class="viewer-nav-btn nav-prev" id="viewerNavPrev">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+                            </svg>
+                        </button>
+                        <button class="viewer-nav-btn nav-next" id="viewerNavNext">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ID de la foto -->
+                <div class="foto-id" id="fotoId">FOTO00000001</div>
+            </div>
+
+            <!-- Panel de información -->
+            <div class="viewer-info-panel" id="viewerInfoPanel">
+
+                <!-- Información del cliente -->
+                <div class="info-section">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        Detectado en esta imagen:
+                    </div>
+
+                    <div class="client-tags" id="clientTags">
+                        <!-- Tags de cliente se insertan aquí -->
+                    </div>
+                </div>
+
+                <!-- Información de la laptop -->
+                <div class="info-section laptop-info">
+                    <h3 class="section-title">💻 Laptop Adquirida</h3>
+                    <div class="laptop-model" id="laptopModel">Modelo de Laptop</div>
+                    <div class="laptop-specs" id="laptopSpecs">
+                        <!-- Especificaciones se insertan aquí -->
+                    </div>
+                </div>
+
+                <!-- Método de compra -->
+                <div class="info-section">
+                    <h3 class="section-title">🛒 Método de Compra</h3>
+                    <div class="purchase-method" id="purchaseMethod">
+                        <span class="method-badge">En persona</span>
+                    </div>
+                </div>
+
+                <!-- Precio -->
+                <div class="info-section">
+                    <h3 class="section-title">💰 Precio</h3>
+                    <div class="price-tag" id="priceTag">$0.00</div>
+                </div>
+
+                <!-- Mensaje del cliente -->
+                <div class="info-section">
+                    <h3 class="section-title">💬 Mensaje del Cliente</h3>
+                    <div class="client-message" id="clientMessage">
+                        Mensaje del cliente sobre su experiencia de compra...
+                    </div>
+                </div>
+
+                <!-- Fecha -->
+                <div class="info-section">
+                    <h3 class="section-title">📅 Fecha de Compra</h3>
+                    <div class="purchase-date" id="purchaseDate">DD/MM/AAAA</div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="info-actions">
+                    <button class="action-btn share-btn" id="shareBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                            <path
+                                d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" />
+                        </svg>
+                        Compartir
+                    </button>
+                    <button class="action-btn download-btn" id="downloadBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                        </svg>
+                        Descargar
+                    </button>
+                </div>
+
+                <!-- Navegación Prev/Next -->
+                <div class="info-nav">
+                    <button class="info-nav-btn" id="infoPrevBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                        </svg>
+                        Anterior
+                    </button>
+                    <button class="info-nav-btn" id="infoNextBtn">
+                        Siguiente
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🎨 VARIABLES CSS - PERSONALIZACIÓN FÁCIL
+     ═══════════════════════════════════════════════════════════════════════════════
+     
+     📌 INSTRUCCIONES: Modifica estas variables para personalizar la apariencia
+     de toda la galería sin necesidad de buscar en el código.
+     
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    :root {
+        /* ─────────────────────────────────────────────────────────────────────────
+         🎨 COLORES PRINCIPALES
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-bg: #000000;
+        /* Fondo de la app */
+        --galeria-header-bg: rgba(0, 0, 0, 0.1);
+        /* Fondo header (transparente 0.3) */
+        --galeria-card-bg: #1a1a1a;
+        /* Fondo de las tarjetas */
+        --galeria-border: rgba(255, 255, 255, 0.1);
+        /* Color de bordes */
+        --galeria-text: #ffffff;
+        /* Texto principal */
+        --galeria-text-secondary: #a0a0a0;
+        /* Texto secundario */
+
+        /* ─────────────────────────────────────────────────────────────────────────
+         🌈 COLORES DE MÉTODO DE COMPRA
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-accent: #0078d4;
+        /* Azul - Envío */
+        --galeria-success: #10b981;
+        /* Verde - Presencial */
+        --galeria-warning: #f59e0b;
+        /* Amarillo - Mercado Libre */
+
+        /* ─────────────────────────────────────────────────────────────────────────
+         📏 DIMENSIONES DEL HEADER
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-header-height: 15vh;
+        /* Altura del header */
+        --galeria-header-blur: 20px;
+        /* Intensidad del blur */
+
+        /* ─────────────────────────────────────────────────────────────────────────
+         🖼️ CONFIGURACIÓN DE TARJETAS DE IMAGEN
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-card-min-width: 220px;
+        /* Ancho mínimo de tarjeta */
+        --galeria-card-height: 420px;
+        /* Altura de las tarjetas */
+        --galeria-card-gap: 16px;
+        /* Espacio entre tarjetas */
+        --galeria-card-radius: 12px;
+        /* Border radius de tarjetas */
+        --galeria-grid-padding: 20px;
+        /* Padding del grid */
+
+        /* ─────────────────────────────────────────────────────────────────────────
+         🏷️ CONFIGURACIÓN DE TÍTULOS DE IMAGEN
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-title-bg: rgba(0, 0, 0, 0.85);
+        /* Fondo del título */
+        --galeria-title-font-size: 12px;
+
+        /* ─────────────────────────────────────────────────────────────────────────
+         📐 ALTURA - IMPORTANTE PARA VENTANAS FLOTANTES
+         ───────────────────────────────────────────────────────────────────────── */
+        --galeria-container-height: 100%;
+        /* Usar 100% para ventana flotante, 90vh para standalone */
+        /* Tamaño de fuente del título */
+        --galeria-title-padding: 10px 12px;
+        /* Padding del título */
+        --galeria-title-radius: 0 0 12px 12px;
+        /* Border radius del título (igual que tarjeta abajo) */
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     📦 CONTENEDOR PRINCIPAL - ADAPTABLE A VENTANA FLOTANTE (COMO SPOTIFY)
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    .galeria-app-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: var(--galeria-container-height);
+        /* 100% para ventana flotante */
+        min-height: 0;
+        /* Crítico para flexbox scroll */
+        flex: 1 1 100%;
+        /* Crecer para ocupar todo el espacio */
+        background: var(--galeria-bg);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--galeria-text);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🎯 HEADER CON BLUR - FIJO EN LA PARTE SUPERIOR
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    .galeria-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: var(--galeria-header-height);
+        min-height: var(--galeria-header-height);
+        background: var(--galeria-header-bg);
+        backdrop-filter: blur(var(--galeria-header-blur));
+        -webkit-backdrop-filter: blur(var(--galeria-header-blur));
+        border-bottom: 1px solid var(--galeria-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+    }
+
+    .header-left,
+    .header-center,
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .header-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        color: var(--galeria-text);
+        white-space: nowrap;
+    }
+
+    .header-filters {
+        display: flex;
+        gap: 12px;
+    }
+
+    .filter-select {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--galeria-border);
+        color: var(--galeria-text);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    .filter-select:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .filter-select option {
+        background: #2a2a2a;
+        color: var(--galeria-text);
+    }
+
+    .files-count {
+        font-size: 14px;
+        color: var(--galeria-text-secondary);
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────────
+     🔲 BOTONES DE VENTANA (Minimizar, Maximizar, Cerrar)
+     ───────────────────────────────────────────────────────────────────────── */
+    .window-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 16px;
+    }
+
+    .window-btn {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--galeria-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .window-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .window-btn.close-btn:hover {
+        background: #e81123;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     📷 GALERÍA GRID - SCROLLEABLE CON IMÁGENES DETRÁS DEL HEADER
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    .galeria-grid {
+        flex: 1 1 0;
+        /* Crítico: usar 0 para calcular height desde flex */
+        min-height: 0;
+        /* Crítico: permite scroll en flex children */
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--galeria-card-min-width), 1fr));
+        gap: var(--galeria-card-gap);
+        padding: var(--galeria-grid-padding);
+        padding-top: calc(var(--galeria-header-height) + var(--galeria-grid-padding));
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--galeria-bg);
+        align-content: start;
+    }
+
+    .galeria-grid::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .galeria-grid::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+    }
+
+    .galeria-grid::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🖼️ TARJETAS DE FOTO
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    .foto-card {
+        position: relative;
+        height: var(--galeria-card-height);
+        overflow: hidden;
+        cursor: pointer;
+        background: var(--galeria-card-bg);
+        border-radius: var(--galeria-card-radius);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .foto-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .foto-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: var(--galeria-card-radius);
+        transition: transform 0.3s ease;
+    }
+
+    .foto-card:hover img {
+        transform: scale(1.05);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────────
+     🏷️ TÍTULO DE LA IMAGEN (nombre-método-precio)
+     ───────────────────────────────────────────────────────────────────────── */
+    .foto-card-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--galeria-title-bg);
+        padding: var(--galeria-title-padding);
+        font-size: var(--galeria-title-font-size);
+        color: var(--galeria-text);
+        text-transform: lowercase;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-radius: var(--galeria-title-radius);
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    /* Badge de método de compra */
+    .method-indicator {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .method-indicator.presencial {
+        background: var(--galeria-success);
+    }
+
+    .method-indicator.envio {
+        background: var(--galeria-accent);
+    }
+
+    .method-indicator.mercadolibre {
+        background: var(--galeria-warning);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     🔍 VISOR DE FOTO EN GRANDE
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    .foto-viewer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .foto-viewer-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .foto-viewer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .viewer-close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        transition: all 0.2s ease;
+    }
+
+    .viewer-close-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    .viewer-content {
+        flex: 1;
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* Área de imagen */
+    .viewer-image-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        position: relative;
+    }
+
+    .viewer-image-container {
+        position: relative;
+        max-width: 100%;
+        max-height: calc(100% - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #viewerImage {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .foto-id {
+        margin-top: 16px;
+        font-family: monospace;
+        font-size: 12px;
+        color: var(--galeria-text-secondary);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+
+    /* Navegación de imagen */
+    .viewer-nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-prev {
+        top: -60px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .nav-next {
+        bottom: -60px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .viewer-nav-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .viewer-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+    /* Panel de información */
+    .viewer-info-panel {
+        width: 380px;
+        background: #121212;
+        border-left: 1px solid var(--galeria-border);
+        padding: 30px 24px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .info-section {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .info-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--galeria-text-secondary);
+        margin-bottom: 12px;
+    }
+
+    .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0 0 12px 0;
+        color: var(--galeria-text);
+    }
+
+    .client-tag {
+        display: inline-block;
+        background: var(--galeria-accent);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .laptop-model {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--galeria-text);
+    }
+
+    .laptop-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .spec-tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: var(--galeria-text-secondary);
+    }
+
+    .method-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .method-badge.presencial {
+        background: rgba(16, 185, 129, 0.2);
+        color: var(--galeria-success);
+    }
+
+    .method-badge.envio {
+        background: rgba(0, 120, 212, 0.2);
+        color: var(--galeria-accent);
+    }
+
+    .method-badge.mercadolibre {
+        background: rgba(245, 158, 11, 0.2);
+        color: var(--galeria-warning);
+    }
+
+    .price-tag {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--galeria-success);
+    }
+
+    .client-message {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--galeria-text-secondary);
+        font-style: italic;
+    }
+
+    .purchase-date {
+        font-size: 14px;
+        color: var(--galeria-text-secondary);
+    }
+
+    .info-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: auto;
+    }
+
+    .action-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .share-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .share-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .download-btn {
+        background: var(--galeria-accent);
+        color: white;
+    }
+
+    .download-btn:hover {
+        background: var(--galeria-accent);
+        filter: brightness(1.1);
+    }
+
+    .info-nav {
+        display: flex;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid var(--galeria-border);
+    }
+
+    .info-nav-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        color: var(--galeria-text-secondary);
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .info-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════════
+     📱 RESPONSIVE
+     ═══════════════════════════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+        .header-center {
+            display: none;
+        }
+
+        .viewer-info-panel {
+            width: 300px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .viewer-content {
+            flex-direction: column;
+        }
+
+        .viewer-info-panel {
+            width: 100%;
+            max-height: 90vh;
+        }
+
+        .viewer-image-area {
+            padding: 20px;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 📸 CONFIGURACIÓN DE FOTOS
+        // ═══════════════════════════════════════════════════════════════════════════════
+        //
+        // 📌 INSTRUCCIONES: Agrega o modifica las fotos de clientes aquí.
+        // Cada foto debe tener los siguientes campos:
+        //   - id: Identificador único (ej: 'FOTO00000001')
+        //   - src: URL de la imagen
+        //   - cliente: Nombre del cliente
+        //   - laptop: Modelo de la laptop
+        //   - specs: Array con especificaciones ['GPU', 'CPU', 'RAM', 'SSD']
+        //   - metodo: 'presencial' | 'envio' | 'mercadolibre'
+        //   - precio: Precio formateado (ej: '$14,999.00')
+        //   - mensaje: Testimonio del cliente
+        //   - fecha: Fecha de compra (ej: '15/12/2024')
+        //
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        const FOTOS = [
+            {
+                id: 'FOTO00000001',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+                cliente: 'Carlos Mendoza',
+                laptop: 'ASUS ROG Strix G15',
+                specs: ['RTX 4060', 'Ryzen 7 7735HS', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$22,500.00',
+                mensaje: '¡Excelente servicio! La laptop superó mis expectativas. El proceso de compra fue muy sencillo.',
+                fecha: '15/12/2024'
+            },
+            {
+                id: 'FOTO00000002',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+                cliente: 'María García',
+                laptop: 'Lenovo Legion 5',
+                specs: ['RTX 3070', 'Ryzen 7 5800H', '32GB RAM', '1TB SSD'],
+                metodo: 'envio',
+                precio: '$19,999.00',
+                mensaje: 'Llegó perfectamente empacada. Todo funcionando de maravilla.',
+                fecha: '12/12/2024'
+            },
+            {
+                id: 'FOTO00000003',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+                cliente: 'Roberto Sánchez',
+                laptop: 'MSI Katana GF66',
+                specs: ['RTX 4050', 'i7-12700H', '16GB RAM', '512GB SSD'],
+                metodo: 'mercadolibre',
+                precio: '$18,500.00',
+                mensaje: 'Compra segura por Mercado Libre. Muy satisfecho con el producto.',
+                fecha: '10/12/2024'
+            },
+            {
+                id: 'FOTO00000004',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+                cliente: 'Ana López',
+                laptop: 'HP Victus 15',
+                specs: ['RTX 3060', 'i5-12500H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$15,999.00',
+                mensaje: 'Muy contenta con mi compra. Excelente atención al cliente.',
+                fecha: '08/12/2024'
+            },
+            {
+                id: 'FOTO00000005',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/ProfilePic.png',
+                cliente: 'Diego Ramírez',
+                laptop: 'Acer Predator Helios 300',
+                specs: ['RTX 4070', 'i7-13700H', '32GB RAM', '1TB SSD'],
+                metodo: 'envio',
+                precio: '$27,800.00',
+                mensaje: 'El envío fue rápido y seguro. La laptop funciona de maravilla.',
+                fecha: '05/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+            {
+                id: 'FOTO00000006',
+                src: 'https://almacenesdelta.shop/wp-content/uploads/2025/12/IMG_4044.webp',
+                cliente: 'Laura Torres',
+                laptop: 'Acer Nitro 5',
+                specs: ['RTX 3060', 'Ryzen 5 6600H', '16GB RAM', '512GB SSD'],
+                metodo: 'presencial',
+                precio: '$14,999.00',
+                mensaje: 'Gran experiencia de compra. El equipo es justo lo que necesitaba.',
+                fecha: '01/12/2024'
+            },
+        ];
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🔧 CONFIGURACIÓN DE FORMATO DE TÍTULO
+        // ═══════════════════════════════════════════════════════════════════════════════
+        //
+        // 📌 PERSONALIZA cómo se genera el título de cada imagen.
+        // Por defecto: nombre-método-precio (ej: laura-torres-en-persona-$14,999)
+        //
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function generateTitle(foto) {
+            // Formatear nombre (reemplazar espacios por guiones, minúsculas)
+            const nombre = foto.cliente.toLowerCase().replace(/\s+/g, '-');
+
+            // Traducir método
+            const metodoTexto = {
+                'presencial': 'en-persona',
+                'envio': 'envio',
+                'mercadolibre': 'mercadolibre'
+            };
+            const metodo = metodoTexto[foto.metodo] || foto.metodo;
+
+            // Formatear precio (quitar decimales si quieres)
+            const precio = foto.precio.replace('.00', '').replace(',', '');
+
+            return `${nombre}-${metodo}-${precio}`;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🔌 ELEMENTOS DEL DOM
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        const galeriaGrid = document.getElementById('galeriaGrid');
+        const filesCount = document.getElementById('filesCount');
+        const filterMetodo = document.getElementById('filterMetodo');
+        const filterOrden = document.getElementById('filterOrden');
+
+        // Botones de ventana - USAR IDs ÚNICOS para evitar conflicto con Spotify
+        const minimizeBtn = document.getElementById('galeriaMinimizeBtn');
+        const maximizeBtn = document.getElementById('galeriaMaximizeBtn');
+        const closeBtn = document.getElementById('galeriaCloseBtn');
+
+        // Visor
+        const viewerOverlay = document.getElementById('fotoViewerOverlay');
+        const viewerCloseBtn = document.getElementById('viewerCloseBtn');
+        const viewerImage = document.getElementById('viewerImage');
+        const viewerImageArea = document.getElementById('viewerImageArea');
+        const viewerNavPrev = document.getElementById('viewerNavPrev');
+        const viewerNavNext = document.getElementById('viewerNavNext');
+        const fotoIdEl = document.getElementById('fotoId');
+        const clientTags = document.getElementById('clientTags');
+        const laptopModel = document.getElementById('laptopModel');
+        const laptopSpecs = document.getElementById('laptopSpecs');
+        const purchaseMethod = document.getElementById('purchaseMethod');
+        const priceTag = document.getElementById('priceTag');
+        const clientMessage = document.getElementById('clientMessage');
+        const purchaseDate = document.getElementById('purchaseDate');
+        const infoPrevBtn = document.getElementById('infoPrevBtn');
+        const infoNextBtn = document.getElementById('infoNextBtn');
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🎬 ESTADO
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        let filteredFotos = [...FOTOS];
+        let currentFotoIndex = -1;
+        let isScrolling = false;
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🖼️ RENDERIZAR GALERÍA
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function renderGallery() {
+            galeriaGrid.innerHTML = '';
+
+            filteredFotos.forEach((foto, index) => {
+                const card = document.createElement('div');
+                card.className = 'foto-card';
+
+                // Generar título
+                const title = generateTitle(foto);
+
+                card.innerHTML = `
+                    <img src="${foto.src}" alt="${foto.cliente}" loading="lazy">
+                    <div class="method-indicator ${foto.metodo}"></div>
+                    <div class="foto-card-title">${title}</div>
+                `;
+
+                card.addEventListener('click', () => openViewer(index));
+                galeriaGrid.appendChild(card);
+            });
+
+            filesCount.textContent = `${filteredFotos.length} fotos`;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🔍 VISOR DE FOTO
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function openViewer(index) {
+            currentFotoIndex = index;
+            updateViewerContent();
+            viewerOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeViewer() {
+            viewerOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            currentFotoIndex = -1;
+        }
+
+        function updateViewerContent() {
+            const foto = filteredFotos[currentFotoIndex];
+            if (!foto) return;
+
+            // Imagen
+            viewerImage.src = foto.src;
+            fotoIdEl.textContent = foto.id;
+
+            // Cliente
+            clientTags.innerHTML = `
+                <div class="client-tag">
+                    ${foto.cliente}
+                </div>
+            `;
+
+            // Laptop
+            laptopModel.textContent = foto.laptop;
+            laptopSpecs.innerHTML = foto.specs.map(spec =>
+                `<span class="spec-tag">${spec}</span>`
+            ).join('');
+
+            // Método
+            const metodoTexto = {
+                'presencial': '🏪 En persona',
+                'envio': '📦 Envío',
+                'mercadolibre': '🛒 Mercado Libre'
+            };
+            purchaseMethod.innerHTML = `
+                <span class="method-badge ${foto.metodo}">${metodoTexto[foto.metodo]}</span>
+            `;
+
+            // Precio
+            priceTag.textContent = foto.precio;
+
+            // Mensaje
+            clientMessage.textContent = foto.mensaje;
+
+            // Fecha
+            purchaseDate.textContent = foto.fecha;
+        }
+
+        function navigateFoto(direction) {
+            const newIndex = currentFotoIndex + direction;
+            if (newIndex >= 0 && newIndex < filteredFotos.length) {
+                currentFotoIndex = newIndex;
+                updateViewerContent();
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🎚️ FILTROS
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function applyFilters() {
+            let result = [...FOTOS];
+
+            // Filtrar por método
+            const metodo = filterMetodo.value;
+            if (metodo !== 'todo') {
+                result = result.filter(f => f.metodo === metodo);
+            }
+
+            // Ordenar
+            const orden = filterOrden.value;
+            if (orden === 'antiguo') {
+                result.reverse();
+            } else if (orden === 'nombre') {
+                result.sort((a, b) => a.cliente.localeCompare(b.cliente));
+            }
+
+            filteredFotos = result;
+            renderGallery();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🔲 BOTONES DE VENTANA - Conexión con sistema de ventanas flotantes
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        function setupWindowControls() {
+            // Buscar la ventana flotante padre que CONTIENE a la galería
+            // IMPORTANTE: Usar closest() desde el contenedor de galería para encontrar SU ventana
+            const findGaleriaWindow = () => {
+                const galeriaContainer = document.getElementById('galeriaAppContainer');
+                if (!galeriaContainer) {
+                    console.warn('🔲 [GALERIA] No se encontró galeriaAppContainer');
+                    return null;
+                }
+
+                // Método 1: Buscar hacia arriba en el DOM desde el contenedor de galería
+                const parentWindow = galeriaContainer.closest('.app-window');
+                if (parentWindow) {
+                    console.log('🔲 [GALERIA] Ventana encontrada via closest:', parentWindow.id || parentWindow);
+                    return parentWindow;
+                }
+
+                // Método 2: Buscar ventanas con data-app="galeria"
+                const galeriaByDataApp = document.querySelector('.app-window[data-app="galeria"]');
+                if (galeriaByDataApp) {
+                    console.log('🔲 [GALERIA] Ventana encontrada via data-app');
+                    return galeriaByDataApp;
+                }
+
+                // Método 3: Buscar por IDs específicos de galería
+                const windowById = document.getElementById('window-galeria') ||
+                    document.getElementById('galeria-window');
+                if (windowById) {
+                    console.log('🔲 [GALERIA] Ventana encontrada via ID');
+                    return windowById;
+                }
+
+                console.warn('🔲 [GALERIA] No se encontró ninguna ventana padre');
+                return null;
+            };
+
+            // Obtener el windowId del elemento ventana
+            const getWindowId = (win) => {
+                if (!win) return 'galeria';
+                // Intentar obtener de data-app, o del id
+                const dataApp = win.getAttribute('data-app');
+                if (dataApp) return dataApp;
+                const id = win.id || '';
+                return id.replace('window-', '').replace('-window', '') || 'galeria';
+            };
+
+            minimizeBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const win = findGaleriaWindow();
+                console.log('🔲 Minimizar galería - Ventana:', win?.id || win);
+
+                if (win && typeof win.minimizeWindow === 'function') {
+                    win.minimizeWindow();
+                } else if (win && win.handleWindowAction) {
+                    win.handleWindowAction('minimize');
+                } else {
+                    // Fallback: minimizar manualmente
+                    const windowId = getWindowId(win);
+                    if (window.minimizeWindowGlobal) {
+                        window.minimizeWindowGlobal(windowId);
+                    }
+                    if (win) {
+                        win.classList.add('minimizing');
+                        setTimeout(() => {
+                            win.classList.remove('show', 'minimizing');
+                            win.classList.add('minimized');
+                            win.style.display = 'none';
+                        }, 250);
+                    }
+                }
+            });
+
+            maximizeBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const win = findGaleriaWindow();
+                console.log('🔲 Maximizar galería - Ventana:', win?.id || win);
+
+                if (win && typeof win.maximizeWindow === 'function') {
+                    win.maximizeWindow();
+                } else if (win && win.handleWindowAction) {
+                    win.handleWindowAction('maximize');
+                } else if (win) {
+                    // Fallback: toggle maximizado
+                    win.classList.toggle('maximized');
+                }
+            });
+
+            closeBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const win = findGaleriaWindow();
+                console.log('🔲 Cerrar galería - Ventana:', win?.id || win);
+
+                if (win && typeof win.closeWindow === 'function') {
+                    win.closeWindow();
+                } else if (win && win.handleWindowAction) {
+                    win.handleWindowAction('close');
+                } else {
+                    // Fallback: cerrar manualmente
+                    const windowId = getWindowId(win);
+                    if (window.removeFromTaskbarGlobal) {
+                        window.removeFromTaskbarGlobal(windowId);
+                    }
+                    if (win) {
+                        win.classList.add('closing');
+                        setTimeout(() => {
+                            win.classList.remove('show', 'closing');
+                            win.style.display = 'none';
+                        }, 250);
+                    }
+                }
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🎮 EVENT LISTENERS
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        // Cerrar visor
+        viewerCloseBtn.addEventListener('click', closeViewer);
+        viewerOverlay.addEventListener('click', (e) => {
+            if (e.target === viewerOverlay) closeViewer();
+        });
+
+        // Navegación con botones
+        viewerNavPrev.addEventListener('click', () => navigateFoto(-1));
+        viewerNavNext.addEventListener('click', () => navigateFoto(1));
+        infoPrevBtn.addEventListener('click', () => navigateFoto(-1));
+        infoNextBtn.addEventListener('click', () => navigateFoto(1));
+
+        // Navegación con scroll
+        viewerImageArea.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            e.preventDefault();
+            isScrolling = true;
+
+            if (e.deltaY > 0) {
+                navigateFoto(1); // Scroll down = siguiente
+            } else {
+                navigateFoto(-1); // Scroll up = anterior
+            }
+
+            setTimeout(() => { isScrolling = false; }, 300);
+        });
+
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+            if (!viewerOverlay.classList.contains('active')) return;
+
+            if (e.key === 'Escape') {
+                closeViewer();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                navigateFoto(-1);
+            } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                navigateFoto(1);
+            }
+        });
+
+        // Filtros
+        filterMetodo.addEventListener('change', applyFilters);
+        filterOrden.addEventListener('change', applyFilters);
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // 🚀 INICIALIZACIÓN
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        // API Global
+        window.GaleriaRecomendaciones = {
+            addFoto: (foto) => {
+                FOTOS.push(foto);
+                applyFilters();
+            },
+            refresh: () => {
+                applyFilters();
+            }
+        };
+
+        // Iniciar
+        renderGallery();
+        setupWindowControls();
+        console.log('✅ Galería de Recomendaciones inicializada');
+
+    })();
+</script>

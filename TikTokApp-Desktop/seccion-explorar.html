@@ -1356,6 +1356,23 @@
       navigatePopupVideo(1);
     });
 
+    // Scroll para cambiar de video
+    let isPopupScrolling = false;
+    popupPlayer.addEventListener('wheel', (e) => {
+      if (isPopupScrolling) return;
+
+      e.preventDefault();
+      isPopupScrolling = true;
+
+      if (e.deltaY > 0) {
+        navigatePopupVideo(1); // Scroll down = siguiente
+      } else {
+        navigatePopupVideo(-1); // Scroll up = anterior
+      }
+
+      setTimeout(() => { isPopupScrolling = false; }, 400);
+    });
+
     // Copiar link
     popupCopyLinkBtn.addEventListener('click', () => {
       popupProfileLink.select();

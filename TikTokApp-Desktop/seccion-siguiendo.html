@@ -2266,6 +2266,23 @@
       navigateVideo(1);
     });
 
+    // Scroll para cambiar de video
+    let isDetailScrolling = false;
+    detailPlayer.addEventListener('wheel', (e) => {
+      if (isDetailScrolling) return;
+
+      e.preventDefault();
+      isDetailScrolling = true;
+
+      if (e.deltaY > 0) {
+        navigateVideo(1); // Scroll down = siguiente
+      } else {
+        navigateVideo(-1); // Scroll up = anterior
+      }
+
+      setTimeout(() => { isDetailScrolling = false; }, 400);
+    });
+
     // Copiar link
     detailCopyBtn.addEventListener('click', () => {
       detailLink.select();
